@@ -3,7 +3,9 @@ require 'json'
 data = JSON.load <<JSON
   {
     "some_setting": {
-      "some_nested_setting": "some nested value"
+      "some_nested_setting": {
+      	"another_nested_setting": "some nested value"
+      }
     }
   }
 JSON
@@ -16,7 +18,7 @@ describe Settings do
     describe "A nested setting" do
       let(:key) { ['some_setting', 'some_nested_setting'] }
       specify "Gets the nested value" do
-        expect(setting).to eq "some nested value"
+        expect(setting).to eq Hash[ "another_nested_setting" => "some nested value" ]
       end
     end
   end
