@@ -5,7 +5,8 @@ class Settings
     @data = data
   end
 
-  def get(key)
-    data[key]
+  def get(*key)
+  	key.flatten! if key.is_a? Array
+  	key.inject(data) {|memo, k| memo[k] }
   end
 end
