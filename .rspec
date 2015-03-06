@@ -1,0 +1,3 @@
+--default-path ./test/spec
+--require spec_helper
+--exclude-pattern "**/spec_helper.rb, **/proof.rb, **/proof/**"
