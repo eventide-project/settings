@@ -20,15 +20,21 @@ end
 
 describe "Settings" do
   let(:settings) { Settings.new data }
-  let(:setting) { settings.get 'some_setting' }
-  specify "Get a setting" do
-    expect(setting).to eq 'some value'
-  end
+  let(:setting) { settings.get key }
 
-  describe "A setting that isn't in the data" do
-    let(:setting) { settings.get 'a_setting_that_doesnt_exist'}
-    specify "Is nil" do
-      expect(setting).to be_nil
+  describe "Getting" do
+    describe "A setting" do
+      let(:key) { 'some_setting' }
+      specify "Gets the value" do
+        expect(setting).to eq 'some value'
+      end
+    end
+
+    describe "A setting that isn't in the data" do
+      let(:key) { 'a_setting_that_isnt_in_the_data' }
+      specify "Gets nil" do
+        expect(setting).to be_nil
+      end
     end
   end
 end
