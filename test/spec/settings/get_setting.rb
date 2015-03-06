@@ -6,8 +6,8 @@ data = JSON.load <<JSON
   }
 JSON
 
-describe "Settings" do
-  let(:settings) { Settings.new data }
+describe Settings do
+  subject(:settings) { Settings.new data }
   let(:setting) { settings.get key }
 
   describe "Getting" do
