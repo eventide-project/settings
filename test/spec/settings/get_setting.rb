@@ -6,18 +6,6 @@ data = JSON.load <<JSON
   }
 JSON
 
-class Settings
-  attr_reader :data
-
-  def initialize(data)
-    @data = data
-  end
-
-  def get(key)
-    data[key]
-  end
-end
-
 describe "Settings" do
   let(:settings) { Settings.new data }
   let(:setting) { settings.get key }
