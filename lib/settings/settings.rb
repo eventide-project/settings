@@ -8,8 +8,11 @@ class Settings
   end
 
   def self.build(pathname=nil)
-    # Does this need to be tested again? Is it even necessary?
+    # QUESTION Does this need to be tested again with the nil case since the File defaults have already been tested?
+    # Should the pathname even be optional?
     pathname ||= File.instance.pathname
+
+    File.validate(pathname)
 
     file_data = ::File.open(pathname)
 
@@ -24,12 +27,20 @@ class Settings
   end
 
   class File
-    # Is there a use for setting directory/name separately versus together?
+    # QUESTION Is there a use case for setting directory/name separately versus together?
     attr_accessor :directory
     attr_accessor :name
 
     def self.instance
       @instance ||= new
+    end
+
+    def self.validate(file)
+      pathname = Pathname.new file
+
+      unless pathname.file?
+        raise "Settings cannot be read from #{pathname}. The file doesn't exist."
+      end
     end
 
     def pathname
@@ -44,6 +55,7 @@ class Settings
         'settings.json'
       end
 
+      # QUESTION Is there a better way to set the default path?
       def self.directory
         ENV['SETTINGS_FILE']
       end
