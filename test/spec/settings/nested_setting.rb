@@ -7,15 +7,11 @@ data = {
 }
 
 describe Settings do
-  let(:settings) { Settings.new data }
-  let(:setting) { settings.get key }
+  specify "Getting a nested setting from the setting data gets the setting's value and descendant values" do
+    settings = Settings.new data
+    key = ['some_setting', 'some_nested_setting']
+    setting = settings.get key
 
-  describe "Getting" do
-    describe "A nested setting" do
-      let(:key) { ['some_setting', 'some_nested_setting'] }
-      specify "Gets the nested value" do
-        expect(setting).to eq Hash[ "another_nested_setting" => "some nested value" ]
-      end
-    end
+    expect(setting == Hash[ "another_nested_setting" => "some nested value" ]).to be
   end
 end
