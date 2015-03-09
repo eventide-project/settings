@@ -7,8 +7,8 @@ class Settings
     @data = data
   end
 
-  def self.build(filename)
-    file_data = ::File.open(filename)
+  def self.build(pathname)
+    file_data = ::File.open(pathname)
 
     data = JSON.load file_data
 
