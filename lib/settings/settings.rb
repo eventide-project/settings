@@ -28,7 +28,7 @@ class Settings
     end
 
     def pathname
-      directory = Pathname.new self.directory
+      directory = Pathname.new self.directory.to_s
       name = Pathname.new Defaults.name
 
       pathname = (directory + name).to_s
