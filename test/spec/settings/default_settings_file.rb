@@ -1,15 +1,12 @@
-describe Settings::File do
-  subject(:file) { Settings::File.instance }
-  let(:settings_file) { File.join(current_path, "settings.json") }
-  let(:current_path) { File.dirname(File.expand_path(__FILE__)) }
+describe Settings::File, "default filepath" do
+  specify "The default settings file is relative to the configured settings file directory" do
+    current_path = File.dirname(File.expand_path(__FILE__))
+    settings_file = File.join(current_path, "settings.json")
 
-  describe "Filename" do
-    before do
-      Settings::File.instance.directory = current_path
-    end
+    file = Settings::File.instance
 
-    specify "Is relative to the settings file path" do
-      expect(file.pathname).to eq settings_file
-    end
+    file.directory = current_path
+
+    expect(file.pathname == settings_file).to be
   end
 end
