@@ -1,4 +1,4 @@
-describe Settings do
+describe Settings, "from a file" do
   subject(:settings) { Settings.build(settings_file) }
   let(:settings_file) { File.join(File.dirname(File.expand_path(__FILE__)), "single_setting.json") }
   let(:setting) { subject.get key }
