@@ -1,6 +1,10 @@
 def foo(*args)
-  args.each { |a| puts a }
+  args.each { |a| puts "#{a}: #{a.class}" }
 end
+
+a = *[:a, :b, :c]
+foo a
+
 
 puts 'Atomic args:'
 foo :a, :b, :c

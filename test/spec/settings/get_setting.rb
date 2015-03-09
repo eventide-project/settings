@@ -1,10 +1,6 @@
-require 'json'
-
-data = JSON.load <<JSON
-  {
-    "some_setting": "some value"
-  }
-JSON
+data = {
+  "some_setting" => "some value"
+}
 
 describe Settings do
   subject(:settings) { Settings.new data }
@@ -26,3 +22,4 @@ describe Settings do
     end
   end
 end
+

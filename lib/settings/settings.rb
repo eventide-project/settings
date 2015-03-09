@@ -1,3 +1,5 @@
+require 'json'
+
 class Settings
   attr_reader :data
 
@@ -5,8 +7,37 @@ class Settings
     @data = data
   end
 
+  def self.build(filename)
+    file_data = ::File.open(filename)
+
+    data = JSON.load file_data
+
+    new data
+  end
+
   def get(*key)
   	key.flatten! if key.is_a? Array
   	key.inject(data) {|memo, k| memo[k] }
+  end
+
+  class File
+    attr_accessor :directory
+
+    def self.instance
+      @instance ||= new
+    end
+
+    def pathname
+      directory = Pathname.new self.directory
+      name = Pathname.new Defaults.name
+
+      pathname = (directory + name).to_s
+    end
+
+    module Defaults
+      def self.name
+        'settings.json'
+      end
+    end
   end
 end

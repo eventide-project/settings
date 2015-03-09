@@ -1,14 +1,10 @@
-require 'json'
-
-data = JSON.load <<JSON
-  {
-    "some_setting": {
-      "some_nested_setting": {
-      	"another_nested_setting": "some nested value"
-      }
+data = {
+  "some_setting" => {
+    "some_nested_setting" => {
+    	"another_nested_setting" => "some nested value"
     }
   }
-JSON
+}
 
 describe Settings do
   let(:settings) { Settings.new data }
