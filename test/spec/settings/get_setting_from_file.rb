@@ -1,12 +1,10 @@
-describe Settings, "from a file" do
-  subject(:settings) { Settings.build(settings_file) }
-  let(:settings_file) { File.join(File.dirname(File.expand_path(__FILE__)), "single_setting.json") }
-  let(:setting) { subject.get key }
+describe Settings do
+  specify "Get a setting from a file" do
+    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "single_setting.json")
+    settings = Settings.build(settings_file)
+    key = 'some_setting'
+    setting = settings.get key
 
-  describe "Get a setting" do
-    let(:key) { 'some_setting' }
-    specify "Gets the value" do
-      expect(setting).to eq 'some value'
-    end
+    expect(setting == 'some value').to be
   end
 end

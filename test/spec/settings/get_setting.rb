@@ -2,24 +2,20 @@ data = {
   "some_setting" => "some value"
 }
 
+settings = Settings.new data
+
 describe Settings do
-  subject(:settings) { Settings.new data }
-  let(:setting) { settings.get key }
+  specify "Getting a setting from the setting data gets the setting's value" do
+    key = 'some_setting'
+    setting = settings.get key
 
-  describe "Getting" do
-    describe "A setting" do
-      let(:key) { 'some_setting' }
-      specify "Gets the value" do
-        expect(setting).to eq 'some value'
-      end
-    end
+    expect(setting == 'some value').to be
+  end
 
-    describe "A setting that isn't in the data" do
-      let(:key) { 'a_setting_that_isnt_in_the_data' }
-      specify "Gets nil" do
-        expect(setting).to be_nil
-      end
-    end
+  specify "Trying to get a setting that isn't in the data gets a nil" do
+    key = 'setting_that_isnt_in_the_data'
+    setting = settings.get key
+
+    expect(setting == nil).to be
   end
 end
-

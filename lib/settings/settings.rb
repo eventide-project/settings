@@ -7,8 +7,8 @@ class Settings
     @data = data
   end
 
-  def self.build(filename)
-    file_data = ::File.open(filename)
+  def self.build(pathname)
+    file_data = ::File.open(pathname)
 
     data = JSON.load file_data
 
@@ -28,7 +28,7 @@ class Settings
     end
 
     def pathname
-      directory = Pathname.new self.directory
+      directory = Pathname.new self.directory.to_s
       name = Pathname.new Defaults.name
 
       pathname = (directory + name).to_s
