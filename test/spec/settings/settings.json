@@ -1,0 +1,5 @@
+{
+  "some_setting": {
+    "some_nested_setting": "some nested value"
+  }
+}
