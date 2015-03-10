@@ -39,7 +39,7 @@ class Settings
       pathname = Pathname.new file
 
       unless pathname.file?
-        raise "Settings cannot be read from #{pathname}. The file doesn't exist."
+        raise(Errno::ENOENT, "Settings cannot be read from #{pathname}. The file doesn't exist.")
       end
     end
 

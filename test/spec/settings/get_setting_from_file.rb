@@ -9,10 +9,10 @@ describe Settings do
   end
 
   specify "Trying to get a setting from a file that doesn't exist" do
-    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
+    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "file-that-does-not-exist.json")
 
     # QUESTION Which one?
     # expect{Settings::File.validate(settings_file)}.to raise_error
-    expect{Settings.build(settings_file)}.to raise_error
+    expect{Settings.build(settings_file)}.to raise_error(Errno::ENOENT)
   end
 end
