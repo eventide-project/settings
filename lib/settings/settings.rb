@@ -8,14 +8,10 @@ class Settings
   end
 
   def self.build(path=nil)
-    # QUESTION Does this need to be tested again with the nil case since the File defaults have already been tested?
-    # Should the path even be optional?
+    # Currently have this responding to filepath & dirpath
+    # Would this make more sense? self.build(dirpath, filename=nil)
 
-    file = Settings::File.instance
-
-    Settings::File.validate(path)
-
-    pathname = file.pathname
+    pathname = Settings::File.build(path)
 
     file_data = ::File.open(pathname)
 
@@ -25,8 +21,8 @@ class Settings
   end
 
   def get(*key)
-  	key.flatten! if key.is_a? Array
-  	key.inject(data) {|memo, k| memo[k] }
+    key.flatten! if key.is_a? Array
+    key.inject(data) {|memo, k| memo[k] }
   end
 
   class File
@@ -37,9 +33,10 @@ class Settings
       @instance ||= new
     end
 
-    def self.validate(path)
+    def self.build(path=nil)
       file = self.instance
 
+      # Should this logic be in the Settings.build method?
       if ::File.directory?(path)
         file.directory = path
       else
@@ -48,7 +45,11 @@ class Settings
       end
 
       filepath = Pathname.new file.pathname
+      self.validate(filepath)
+      filepath
+    end
 
+    def self.validate(filepath)
       unless filepath.file?
         raise(Errno::ENOENT, "Settings cannot be read from #{filepath}. The file doesn't exist.")
       end
