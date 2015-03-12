@@ -10,6 +10,6 @@ describe Settings, "assignment" do
     some_obj = SomeObject.new
     settings.configure some_obj
 
-    expect(some_obj.some_other_setting == "some other value")
+    expect(some_obj.some_other_setting == "some other value").to be
   end
 end

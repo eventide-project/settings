@@ -29,6 +29,10 @@ class Settings
     JSON.load file_data
   end
 
+  def configure(object)
+
+  end
+
   def get(*key)
     key.flatten! if key.is_a? Array
     key.inject(data) {|memo, k| memo ? memo[k] : nil }
