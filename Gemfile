@@ -6,5 +6,4 @@ prox_gem 'logger'
 
 source 'https://rubygems.org'
 
-gem 'logging', '1.8.2'
 gem 'rspec', '~> 3.2.0'
