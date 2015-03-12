@@ -8,16 +8,19 @@ class Settings
   end
 
   def self.build(path)
-    # Currently have this responding to filepath & dirpath - not sure how passing in a nil will work?
-    # Would this make more sense? self.build(dirpath, filename=nil)
+    pathname = File.canonical(path)
 
-    pathname = Settings::File.canonical(path)
+    File.validate(pathname)
 
-    file_data = ::File.open(pathname)
+    file_data = open_file(pathname)
 
     data = JSON.load file_data
 
     new data
+  end
+
+  def self.open_file(pathname)
+    ::File.open(pathname)
   end
 
   def get(*key)
@@ -25,40 +28,21 @@ class Settings
     key.inject(data) {|memo, k| memo[k] }
   end
 
-  class File
-    attr_accessor :directory
-    attr_accessor :name
-
-    def self.instance
-      @instance ||= new
-    end
-
-    def self.canonical(path=nil)
-      file = self.instance
-
+  module File
+    def self.canonical(path)
       if ::File.extname(path) == ""
-        file.directory = path
-      else
-        file.directory = ::File.dirname(path)
-        file.name = ::File.basename(path)
+        path = (Pathname.new(path) + Defaults.name).to_s
       end
 
-      filepath = Pathname.new file.pathname
-      self.validate(filepath)
-      filepath
+      path
     end
 
     def self.validate(filepath)
-      unless filepath.file?
-        raise(Errno::ENOENT, "Settings cannot be read from #{filepath}. The file doesn't exist.")
+      pathname = Pathname.new filepath
+
+      unless pathname.file?
+        raise(Errno::ENOENT, "Settings cannot be read from #{pathname}. The file doesn't exist.")
       end
-    end
-
-    def pathname
-      directory = Pathname.new self.directory.to_s
-      name = Pathname.new (self.name ||= Defaults.name).to_s
-
-      pathname = (directory + name).to_s
     end
 
     module Defaults
