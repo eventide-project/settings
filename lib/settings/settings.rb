@@ -8,7 +8,7 @@ class Settings
   end
 
   def self.build(dirpath, filename=nil)
-    pathname = Settings::File.build(dirpath, filename)
+    pathname = Settings::File.canonical(dirpath, filename)
 
     file_data = ::File.open(pathname)
 
@@ -30,7 +30,7 @@ class Settings
       @instance ||= new
     end
 
-    def self.build(dirpath, name=nil)
+    def self.canonical(dirpath, name=nil)
       instance.directory = dirpath
       instance.name = name
 
