@@ -8,7 +8,7 @@ class Settings
   end
 
   def self.build(path=nil)
-    # Currently have this responding to filepath & dirpath
+    # Currently have this responding to filepath & dirpath - not sure how passing in a nil will work?
     # Would this make more sense? self.build(dirpath, filename=nil)
 
     pathname = Settings::File.build(path)
