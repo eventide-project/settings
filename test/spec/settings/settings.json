@@ -3,5 +3,6 @@
     "some_nested_setting": {
       "another_nested_setting": "some nested value"
     }
-  }
+  },
+  "some_other_setting": "some other value"
 }
