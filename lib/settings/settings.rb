@@ -1,4 +1,5 @@
 require 'json'
+require 'confstruct'
 
 class Settings
   attr_reader :data
@@ -14,15 +15,18 @@ class Settings
 
     File.validate(pathname)
 
-    file_data = open_file(pathname)
+    file_data = read_file(pathname)
 
-    data = JSON.load file_data
+    data = Confstruct::Configuration.new(file_data)
 
-    new data
+    settings_data = data.configure(override_data)
+
+    new settings_data
   end
 
-  def self.open_file(pathname)
-    ::File.open(pathname)
+  def self.read_file(pathname)
+    file_data = ::File.open(pathname)
+    JSON.load file_data
   end
 
   def get(*key)
