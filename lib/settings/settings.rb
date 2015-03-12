@@ -31,21 +31,19 @@ class Settings
     end
 
     def self.build(dirpath, name=nil)
-      name ||= Defaults.name
+      instance.directory = dirpath
+      instance.name = name
 
-      file = self.instance
+      pathname = Pathname.new instance.pathname
 
-      file.directory = dirpath
-      file.name = name
+      validate(pathname)
 
-      filepath = Pathname.new file.pathname
-      self.validate(filepath)
-      filepath
+      pathname
     end
 
-    def self.validate(filepath)
-      unless filepath.file?
-        raise(Errno::ENOENT, "Settings cannot be read from #{filepath}. The file doesn't exist.")
+    def self.validate(pathname)
+      unless pathname.file?
+        raise(Errno::ENOENT, "Settings cannot be read from #{pathname}. The file doesn't exist.")
       end
     end
 
