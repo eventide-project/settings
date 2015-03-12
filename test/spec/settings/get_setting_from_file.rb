@@ -19,16 +19,6 @@ describe Settings do
     expect(setting == 'some value').to be
   end
 
-  # Pass in nothing?
-  xspecify "Getting a setting from a file given nothing" do
-    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
-    settings = Settings.build
-    keys = ['some_setting', 'some_nested_setting']
-    setting = settings.get keys
-
-    expect(setting == 'some nested value').to be
-  end
-
   specify "Trying to get a setting from a file that doesn't exist" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "file-that-does-not-exist.json")
 
