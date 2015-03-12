@@ -1,7 +1,7 @@
 data = {
   "some_setting" => {
     "some_nested_setting" => {
-    	"another_nested_setting" => "some nested value"
+      "another_nested_setting" => "some nested value"
     }
   }
 }

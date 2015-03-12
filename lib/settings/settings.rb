@@ -7,7 +7,9 @@ class Settings
     @data = data
   end
 
-  def self.build(path)
+  def self.build(path, override_data=nil)
+    override_data ||= {}
+
     pathname = File.canonical(path)
 
     File.validate(pathname)
@@ -25,7 +27,7 @@ class Settings
 
   def get(*key)
     key.flatten! if key.is_a? Array
-    key.inject(data) {|memo, k| memo[k] }
+    key.inject(data) {|memo, k| memo ? memo[k] : nil }
   end
 
   module File
