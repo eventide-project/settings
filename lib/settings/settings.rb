@@ -7,11 +7,8 @@ class Settings
     @data = data
   end
 
-  def self.build(path=nil)
-    # Currently have this responding to filepath & dirpath - not sure how passing in a nil will work?
-    # Would this make more sense? self.build(dirpath, filename=nil)
-
-    pathname = Settings::File.build(path)
+  def self.build(dirpath, filename=nil)
+    pathname = Settings::File.build(dirpath, filename)
 
     file_data = ::File.open(pathname)
 
@@ -33,16 +30,13 @@ class Settings
       @instance ||= new
     end
 
-    def self.build(path=nil)
+    def self.build(dirpath, name=nil)
+      name ||= Defaults.name
+
       file = self.instance
 
-      # Should this logic be in the Settings.build method?
-      if ::File.directory?(path)
-        file.directory = path
-      else
-        file.directory = ::File.dirname(path)
-        file.name = ::File.basename(path)
-      end
+      file.directory = dirpath
+      file.name = name
 
       filepath = Pathname.new file.pathname
       self.validate(filepath)
