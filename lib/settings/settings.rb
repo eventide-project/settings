@@ -42,10 +42,10 @@ class Settings
     keys.each {|k| data[k] ? receiver.send("#{k}=", data[k]) : nil }
   end
 
-  def get(*key)
-    key.flatten! if key.is_a? Array
+  def get(*keys)
+    keys.flatten! if keys.is_a? Array
 
-    key.inject(data) {|memo, k| memo ? memo[k] : nil }
+    keys.inject(data) {|memo, k| memo ? memo[k] : nil }
   end
 
   module File

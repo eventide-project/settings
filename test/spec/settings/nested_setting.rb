@@ -12,8 +12,6 @@ describe Settings do
     key = ['some_setting', 'some_nested_setting']
     setting = settings.get key
 
-    puts setting.class
-
     expect(setting == Hash[ "another_nested_setting" => "some nested value" ]).to be
   end
 end
