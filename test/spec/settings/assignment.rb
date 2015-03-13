@@ -10,7 +10,7 @@ describe Settings, "assignment" do
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
-    settings.configure some_obj
+    settings.set some_obj
 
     expect(some_obj.some_setting.to_h == Hash[{ :some_nested_setting => { :another_nested_setting => "some nested value" }}] ).to be
     expect(some_obj.some_other_setting == "some other value").to be
@@ -21,7 +21,7 @@ describe Settings, "assignment" do
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
-    settings.configure some_obj, "some_other_setting"
+    settings.set some_obj, "some_other_setting"
 
     expect(some_obj.some_setting == nil).to be
     expect(some_obj.some_other_setting == "some other value").to be
@@ -32,7 +32,7 @@ describe Settings, "assignment" do
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
-    settings.configure some_obj, ["some_other_setting", "some_setting"]
+    settings.set some_obj, ["some_other_setting", "some_setting"]
 
     expect(some_obj.some_setting.to_h == Hash[{ :some_nested_setting => { :another_nested_setting => "some nested value" }}]).to be
     expect(some_obj.some_other_setting == "some other value").to be
@@ -43,7 +43,7 @@ describe Settings, "assignment" do
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
-    settings.configure some_obj, "setting_not_in_the_data"
+    settings.set some_obj, "setting_not_in_the_data"
 
     expect(some_obj.setting_not_in_the_data == nil).to be
   end

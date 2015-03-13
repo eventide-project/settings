@@ -34,7 +34,7 @@ class Settings
     data.pop!
   end
 
-  def configure(receiver, *keys)
+  def set(receiver, *keys)
     keys = data.keys if keys.empty?
 
     keys.flatten! if keys.is_a? Array
