@@ -1,6 +1,7 @@
 class SomeObject
   attr_accessor :some_setting
   attr_accessor :some_other_setting
+  attr_accessor :setting_not_in_the_data
 end
 
 describe Settings, "assignment" do
@@ -10,8 +11,6 @@ describe Settings, "assignment" do
 
     some_obj = SomeObject.new
     settings.configure some_obj
-
-    puts "Some_setting: #{some_obj.some_setting}"
 
     expect(some_obj.some_setting == { "some_nested_setting" => { "another_nested_setting" => "some nested value" }}).to be
     expect(some_obj.some_other_setting == "some other value").to be
@@ -37,5 +36,15 @@ describe Settings, "assignment" do
 
     expect(some_obj.some_setting == { "some_nested_setting" => { "another_nested_setting" => "some nested value" }}).to be
     expect(some_obj.some_other_setting == "some other value").to be
+  end
+
+  specify "Trying to configure a setting that is not in the settings data raises an error" do
+    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
+    settings = Settings.build(settings_file)
+
+    some_obj = SomeObject.new
+    settings.configure some_obj, "setting_not_in_the_data"
+
+    expect(some_obj.setting_not_in_the_data == nil).to be
   end
 end

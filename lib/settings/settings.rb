@@ -35,7 +35,7 @@ class Settings
   def configure(receiver, *keys)
     keys = data.keys if keys.empty?
 
-    keys.each {|k| receiver.send("#{k}=", data[k]) }
+    keys.each {|k| data[k] ? receiver.send("#{k}=", data[k]) : nil }
   end
 
   def get(*key)
