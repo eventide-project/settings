@@ -29,8 +29,8 @@ class Settings
     JSON.load file_data
   end
 
-  def configure(object)
-
+  def configure(receiver)
+    data.each {|setting, value| receiver.send("#{setting}=", value) if receiver.respond_to?("#{setting}=")}
   end
 
   def get(*key)

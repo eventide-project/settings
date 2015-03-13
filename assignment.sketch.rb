@@ -7,10 +7,12 @@ some_obj = SomeObj.new
 
 settings = Settings.build 'some-path'
 
-setting.configure some_obj
+setting.configure some_obj, key
+
+# key is Nullable
 
 {
-  "foo" => "foo value",
+  "foo" => { "baz" => "baz value" },
   "bar" => "bar value"
 }
 
