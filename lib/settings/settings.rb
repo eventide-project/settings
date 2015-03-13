@@ -29,7 +29,7 @@ class Settings
   end
 
   def self.override_settings(data, override_data)
-    data.configure(override_data)
+    data.push!(override_data)
   end
 
   def configure(receiver, *keys)
