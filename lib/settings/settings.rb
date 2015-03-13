@@ -8,7 +8,7 @@ class Settings
     @data = data
   end
 
-  def self.build(path, override_data=nil)
+  def self.build(path)
     pathname = File.canonical(path)
 
     File.validate(pathname)
@@ -16,8 +16,6 @@ class Settings
     file_data = read_file(pathname)
 
     data = Confstruct::Configuration.new(file_data)
-
-    data = override_settings(data, override_data) if override_data
 
     new data
   end
@@ -28,8 +26,12 @@ class Settings
     JSON.load file_data
   end
 
-  def self.override_settings(data, override_data)
+  def override(override_data)
     data.push!(override_data)
+  end
+
+  def reset
+    data.pop!
   end
 
   def configure(receiver, *keys)
