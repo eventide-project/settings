@@ -9,28 +9,35 @@ class Settings
   end
 
   def self.build(path, override_data=nil)
-    override_data ||= {}
-
     pathname = File.canonical(path)
 
     File.validate(pathname)
 
-    file_data = read_file(pathname)
+    data = read_file(pathname)
 
-    data = Confstruct::Configuration.new(file_data)
+    data = override(data, override_data) if override_data
 
-    settings_data = data.configure(override_data)
-
-    new settings_data
+    new data
   end
 
   def self.read_file(pathname)
     file_data = ::File.open(pathname)
+
     JSON.load file_data
   end
 
-  def configure(receiver)
-    data.each {|setting, value| receiver.send("#{setting}=", value) if receiver.respond_to?("#{setting}=")}
+  def self.override(data, override_data)
+    settings_data = Confstruct::Configuration.new(data)
+
+    settings_data.configure(override_data)
+  end
+
+  def configure(receiver, key=nil)
+    if key
+      receiver.send("#{key}=", data[key])
+    else
+      data.each {|setting, value| receiver.send("#{setting}=", value) if receiver.respond_to?("#{setting}=")}
+    end
   end
 
   def get(*key)
