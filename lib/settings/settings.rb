@@ -15,7 +15,7 @@ class Settings
 
     data = read_file(pathname)
 
-    data = override(data, override_data) if override_data
+    data = override_settings(data, override_data) if override_data
 
     new data
   end
@@ -26,18 +26,16 @@ class Settings
     JSON.load file_data
   end
 
-  def self.override(data, override_data)
+  def self.override_settings(data, override_data)
     settings_data = Confstruct::Configuration.new(data)
 
     settings_data.configure(override_data)
   end
 
-  def configure(receiver, key=nil)
-    if key
-      receiver.send("#{key}=", data[key])
-    else
-      data.each {|setting, value| receiver.send("#{setting}=", value) if receiver.respond_to?("#{setting}=")}
-    end
+  def configure(receiver, *keys)
+    keys = data.keys if keys.empty?
+
+    keys.each {|k| receiver.send("#{k}=", data[k]) }
   end
 
   def get(*key)
