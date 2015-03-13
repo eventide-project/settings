@@ -33,6 +33,8 @@ class Settings
   end
 
   def configure(receiver, *keys)
+    keys.flatten! if keys.is_a? Array
+
     keys = data.keys if keys.empty?
 
     keys.each {|k| data[k] ? receiver.send("#{k}=", data[k]) : nil }
@@ -40,6 +42,7 @@ class Settings
 
   def get(*key)
     key.flatten! if key.is_a? Array
+
     key.inject(data) {|memo, k| memo ? memo[k] : nil }
   end
 
