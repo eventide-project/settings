@@ -5,7 +5,7 @@ class SomeObject
 end
 
 describe Settings, "assignment" do
-  specify "Configure an instance of an object by applying all settings to it" do
+  xspecify "Configure an instance of an object by applying all settings to it" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
@@ -27,7 +27,7 @@ describe Settings, "assignment" do
     expect(some_obj.some_other_setting == "some other value").to be
   end
 
-  specify "Configure an instance of an object by applying multiple settings to it" do
+  xspecify "Configure an instance of an object by applying multiple settings to it" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 

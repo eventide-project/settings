@@ -13,7 +13,9 @@ class Settings
 
     File.validate(pathname)
 
-    data = read_file(pathname)
+    file_data = read_file(pathname)
+
+    data = Confstruct::Configuration.new(file_data)
 
     data = override_settings(data, override_data) if override_data
 
@@ -27,15 +29,13 @@ class Settings
   end
 
   def self.override_settings(data, override_data)
-    settings_data = Confstruct::Configuration.new(data)
-
-    settings_data.configure(override_data)
+    data.configure(override_data)
   end
 
   def configure(receiver, *keys)
-    keys.flatten! if keys.is_a? Array
-
     keys = data.keys if keys.empty?
+
+    keys.flatten! if keys.is_a? Array
 
     keys.each {|k| data[k] ? receiver.send("#{k}=", data[k]) : nil }
   end
