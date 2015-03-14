@@ -1,4 +1,5 @@
 require 'json'
+require 'confstruct'
 
 class Settings
   attr_reader :data
@@ -7,31 +8,61 @@ class Settings
     @data = data
   end
 
-  def self.build(pathname)
-    file_data = ::File.open(pathname)
+  def self.build(path)
+    pathname = File.canonical(path)
 
-    data = JSON.load file_data
+    File.validate(pathname)
+
+    file_data = read_file(pathname)
+
+    data = Confstruct::Configuration.new(file_data)
 
     new data
   end
 
-  def get(*key)
-  	key.flatten! if key.is_a? Array
-  	key.inject(data) {|memo, k| memo[k] }
+  def self.read_file(pathname)
+    file_data = ::File.open(pathname)
+
+    JSON.load file_data
   end
 
-  class File
-    attr_accessor :directory
+  def override(override_data)
+    data.push!(override_data)
+  end
 
-    def self.instance
-      @instance ||= new
+  def reset
+    data.pop!
+  end
+
+  def set(receiver, *keys)
+    keys = data.keys if keys.empty?
+
+    keys.flatten! if keys.is_a? Array
+
+    keys.each {|k| data[k] ? receiver.send("#{k}=", data[k]) : nil }
+  end
+
+  def get(*keys)
+    keys.flatten! if keys.is_a? Array
+
+    keys.inject(data) {|memo, k| memo ? memo[k] : nil }
+  end
+
+  module File
+    def self.canonical(path)
+      if ::File.extname(path) == ""
+        path = (Pathname.new(path) + Defaults.name).to_s
+      end
+
+      path
     end
 
-    def pathname
-      directory = Pathname.new self.directory.to_s
-      name = Pathname.new Defaults.name
+    def self.validate(filepath)
+      pathname = Pathname.new filepath
 
-      pathname = (directory + name).to_s
+      unless pathname.file?
+        raise(Errno::ENOENT, "Settings cannot be read from #{pathname}. The file doesn't exist.")
+      end
     end
 
     module Defaults
