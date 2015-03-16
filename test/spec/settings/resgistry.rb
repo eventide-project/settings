@@ -1,20 +1,20 @@
 class SomeObject
-  extend Settings::Setting::Macro
-
   setting :some_setting
-  attr_accessor :some_attribute
+  setting :some_other_setting
 end
 
 describe Settings::Registry do
-  specify "A setting attribute will be stored in the registry" do
+  specify "A registered setting will be stored in the settings registry by its class name" do
     registry = Settings::Registry.instance
 
-    expect(registry.setting?(SomeObject, :some_setting)).to be
+    registry.register(SomeObject, :some_setting)
+
+    expect(registry.setting? SomeObject, :some_setting ).to be
   end
 
-  specify "A non-setting attribute will not be stored in the registry" do
+  specify "An unregistered setting will not be stored in the settings registry" do
     registry = Settings::Registry.instance
 
-    expect(registry.setting?(SomeObject, :some_attribute) == false).to be
+    expect(registry.setting? SomeObject, :some_other_setting ).to_not be
   end
 end
