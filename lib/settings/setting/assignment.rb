@@ -12,6 +12,7 @@ class Settings
       end
 
       def self.assign_value(receiver, setting_name, value)
+      end
 
       def self.setting?(receiver, attr_name)
         # ...
