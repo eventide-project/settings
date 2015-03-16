@@ -3,13 +3,17 @@ require 'confstruct'
 
 class Settings
   attr_reader :data
+  attr_reader :pathname
 
-  def initialize(data)
+  def initialize(data, pathname=nil)
     @data = data
+    @pathname = pathname
   end
 
-  def self.build(path)
-    pathname = File.canonical(path)
+  def self.build(pathname=nil)
+    pathname ||= File::Defaults.name
+
+    pathname = File.canonical(pathname)
 
     File.validate(pathname)
 
@@ -17,7 +21,7 @@ class Settings
 
     data = Confstruct::Configuration.new(file_data)
 
-    new data
+    new data, pathname
   end
 
   def self.read_file(pathname)
