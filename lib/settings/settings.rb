@@ -47,6 +47,7 @@ class Settings
   end
 
   def assign_value(receiver, setter_name, value)
+    # later, use assignment module
     receiver.send "#{setter_name}=", value
   end
 
