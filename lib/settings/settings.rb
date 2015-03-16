@@ -58,6 +58,10 @@ class Settings
         path = (Pathname.new(path) + Defaults.name).to_s
       end
 
+      if ::File.dirname(path) == "."
+        path = (Pathname.new(Dir.pwd) + path).to_s
+      end
+
       path
     end
 
