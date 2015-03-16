@@ -3,15 +3,18 @@ class Settings
     module Assignment
       # maybe just procedures, ie: all 'self' maybe
 
-      def self.assign(receiver, key)
+      def self.assign(receiver, attr_name, value)
         # ...
-        # setting? ...
-        # assignable? ...
-        # assign_value ...
+        return unless setting? receiver, attr_name
+        return unless assignable? receiver, attr_name
+
+        assign_value(receiver, attr_name, value)
+
         # return value
       end
 
-      def self.assign_value(receiver, setting_name, value)
+      def self.assign_value(receiver, attr_name, value)
+        receiver.send "#{attr_name}=", value
       end
 
       def self.setting?(receiver, attr_name)

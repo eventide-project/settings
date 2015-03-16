@@ -15,6 +15,9 @@ describe Settings, "assignment" do
     some_obj = SomeObject.new
     settings.set some_obj
 
+    puts "Some Setting: #{some_obj.some_setting}"
+    puts "Some Other Setting: #{some_obj.some_other_setting}"
+
     expect(some_obj.some_setting.to_h == Hash[{ :some_nested_setting => { :another_nested_setting => "some nested value" }}] ).to be
     expect(some_obj.some_other_setting == "some other value").to be
   end
@@ -51,7 +54,7 @@ describe Settings, "assignment" do
     expect(some_obj.setting_not_in_the_data == nil).to be
   end
 
-  xspecify "An attribute that is not a setting does not get set" do
+  specify "An attribute that is not a setting does not get set" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 

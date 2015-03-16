@@ -46,9 +46,10 @@ class Settings
     keys.each {|k| data[k] ? assign_value(receiver, k, data[k]) : nil }
   end
 
-  def assign_value(receiver, setter_name, value)
-    # later, use assignment module
-    receiver.send "#{setter_name}=", value
+  def assign_value(receiver, attr_name, value)
+    attr_name = attr_name.to_sym
+
+    Settings::Setting::Assignment.assign(receiver, attr_name, value)
   end
 
   def get(*keys)
