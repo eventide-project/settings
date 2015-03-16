@@ -1,7 +1,9 @@
 class SomeObject
-  attr_accessor :some_setting
-  attr_accessor :some_other_setting
-  attr_accessor :setting_not_in_the_data
+  extend Settings::Setting::Macro
+
+  setting :some_setting
+  setting :some_other_setting
+  setting :setting_not_in_the_data
 end
 
 describe Settings, "assignment" do
