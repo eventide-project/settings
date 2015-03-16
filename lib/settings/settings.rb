@@ -53,20 +53,20 @@ class Settings
   end
 
   module File
-    def self.canonical(path)
-      if ::File.extname(path) == ""
-        path = (Pathname.new(path) + Defaults.name).to_s
+    def self.canonical(pathname)
+      if ::File.extname(pathname) == ""
+        pathname = (Pathname.new(pathname) + Defaults.name).to_s
       end
 
-      if ::File.dirname(path) == "."
-        path = (Pathname.new(Dir.pwd) + path).to_s
+      if ::File.dirname(pathname) == "."
+        pathname = (Pathname.new(Directory::Defaults.pathname) + pathname).to_s
       end
 
-      path
+      pathname
     end
 
-    def self.validate(filepath)
-      pathname = Pathname.new filepath
+    def self.validate(pathname)
+      pathname = Pathname.new pathname
 
       unless pathname.file?
         raise(Errno::ENOENT, "Settings cannot be read from #{pathname}. The file doesn't exist.")
@@ -76,6 +76,14 @@ class Settings
     module Defaults
       def self.name
         'settings.json'
+      end
+    end
+  end
+
+  module Directory
+    module Defaults
+      def self.pathname
+        Dir.pwd
       end
     end
   end
