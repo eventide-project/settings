@@ -4,5 +4,6 @@
       "another_nested_setting": "some nested value"
     }
   },
-  "some_other_setting": "some other value"
+  "some_other_setting": "some other value",
+  "some_attribute": "some attribute value"
 }

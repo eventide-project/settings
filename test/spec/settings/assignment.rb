@@ -4,6 +4,7 @@ class SomeObject
   setting :some_setting
   setting :some_other_setting
   setting :setting_not_in_the_data
+  attr_accessor :some_attribute
 end
 
 describe Settings, "assignment" do
@@ -40,7 +41,7 @@ describe Settings, "assignment" do
     expect(some_obj.some_other_setting == "some other value").to be
   end
 
-  specify "Trying to configure a setting that is not in the settings data raises an error" do
+  specify "Trying to configure a setting that is not in the settings data does not assign the setting value to the receiver" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
@@ -48,5 +49,15 @@ describe Settings, "assignment" do
     settings.set some_obj, "setting_not_in_the_data"
 
     expect(some_obj.setting_not_in_the_data == nil).to be
+  end
+
+  xspecify "An attribute that is not a setting does not get set" do
+    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
+    settings = Settings.build(settings_file)
+
+    some_obj = SomeObject.new
+    settings.set some_obj
+
+    expect(some_obj.some_attribute == nil).to be
   end
 end

@@ -43,7 +43,11 @@ class Settings
 
     keys.flatten! if keys.is_a? Array
 
-    keys.each {|k| data[k] ? receiver.send("#{k}=", data[k]) : nil }
+    keys.each {|k| data[k] ? assign_value(receiver, k, data[k]) : nil }
+  end
+
+  def assign_value(receiver, setter_name, value)
+    receiver.send "#{setter_name}=", value
   end
 
   def get(*keys)
