@@ -7,7 +7,7 @@ module AttributeExample
   end
 end
 
-describe "Settings Attribute" do
+describe "Settings attribute" do
   specify "Has a getter" do
     thing = AttributeExample::Thing.new
     expect(thing.respond_to? :some_setting).to be
@@ -25,7 +25,7 @@ describe "Settings Attribute" do
   end
 end
 
-describe "Attribute Accessor" do
+describe "Attribute accessor that is not a setting" do
   specify "Is not in the Settings registry" do
     registry = Settings::Registry.instance
 

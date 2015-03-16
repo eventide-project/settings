@@ -15,9 +15,6 @@ describe Settings, "assignment" do
     some_obj = SomeObject.new
     settings.set some_obj
 
-    puts "Some Setting: #{some_obj.some_setting}"
-    puts "Some Other Setting: #{some_obj.some_other_setting}"
-
     expect(some_obj.some_setting.to_h == Hash[{ :some_nested_setting => { :another_nested_setting => "some nested value" }}] ).to be
     expect(some_obj.some_other_setting == "some other value").to be
   end
