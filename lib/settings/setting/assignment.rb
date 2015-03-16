@@ -15,8 +15,8 @@ class Settings
       end
 
       def self.setting?(receiver, attr_name)
-        # ...
-        # Registry.instance.setting? receiver, attr_name
+        receiver_class = receiver.class
+        Settings::Registry.instance.setting? receiver_class, attr_name
       end
 
       def self.assignable?(receiver, attr_name)
@@ -24,7 +24,7 @@ class Settings
       end
 
       def self.setter_name(attr_name)
-        :"#{attr_name}=" unless attr_name.to_s.end_with '='
+        :"#{attr_name.to_s}=" unless attr_name.to_s.end_with? '='
       end
     end
   end
