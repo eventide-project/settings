@@ -58,6 +58,6 @@ describe Settings, "assignment" do
     some_obj = SomeObject.new
     settings.set some_obj
 
-    expect(some_obj.some_attribute == nil).to be
+    expect(some_obj.some_attribute).to eq nil
   end
 end

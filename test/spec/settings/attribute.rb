@@ -18,7 +18,7 @@ describe "Settings attribute" do
     expect(thing.respond_to? :some_setting=).to be
   end
 
-  specify "Is in the Settings registry" do
+  specify "Is not registered" do
     registry = Settings::Registry.instance
 
     expect(registry.setting? AttributeExample::Thing, :some_setting).to be
@@ -26,7 +26,7 @@ describe "Settings attribute" do
 end
 
 describe "Attribute accessor that is not a setting" do
-  specify "Is not in the Settings registry" do
+  specify "Is registered" do
     registry = Settings::Registry.instance
 
     expect(registry.setting? AttributeExample::Thing, :some_attribute).to_not be
