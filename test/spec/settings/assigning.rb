@@ -30,7 +30,7 @@ describe Settings, "assignment" do
     expect(some_obj.some_other_setting == "some other value").to be true
   end
 
-  specify "Configure an instance of an object by applying multiple settings to it" do
+  xspecify "Configure an instance of an object by applying multiple settings to it" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
@@ -41,12 +41,12 @@ describe Settings, "assignment" do
     expect(some_obj.some_other_setting == "some other value").to be true
   end
 
-  specify "Trying to configure a setting that is not in the settings data does not assign the setting value to the receiver" do
+  specify "A settings that is not in the settings data is not set" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
-    settings.set some_obj, "setting_not_in_the_data"
+    settings.set some_obj
 
     expect(some_obj.setting_not_in_the_data.nil?).to be true
   end
@@ -61,5 +61,13 @@ describe Settings, "assignment" do
     expect(some_obj.some_attribute.nil?).to be true
   end
 
+  specify "Setting an attribute that isn't a setting is an error" do
+    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
+    settings = Settings.build(settings_file)
 
+    some_obj = SomeObject.new
+    settings.set some_obj, "some_attribute"
+
+    expect(some_obj.some_attribute.nil?).to be true
+  end
 end
