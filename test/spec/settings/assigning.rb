@@ -4,13 +4,12 @@ class SomeObject
   setting :some_setting
   setting :some_other_setting
   setting :some_nested_setting
-  setting :another_nested_setting
   setting :setting_not_in_the_data
   attr_accessor :some_attribute
 end
 
 describe Settings, "assignment" do
-  specify "Configure an instance of an object by applying all settings to it" do
+  specify "Set an object" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
@@ -42,7 +41,7 @@ describe Settings, "assignment" do
     expect(some_obj.some_nested_setting.to_h == Hash[{ :another_nested_setting => "some nested value" }]).to be
   end
 
-  specify "A settings that is not in the settings data is not set" do
+  specify "A setting that is not in the settings data is not set" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
