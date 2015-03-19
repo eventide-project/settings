@@ -8,14 +8,14 @@ class Settings
       end
 
       def self.assign(receiver, attr_name, value, strict=false)
-        if validate_attribute(receiver, attr_name, strict)
+        if approve_attribute(receiver, attr_name, strict)
           assign_value(receiver, attr_name, value)
         end
 
         receiver
       end
 
-      def self.validate_attribute(receiver, attr_name, strict)
+      def self.approve_attribute(receiver, attr_name, strict)
         setting = setting? receiver, attr_name
         assignable = assignable? receiver, attr_name
 
