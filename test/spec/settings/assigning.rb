@@ -62,14 +62,22 @@ describe Settings, "assignment" do
     expect(some_obj.some_attribute.nil?).to be true
   end
 
-  xspecify "Setting an attribute that isn't a defined setting is an error" do
+  specify "Strictly setting an attribute that isn't a defined setting is an error" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
 
-    expect { settings.set some_obj, "some_attribute" }.to raise_error
-
-    # expect(some_obj.some_attribute.nil?).to be true
+    expect { settings.set some_obj, attribute: :some_attribute }.to raise_error
   end
+
+  specify "Unstrictly setting an attribute that isn't a defined setting is not an error" do
+    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
+    settings = Settings.build(settings_file)
+
+    some_obj = SomeObject.new
+
+    expect { settings.set some_obj, attribute: :some_attribute, strict: false }.to_not raise_error
+  end
+
 end

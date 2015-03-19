@@ -46,26 +46,19 @@ class Settings
     data.pop!
   end
 
-  # def set(receiver, *keys)
-  #   keys = data.keys if keys.empty?
-
-  #   keys.flatten! if keys.is_a? Array
-
-  #   keys.each {|k| data[k] ? assign_value(receiver, k, data[k]) : nil }
-  # end
-
-  # def set(receiver, *keys)
-  def set(receiver, *namespace, attribute: nil)
-    logger.trace "Setting #{receiver} (#{digest(namespace, attribute)})"
+  def set(receiver, *namespace, attribute: nil, strict: nil)
+    logger.trace "Setting #{receiver} (#{digest(namespace, attribute, strict)})"
     unless attribute.nil?
-      value = set_one(receiver, attribute, namespace)
+      strict = true if strict.nil?
+      value = set_one(receiver, attribute, namespace, strict)
     else
-      receiver = set_all(receiver, namespace)
+      strict = false if strict.nil?
+      receiver = set_all(receiver, namespace, strict)
     end
     value || receiver
   end
 
-  def set_one(receiver, attribute, namespace)
+  def set_one(receiver, attribute, namespace, strict)
     attribute = attribute.to_s if attribute.is_a? Symbol
 
     full_namespace = namespace.dup
@@ -73,7 +66,7 @@ class Settings
 
     value = get(full_namespace)
 
-    assign_value(receiver, attribute, value)
+    assign_value(receiver, attribute, value, strict)
 
     log_value = value
     log_value = log_value.to_h if log_value.respond_to? :to_h
@@ -83,20 +76,18 @@ class Settings
     value
   end
 
-  def set_all(receiver, namespace)
+  def set_all(receiver, namespace, strict=nil)
     data.each {|k, v| assign_value(receiver, k, v) }
   end
 
-  def assign_value(receiver, attribute, value)
+  def assign_value(receiver, attribute, value, strict=false)
     attribute = attribute.to_sym # aren't they already symbols if they come from confstruct
-    Settings::Setting::Assignment.assign(receiver, attribute, value)
+    Settings::Setting::Assignment.assign(receiver, attribute, value, strict)
   end
 
   def get(*namespace)
     namespace.flatten!
     logger.trace "Getting #{namespace}"
-
-    # namespace = namespace.join '.'
 
     value = namespace.inject(data) {|memo, k| memo ? memo[k] : nil }
 
@@ -109,13 +100,12 @@ class Settings
     value
   end
 
-  def digest(namespace, attribute)
+  def digest(namespace, attribute, strict)
     content = []
     content << "Namespace: #{namespace.join ', '}" unless namespace.empty?
     content << "Attribute: #{attribute}" if attribute
-    str = content.join ', '
-    str = 'Namespace and Attribute are not specified' if str.empty?
-    str
+    content << "Strict: #{strict}"
+    content.join ', '
   end
 
   module File
