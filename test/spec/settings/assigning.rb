@@ -20,6 +20,26 @@ describe Settings, "assignment" do
     expect(some_obj.some_other_setting == "some other value").to be true
   end
 
+  specify "Set an object from a nested namespace" do
+    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "nested_settings.json")
+    settings = Settings.build(settings_file)
+
+    some_obj = SomeObject.new
+    settings.set some_obj, "nested_settings"
+
+    expect(some_obj.some_setting == "some value").to be true
+    expect(some_obj.some_other_setting == "some other value").to be true
+  end
+
+  specify "Setting an object strictly where the object doesn't have settings that correspond to the data is an error" do
+    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
+    settings = Settings.build(settings_file)
+
+    some_obj = SomeObject.new
+
+    expect { settings.set some_obj, strict: true }.to raise_error
+  end
+
   specify "Set an attribute explicitly" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)

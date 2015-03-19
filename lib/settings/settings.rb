@@ -76,8 +76,9 @@ class Settings
     value
   end
 
-  def set_all(receiver, namespace, strict=nil)
-    data.each {|k, v| assign_value(receiver, k, v) }
+  def set_all(receiver, namespace, strict)
+    data = get(namespace)
+    data.each {|k, v| assign_value(receiver, k, v, strict) }
   end
 
   def assign_value(receiver, attribute, value, strict=false)

@@ -32,7 +32,7 @@ class Settings
           end
         end
 
-        unless setting
+        unless assignable
           msg = "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
           if strict
             logger.error msg
