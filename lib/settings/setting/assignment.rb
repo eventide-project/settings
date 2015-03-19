@@ -16,22 +16,9 @@ class Settings
       end
 
       def self.approve_attribute(receiver, attr_name, strict)
-        setting = setting? receiver, attr_name
+        approved = true
+
         assignable = assignable? receiver, attr_name
-
-        valid = true
-
-        unless setting
-          msg = "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
-          if strict
-            logger.error msg
-            raise msg
-          else
-            logger.warn msg
-            valid = false
-          end
-        end
-
         unless assignable
           msg = "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
           if strict
@@ -39,11 +26,23 @@ class Settings
             raise msg
           else
             logger.warn msg
-            valid = false
+            approved = false
           end
         end
 
-        valid
+        setting = setting? receiver, attr_name
+        unless setting
+          msg = "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
+          if strict
+            logger.error msg
+            raise msg
+          else
+            logger.warn msg
+            approved = false
+          end
+        end
+
+        approved
       end
 
       def self.assign_value(receiver, attr_name, value)
