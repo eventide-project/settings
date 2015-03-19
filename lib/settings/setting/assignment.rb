@@ -1,7 +1,6 @@
 class Settings
   module Setting
     module Assignment
-
       def self.assign(receiver, attr_name, value)
         return unless setting? receiver, attr_name
         return unless assignable? receiver, attr_name
@@ -12,6 +11,7 @@ class Settings
 
       def self.assign_value(receiver, attr_name, value)
         receiver.send "#{attr_name}=", value
+        value
       end
 
       def self.setting?(receiver, attr_name)

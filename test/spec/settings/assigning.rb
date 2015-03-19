@@ -3,6 +3,8 @@ class SomeObject
 
   setting :some_setting
   setting :some_other_setting
+  setting :some_nested_setting
+  setting :another_nested_setting
   setting :setting_not_in_the_data
   attr_accessor :some_attribute
 end
@@ -19,26 +21,25 @@ describe Settings, "assignment" do
     expect(some_obj.some_other_setting == "some other value").to be true
   end
 
-  specify "Configure an instance of an object by applying one specified setting to it" do
+  specify "Set an attribute explicitly" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
-    settings.set some_obj, "some_other_setting"
+    settings.set some_obj, attribute: :some_other_setting
 
-    expect(some_obj.some_setting == nil).to be
+    expect(some_obj.some_setting.nil?).to be true
     expect(some_obj.some_other_setting == "some other value").to be true
   end
 
-  xspecify "Configure an instance of an object by applying multiple settings to it" do
+  specify "Set an attribute explicitly from a nested namespace" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
-    settings.set some_obj, ["some_other_setting", "some_setting"]
+    settings.set(some_obj, "some_setting", attribute: :some_nested_setting)
 
-    expect(some_obj.some_setting.to_h == Hash[{ :some_nested_setting => { :another_nested_setting => "some nested value" }}]).to be
-    expect(some_obj.some_other_setting == "some other value").to be true
+    expect(some_obj.some_nested_setting.to_h == Hash[{ :another_nested_setting => "some nested value" }]).to be
   end
 
   specify "A settings that is not in the settings data is not set" do
@@ -61,13 +62,14 @@ describe Settings, "assignment" do
     expect(some_obj.some_attribute.nil?).to be true
   end
 
-  specify "Setting an attribute that isn't a setting is an error" do
+  xspecify "Setting an attribute that isn't a defined setting is an error" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
     some_obj = SomeObject.new
-    settings.set some_obj, "some_attribute"
 
-    expect(some_obj.some_attribute.nil?).to be true
+    expect { settings.set some_obj, "some_attribute" }.to raise_error
+
+    # expect(some_obj.some_attribute.nil?).to be true
   end
 end
