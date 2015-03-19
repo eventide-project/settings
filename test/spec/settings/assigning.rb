@@ -9,7 +9,7 @@ class SomeObject
 end
 
 describe Settings, "assignment" do
-  specify "Set an object" do
+  specify "Setting an object assigns data for all setting attributes with corresponding settings data" do
     settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
     settings = Settings.build(settings_file)
 
