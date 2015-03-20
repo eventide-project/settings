@@ -14,16 +14,18 @@ class Settings
     @pathname = pathname
   end
 
-  def self.build(pathname=nil)
-    pathname ||= File::Defaults.name
+  def self.build(data_source=nil)
+    raw_data = nil
+    if data_source.is_a? Hash
+      raw_data = data_source
+    else
+      pathname ||= File::Defaults.name
+      pathname = File.canonical(pathname)
+      File.validate(pathname)
+      raw_data = read_file(pathname)
+    end
 
-    pathname = File.canonical(pathname)
-
-    File.validate(pathname)
-
-    file_data = read_file(pathname)
-
-    data = Confstruct::Configuration.new(file_data)
+    data = Confstruct::Configuration.new(raw_data)
 
     instance = new data, pathname
 
@@ -46,14 +48,11 @@ class Settings
     data.pop!
   end
 
-  def set(receiver, *namespace, attribute: nil, strict: nil)
+  def set(receiver, *namespace, attribute: nil, strict: true)
     logger.trace "Setting #{receiver} (#{digest(namespace, attribute, strict)})"
     unless attribute.nil?
-      strict = true if strict.nil?
       value = set_one(receiver, attribute, namespace, strict)
     else
-      # strict = false if strict.nil?
-      strict = true if strict.nil?
       receiver = set_all(receiver, namespace, strict)
     end
     value || receiver
@@ -64,10 +63,16 @@ class Settings
 
     attribute = attribute.to_s if attribute.is_a? Symbol
 
-    full_namespace = namespace.dup
-    full_namespace << attribute
+    attribute_namespace = namespace.dup
+    attribute_namespace << attribute
 
-    value = get(full_namespace)
+    value = get(attribute_namespace)
+
+    if value.nil?
+      msg = "#{attribute_namespace} not found in the data"
+      logger.error msg
+      raise msg
+    end
 
     Settings::Setting::Assignment::Attribute.assign(receiver, attribute.to_sym, value, strict)
 
