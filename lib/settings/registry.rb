@@ -2,10 +2,6 @@ class Settings
   class Registry
     attr_accessor :data
 
-    def self.instance
-      @instance ||= new
-    end
-
     def initialize
       @data = {}
     end
@@ -24,6 +20,20 @@ class Settings
 
     def registered?(cls)
       !!@data[cls]
+    end
+
+    class << self
+      def instance
+        @instance ||= new
+      end
+
+      def register(cls, attr_name)
+        instance.register(cls, attr_name)
+      end
+
+      def setting?(cls, attr_name)
+        instance.setting?(cls, attr_name)
+      end
     end
   end
 end
