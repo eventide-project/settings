@@ -25,7 +25,7 @@ describe Settings::Setting::Assignment do
   specify "Assign to the corresponding attribute on the receiver" do
     another_object = AnotherObject.new
 
-    Settings::Setting::Assignment.assign_value(another_object, :some_setting, "some value")
+    Settings::Setting::Assignment::Object.assign_value(another_object, :some_setting, "some value")
 
     expect(another_object.some_setting == "some value").to be
   end

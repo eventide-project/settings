@@ -16,6 +16,9 @@ describe Settings, "assignment" do
     some_obj = SomeObject.new
     settings.set some_obj
 
+    Logger.register(self).debug some_obj.some_setting.to_h
+    Logger.register(self).debug some_obj.some_other_setting
+
     expect(some_obj.some_setting.to_h == Hash[{ :some_nested_setting => { :another_nested_setting => "some nested value" }}] ).to be
     expect(some_obj.some_other_setting == "some other value").to be true
   end
@@ -29,15 +32,6 @@ describe Settings, "assignment" do
 
     expect(some_obj.some_setting == "some value").to be true
     expect(some_obj.some_other_setting == "some other value").to be true
-  end
-
-  specify "Setting an object strictly where the object doesn't have settings that correspond to the data is an error" do
-    settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
-    settings = Settings.build(settings_file)
-
-    some_obj = SomeObject.new
-
-    expect { settings.set some_obj, strict: true }.to raise_error
   end
 
   specify "Set an attribute explicitly" do

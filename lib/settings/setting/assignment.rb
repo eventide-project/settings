@@ -1,66 +1,96 @@
 class Settings
   module Setting
     module Assignment
-      Logger.register self
+      extend self
 
-      def self.logger
+      def logger
         Logger.get self
       end
 
-      def self.assign(receiver, attr_name, value, strict=false)
-        if approve_attribute(receiver, attr_name, strict)
+      def assign(receiver, attr_name, value, strict=false)
+        if settable?(receiver, attr_name, strict)
           assign_value(receiver, attr_name, value)
         end
 
         receiver
       end
 
-      def self.approve_attribute(receiver, attr_name, strict)
-        approved = true
-
-        assignable = assignable? receiver, attr_name
-        unless assignable
-          msg = "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
-          if strict
-            logger.error msg
-            raise msg
-          else
-            logger.warn msg
-            approved = false
-          end
-        end
-
-        setting = setting? receiver, attr_name
-        unless setting
-          msg = "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
-          if strict
-            logger.error msg
-            raise msg
-          else
-            logger.warn msg
-            approved = false
-          end
-        end
-
-        approved
-      end
-
-      def self.assign_value(receiver, attr_name, value)
+      def assign_value(receiver, attr_name, value)
         receiver.send "#{attr_name}=", value
-        value
       end
 
-      def self.setting?(receiver, attr_name)
+      def setting?(receiver, attr_name)
         receiver_class = receiver.class
         Settings::Registry.instance.setting? receiver_class, attr_name
       end
 
-      def self.assignable?(receiver, attr_name)
+      def assignable?(receiver, attr_name)
         receiver.respond_to? setter_name(attr_name)
       end
 
-      def self.setter_name(attr_name)
+      def setter_name(attr_name)
         :"#{attr_name.to_s}=" unless attr_name.to_s.end_with? '='
+      end
+
+      def digest(receiver, attribute, strict)
+        content = []
+        content << "Attribute: #{attribute}" if attribute
+        content << "Receiver: #{receiver}"
+        strict = "<not set>" if strict.nil?
+        content << "Strict: #{strict}"
+        content.join ', '
+      end
+
+      module Object
+        extend Assignment
+        Logger.register self
+
+        def self.settable?(receiver, attr_name, strict)
+          logger.trace "Approving attribute (#{digest(receiver, attr_name, strict)})"
+
+          assignable = assignable? receiver, attr_name
+
+          unless assignable
+            logger.debug "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
+            return false
+          end
+
+          # put before assign clause above
+          if strict
+            setting = setting?(receiver, attr_name)
+            unless setting
+              logger.debug "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
+              return false
+            end
+          end
+
+          true
+        end
+      end
+
+      module Attribute
+        extend Assignment
+        Logger.register self
+
+        def self.settable?(receiver, attr_name, strict)
+          if strict
+            setting = setting? receiver, attr_name
+            unless setting
+              msg = "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
+              logger.error msg
+              raise msg
+            end
+          end
+
+          assignable = assignable? receiver, attr_name
+          unless assignable
+            msg = "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
+            logger.error msg
+            raise msg
+          end
+
+          true
+        end
       end
     end
   end

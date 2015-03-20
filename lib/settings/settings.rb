@@ -52,13 +52,16 @@ class Settings
       strict = true if strict.nil?
       value = set_one(receiver, attribute, namespace, strict)
     else
-      strict = false if strict.nil?
+      # strict = false if strict.nil?
+      strict = true if strict.nil?
       receiver = set_all(receiver, namespace, strict)
     end
     value || receiver
   end
 
   def set_one(receiver, attribute, namespace, strict)
+    logger.trace "Setting #{receiver} attribute (#{digest(namespace, attribute, strict)})"
+
     attribute = attribute.to_s if attribute.is_a? Symbol
 
     full_namespace = namespace.dup
@@ -66,7 +69,7 @@ class Settings
 
     value = get(full_namespace)
 
-    assign_value(receiver, attribute, value, strict)
+    Settings::Setting::Assignment::Attribute.assign(receiver, attribute.to_sym, value, strict)
 
     log_value = value
     log_value = log_value.to_h if log_value.respond_to? :to_h
@@ -77,8 +80,11 @@ class Settings
   end
 
   def set_all(receiver, namespace, strict)
+    logger.trace "Setting #{receiver} object (#{digest(namespace, nil, strict)})"
     data = get(namespace)
-    data.each {|k, v| assign_value(receiver, k, v, strict) }
+    data.each {|attribute, value| Settings::Setting::Assignment::Object.assign(receiver, attribute.to_sym, value, strict) }
+    logger.info "Set #{receiver} object (#{digest(namespace, nil, strict)})"
+    receiver
   end
 
   def assign_value(receiver, attribute, value, strict=false)
@@ -105,6 +111,7 @@ class Settings
     content = []
     content << "Namespace: #{namespace.join ', '}" unless namespace.empty?
     content << "Attribute: #{attribute}" if attribute
+    strict = "<not set>" if strict.nil?
     content << "Strict: #{strict}"
     content.join ', '
   end
