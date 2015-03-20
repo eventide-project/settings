@@ -48,20 +48,18 @@ class Settings
         def self.settable?(receiver, attr_name, strict)
           logger.trace "Approving attribute (#{digest(receiver, attr_name, strict)})"
 
-          assignable = assignable? receiver, attr_name
-
-          unless assignable
-            logger.debug "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
-            return false
-          end
-
-          # put before assign clause above
           if strict
             setting = setting?(receiver, attr_name)
             unless setting
               logger.debug "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
               return false
             end
+          end
+
+          assignable = assignable? receiver, attr_name
+          unless assignable
+            logger.debug "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
+            return false
           end
 
           true
