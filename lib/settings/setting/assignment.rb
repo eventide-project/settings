@@ -17,7 +17,11 @@ class Settings
       end
 
       def assign_value(receiver, attr_name, value)
-        receiver.send "#{attr_name}=", value
+        logger.trace "Assigning to #{attr_name}"
+        receiver.send("#{attr_name}=", value).tap do
+          logger.debug "Assigning to #{attr_name}"
+          logger.data "Assigned #{value} to #{attr_name}"
+        end
       end
 
       def setting?(receiver, attr_name)
@@ -63,6 +67,7 @@ class Settings
             return false
           end
 
+          logger.debug "\"#{attr_name}\" can be set"
           true
         end
       end
@@ -88,6 +93,7 @@ class Settings
             raise msg
           end
 
+          logger.debug "\"#{attr_name}\" can be set"
           true
         end
       end
