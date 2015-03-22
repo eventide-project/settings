@@ -1,6 +1,4 @@
 class Settings
-  Logger.register self
-
   attr_reader :data
   attr_reader :pathname
 
@@ -12,12 +10,17 @@ class Settings
   end
 
   def self.build(data_source=nil)
+    logger = Logger.get self
+
     raw_data = nil
     if data_source.is_a? Hash
+      logger.trace "Building based on a hash"
       raw_data = data_source
+      logger.data raw_data
     else
+      logger.trace "Building based on a pathname"
       pathname = data_source
-      pathname ||= File::Defaults.name
+      pathname ||= File::Defaults.filename
       pathname = File.canonical(pathname)
       File.validate(pathname)
       raw_data = read_file(pathname)
@@ -126,7 +129,7 @@ class Settings
   module File
     def self.canonical(pathname)
       if ::File.extname(pathname) == ""
-        pathname = (Pathname.new(pathname) + Defaults.name).to_s
+        pathname = (Pathname.new(pathname) + Defaults.filename).to_s
       end
 
       if ::File.dirname(pathname) == "."
@@ -146,8 +149,11 @@ class Settings
     end
 
     module Defaults
-      def self.name
-        'settings.json'
+      def self.filename
+        logger = Logger.get self
+        default_file = 'settings.json'
+        logger.debug "Using the default settings file name (#{default_file})"
+        default_file
       end
     end
   end
@@ -155,7 +161,10 @@ class Settings
   module Directory
     module Defaults
       def self.pathname
-        Dir.pwd
+        logger = Logger.get self
+        default_dir = Dir.pwd
+        logger.debug "Using the working directory default settings directory (#{default_dir})"
+        default_dir
       end
     end
   end
