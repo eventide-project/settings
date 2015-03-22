@@ -13,23 +13,25 @@ module ObjectAssignment
   end
 end
 
-describe Settings::Setting::Assignment::Object do
-  specify "Settable when the attribute is a setting" do
-    example = ObjectAssignment.example
-    assert(ObjectAssignment.assignment.assure_settable(example, :some_setting))
+describe "Object Assignment", :* do
+  describe Settings::Setting::Assignment::Object do
+    specify "Settable when the attribute is a setting" do
+      example = ObjectAssignment.example
+      assert(ObjectAssignment.assignment.assure_settable(example, :some_setting))
+    end
   end
-end
 
-describe Settings::Setting::Assignment::Object, "Strict" do
-  specify "Is not settable when the attribute is a plain old attribute" do
-    example = ObjectAssignment.example
-    refute(ObjectAssignment.assignment.assure_settable(example, :some_attribute, strict = true))
+  describe Settings::Setting::Assignment::Object, "Strict" do
+    specify "Is not settable when the attribute is a plain old attribute" do
+      example = ObjectAssignment.example
+      refute(ObjectAssignment.assignment.assure_settable(example, :some_attribute, strict = true))
+    end
   end
-end
 
-describe Settings::Setting::Assignment::Object, "Not strict" do
-  specify "Settable when the attribute is a plain old attribute" do
-    example = ObjectAssignment.example
-    assert(ObjectAssignment.assignment.assure_settable(example, :some_attribute, strict = false))
+  describe Settings::Setting::Assignment::Object, "Not strict" do
+    specify "Settable when the attribute is a plain old attribute" do
+      example = ObjectAssignment.example
+      assert(ObjectAssignment.assignment.assure_settable(example, :some_attribute, strict = false))
+    end
   end
 end
