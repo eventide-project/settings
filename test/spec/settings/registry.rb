@@ -1,6 +1,6 @@
 describe Settings::Registry do
   specify "A registered setting is be stored in the settings registry by its class name" do
-    registry = Settings::Registry.instance
+    registry = Settings::Registry.new
 
     Settings::Registry.register(Object, :some_setting)
 
