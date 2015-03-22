@@ -27,9 +27,4 @@ describe Settings::Setting::Assignment, :* do
     assert(Assignment.assignment.assignable?(example, :some_setting))
     refute(Assignment.assignment.assignable?(example, :some_attribute))
   end
-
-  specify "Set the setting" do
-    example = AttributeAssignment.example
-    assert(AttributeAssignment.assignment.assure_settable(example, :some_setting))
-  end
 end
