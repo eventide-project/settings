@@ -48,7 +48,10 @@ class Settings
 
       module Object
         extend Assignment
-        Logger.register self
+
+        def logger
+          Logger.get self
+        end
 
         def self.assure_settable(receiver, attr_name, strict=true)
           logger.trace "Approving attribute (#{digest(receiver, attr_name, strict)})"
@@ -74,7 +77,10 @@ class Settings
 
       module Attribute
         extend Assignment
-        Logger.register self
+
+        def logger
+          Logger.get self
+        end
 
         def self.assure_settable(receiver, attr_name, strict=true)
           if strict
