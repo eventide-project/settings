@@ -23,13 +23,17 @@ class Settings
       raw_data = read_file(pathname)
     end
 
-    data = Confstruct::Configuration.new(raw_data)
+    data = confstruct(raw_data)
 
     instance = new data, pathname
 
     Logger.configure instance
 
     instance
+  end
+
+  def self.confstruct(raw_data)
+    Confstruct::Configuration.new(raw_data)
   end
 
   def self.read_file(pathname)
