@@ -3,11 +3,10 @@ module AttributeExample
     extend Settings::Setting::Macro
 
     setting :some_setting
-    attr_accessor :some_attribute
   end
 end
 
-describe "Settings attribute" do
+describe "Settings attribute", :* do
   specify "Has a getter" do
     thing = AttributeExample::Thing.new
     expect(thing.respond_to? :some_setting).to be
@@ -22,13 +21,5 @@ describe "Settings attribute" do
     registry = Settings::Registry.instance
 
     expect(registry.setting? AttributeExample::Thing, :some_setting).to be
-  end
-end
-
-describe "Attribute accessor that is not a setting" do
-  specify "Is registered" do
-    registry = Settings::Registry.instance
-
-    expect(registry.setting? AttributeExample::Thing, :some_attribute).to_not be
   end
 end
