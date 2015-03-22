@@ -13,7 +13,7 @@ module AttributeAssignment
   end
 end
 
-describe "Attribute Assignment", :* do
+describe "Attribute Assignment" do
   describe Settings::Setting::Assignment::Attribute do
     specify "Settable when the attribute is a setting" do
       example = AttributeAssignment.example

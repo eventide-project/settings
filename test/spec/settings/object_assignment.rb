@@ -13,7 +13,7 @@ module ObjectAssignment
   end
 end
 
-describe "Object Assignment", :* do
+describe "Object Assignment" do
   describe Settings::Setting::Assignment::Object do
     specify "Settable when the attribute is a setting" do
       example = ObjectAssignment.example
