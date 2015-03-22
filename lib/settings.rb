@@ -2,6 +2,8 @@ require 'pathname'
 require 'logger'
 require 'attribute'
 require 'dependency'; Dependency.activate
+require 'json'
+require 'confstruct'
 
 require 'settings/registry'
 require 'settings/settings'

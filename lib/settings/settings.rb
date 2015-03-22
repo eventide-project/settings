@@ -1,6 +1,3 @@
-require 'json'
-require 'confstruct'
-
 class Settings
   Logger.register self
 
@@ -19,6 +16,7 @@ class Settings
     if data_source.is_a? Hash
       raw_data = data_source
     else
+      pathname = data_source
       pathname ||= File::Defaults.name
       pathname = File.canonical(pathname)
       File.validate(pathname)
