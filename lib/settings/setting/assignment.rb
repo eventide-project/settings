@@ -8,7 +8,8 @@ class Settings
       end
 
       def assign(receiver, attr_name, value, strict=false)
-        if settable?(receiver, attr_name, strict)
+        settable = assure_settable(receiver, attr_name, strict)
+        if settable
           assign_value(receiver, attr_name, value)
         end
 
@@ -45,7 +46,7 @@ class Settings
         extend Assignment
         Logger.register self
 
-        def self.settable?(receiver, attr_name, strict)
+        def self.assure_settable(receiver, attr_name, strict)
           logger.trace "Approving attribute (#{digest(receiver, attr_name, strict)})"
 
           if strict
@@ -70,7 +71,7 @@ class Settings
         extend Assignment
         Logger.register self
 
-        def self.settable?(receiver, attr_name, strict=false)
+        def self.assure_settable(receiver, attr_name, strict=false)
           if strict
             setting = setting? receiver, attr_name
             unless setting

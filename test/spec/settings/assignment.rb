@@ -30,6 +30,6 @@ describe Settings::Setting::Assignment, :* do
 
   specify "Set the setting" do
     example = AttributeAssignment.example
-    assert(AttributeAssignment.assignment.settable?(example, :some_setting))
+    assert(AttributeAssignment.assignment.assure_settable(example, :some_setting))
   end
 end

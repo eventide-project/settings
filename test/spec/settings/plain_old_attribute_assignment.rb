@@ -18,7 +18,7 @@ describe Settings::Setting::Assignment::Attribute, "Strict", :* do
     example = AttributeAssignment.example
 
     assert_raises RuntimeError do
-      AttributeAssignment.assignment.settable?(example, :some_attribute, strict = true)
+      AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = true)
     end
   end
 end
@@ -26,6 +26,6 @@ end
 describe Settings::Setting::Assignment::Attribute, "Not strict", :* do
   specify "Settable when the attribute is a plain old attribute" do
     example = AttributeAssignment.example
-    assert(AttributeAssignment.assignment.settable?(example, :some_attribute, strict = false))
+    assert(AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = false))
   end
 end
