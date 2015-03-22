@@ -35,7 +35,7 @@ module Override
   end
 end
 
-describe "Override settings", :* do
+describe "Override settings" do
   specify "An override setting that is in the settings data is replaced by the override data" do
     settings = Override.override
 

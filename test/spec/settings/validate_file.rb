@@ -1,4 +1,4 @@
-describe Settings::File, "validation", :* do
+describe Settings::File, "validation" do
   specify "A file that doesn't exist is invalid" do
     file_that_doesnt_exist = "file-that-does-not-exist.json"
 

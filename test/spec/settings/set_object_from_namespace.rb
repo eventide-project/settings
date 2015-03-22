@@ -20,7 +20,7 @@ module SetObjectFromNamespace
   end
 end
 
-describe "Set an object from a namespace", :* do
+describe "Set an object from a namespace" do
   specify "Assigns data from within that namespace to corresponding setting attributes" do
     example = SetObjectFromNamespace.example
     SetObjectFromNamespace.settings.set example, "some_namespace"

@@ -13,7 +13,7 @@ module Assignment
   end
 end
 
-describe Settings::Setting::Assignment, :* do
+describe Settings::Setting::Assignment do
   specify "Determine whether the attribute is a setting" do
     example = Assignment.example
 

@@ -18,7 +18,7 @@ module GetNestedSetting
   end
 end
 
-describe "Get Nested Setting", :* do
+describe "Get Nested Setting" do
   specify "Getting a nested setting from the setting data gets the setting's value and descendant values" do
     setting = GetNestedSetting.get 'some_setting', 'some_nested_setting'
     assert(setting == Hash[ "another_nested_setting" => "some nested value" ])

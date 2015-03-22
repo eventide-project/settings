@@ -1,4 +1,4 @@
-describe Settings::Registry, :* do
+describe Settings::Registry do
   specify "A registered setting is be stored in the settings registry by its class name" do
     Settings::Registry.register(Object, :some_setting)
     assert(Settings::Registry.setting? Object, :some_setting )

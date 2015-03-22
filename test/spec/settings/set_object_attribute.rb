@@ -18,7 +18,7 @@ module SetObjectPlainOldAttribute
   end
 end
 
-describe "Set an object", :* do
+describe "Set an object" do
   specify "When setting strictly, plain old attributes are not set" do
     example = SetObjectPlainOldAttribute.example
     SetObjectPlainOldAttribute.settings.set example

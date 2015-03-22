@@ -19,7 +19,7 @@ module SetSetting
   end
 end
 
-describe "Set a setting attribute", :* do
+describe "Set a setting attribute" do
   specify "Assigns the data to the corresponding attribute" do
     example = SetSetting.example
     SetSetting.settings.set example, attribute: :some_setting

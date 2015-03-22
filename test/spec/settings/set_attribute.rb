@@ -18,7 +18,7 @@ module SetPlainOldAttribute
   end
 end
 
-describe "Set a plain old attribute", :* do
+describe "Set a plain old attribute" do
   specify "When setting strictly, it's an error" do
     example = SetPlainOldAttribute.example
 

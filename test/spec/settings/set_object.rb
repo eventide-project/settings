@@ -22,7 +22,7 @@ module SetObject
   end
 end
 
-describe "Set an object", :* do
+describe "Set an object" do
   specify "Assigns data to corresponding setting attributes" do
     example = SetObject.example
     SetObject.settings.set example

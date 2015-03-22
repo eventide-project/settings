@@ -14,7 +14,7 @@ module GetSetting
   end
 end
 
-describe "Get Settings", :* do
+describe "Get Settings" do
   specify "Getting a setting from the setting data gets the setting's value" do
     setting = GetSetting.get 'some_setting'
     expect(setting == 'some value').to be
