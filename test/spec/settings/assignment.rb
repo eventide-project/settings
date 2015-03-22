@@ -1,32 +1,35 @@
-class AnotherObject
-  extend Settings::Setting::Macro
+module Assignment
+  def self.example
+    Example.new
+  end
 
-  setting :some_setting
-  setting :some_other_setting
-  setting :setting_not_in_the_data
-  attr_reader :some_attribute
+  def self.assignment
+    Settings::Setting::Assignment
+  end
+
+  class Example
+    setting :some_setting
+    attr_reader :some_attribute
+  end
 end
 
-describe Settings::Setting::Assignment do
+describe Settings::Setting::Assignment, :* do
   specify "Determine whether the attribute is a setting" do
-    another_object = AnotherObject.new
+    example = Assignment.example
 
-    expect(Settings::Setting::Assignment.setting? another_object, :some_setting).to be
-    expect(Settings::Setting::Assignment.setting? another_object, :some_attribute).to_not be
+    assert(Assignment.assignment.setting?(example, :some_setting))
+    refute(Assignment.assignment.setting?(example, :some_attribute))
   end
 
   specify "Determine whether the attribute is assignable" do
-    another_object = AnotherObject.new
+    example = Assignment.example
 
-    expect(Settings::Setting::Assignment.assignable? another_object, :some_setting).to be
-    expect(Settings::Setting::Assignment.assignable? another_object, :some_attribute).to_not be
+    assert(Assignment.assignment.assignable?(example, :some_setting))
+    refute(Assignment.assignment.assignable?(example, :some_attribute))
   end
 
-  specify "Assign to the corresponding attribute on the receiver" do
-    another_object = AnotherObject.new
-
-    Settings::Setting::Assignment::Object.assign_value(another_object, :some_setting, "some value")
-
-    expect(another_object.some_setting == "some value").to be
+  specify "Set the setting" do
+    example = AttributeAssignment.example
+    assert(AttributeAssignment.assignment.settable?(example, :some_setting))
   end
 end

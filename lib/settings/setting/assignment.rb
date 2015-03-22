@@ -24,7 +24,6 @@ class Settings
         Settings::Registry.instance.setting? receiver_class, attr_name
       end
 
-      # TODO This is described as correspondence. Harmonize domain language? [Scott, Fri Mar 20 2015]
       def assignable?(receiver, attr_name)
         receiver.respond_to? setter_name(attr_name)
       end
@@ -71,7 +70,7 @@ class Settings
         extend Assignment
         Logger.register self
 
-        def self.settable?(receiver, attr_name, strict)
+        def self.settable?(receiver, attr_name, strict=false)
           if strict
             setting = setting? receiver, attr_name
             unless setting
