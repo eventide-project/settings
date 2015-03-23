@@ -5,7 +5,7 @@ describe Settings::File, "default filename" do
 
     pathname = Settings::File.canonical(current_path)
 
-    expect(pathname == settings_file).to be
+    assert(pathname == settings_file)
   end
 
   specify "The current working directory is used when the path is a filename" do

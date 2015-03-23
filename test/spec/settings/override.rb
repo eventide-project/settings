@@ -1,34 +1,54 @@
-override_data = {
-  "some_setting" => {
-    "some_nested_setting" => {
-      "another_nested_setting" => "some other nested value",
-      "yet_another_nested_setting" => "yet another nested value"
+module Override
+  def self.data
+    {
+      "some_setting" => {
+        "some_nested_setting" => {
+          "another_nested_setting" => "some nested value"
+        }
+      }
     }
-  }
-}
+  end
 
-describe Settings, "overriden setting" do
-  context "Settings are replaced by overridden settings" do
-    specify "A setting that is in the settings data" do
-      settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "single_setting.json")
-      settings = Settings.build(settings_file)
+  def self.override_data
+    {
+      "some_setting" => {
+        "some_nested_setting" => {
+          "another_nested_setting" => "some other nested value",
+          "yet_another_nested_setting" => "yet another nested value"
+        }
+      }
+    }
+  end
 
-      settings.override(override_data)
+  def self.override
+    s = settings
+    s.override(override_data)
+    s
+  end
 
-      another_nested_setting = settings.get('some_setting', 'some_nested_setting', 'another_nested_setting')
+  def self.settings
+    Settings.build data
+  end
 
-      expect(another_nested_setting == "some other nested value").to be
-    end
+  def self.get(*key)
+    settings.get key
+  end
+end
 
-    specify "A setting that is not in the settings data" do
-      settings_file = File.join(File.dirname(File.expand_path(__FILE__)), "single_setting.json")
-      settings = Settings.build(settings_file)
+describe "Override settings" do
+  specify "An override setting that is in the settings data is replaced by the override data" do
+    settings = Override.override
 
-      settings.override(override_data)
+    another_nested_setting = settings.get('some_setting', 'some_nested_setting', 'another_nested_setting')
 
-      yet_another_nested_setting = settings.get(['some_setting', 'some_nested_setting', 'yet_another_nested_setting'])
+    assert(another_nested_setting == "some other nested value")
+  end
 
-      expect(yet_another_nested_setting == "yet another nested value").to be
-    end
+  specify "An override setting that is not in the settings data is added to the data" do
+    settings = Override.override
+
+    yet_another_nested_setting = settings.get(['some_setting', 'some_nested_setting', 'yet_another_nested_setting'])
+
+    assert(yet_another_nested_setting == "yet another nested value")
   end
 end
