@@ -1,21 +1,17 @@
 module Override
   def self.data
     {
-      "some_setting" => {
-        "some_nested_setting" => {
-          "another_nested_setting" => "some nested value"
-        }
+      "some_namespace" => {
+        "some_setting" => "some value"
       }
     }
   end
 
   def self.override_data
     {
-      "some_setting" => {
-        "some_nested_setting" => {
-          "another_nested_setting" => "some other nested value",
-          "yet_another_nested_setting" => "yet another nested value"
-        }
+      "some_namespace" => {
+        "some_setting" => "some overridden value",
+        "some_other_setting" => "some other value"
       }
     }
   end
@@ -35,22 +31,18 @@ module Override
   end
 end
 
-# Namespace, not nested
-
 describe "Override settings" do
-  xspecify "An override setting that is in the settings data is replaced by the override data" do
+  specify "An override setting that is in the settings data is replaced by the override data" do
     settings = Override.override
+    overridden_setting = settings.get(:some_namespace, :some_setting)
 
-    another_nested_setting = settings.get('some_setting', 'some_nested_setting', 'another_nested_setting')
-
-    assert(another_nested_setting == "some other nested value")
+    assert(overridden_setting == "some overridden value")
   end
 
-  xspecify "An override setting that is not in the settings data is added to the data" do
+  specify "An override setting that is not in the settings data is added to the data" do
     settings = Override.override
+    some_other_setting = settings.get(:some_namespace, :some_other_setting)
 
-    yet_another_nested_setting = settings.get(['some_setting', 'some_nested_setting', 'yet_another_nested_setting'])
-
-    assert(yet_another_nested_setting == "yet another nested value")
+    assert(some_other_setting == "some other value")
   end
 end
