@@ -1,5 +1,9 @@
 class Settings
   module File
+    def self.logger
+      @logger ||= Logger.get self
+    end
+
     def self.canonical(pathname)
       if ::File.extname(pathname) == ""
         pathname = (Pathname.new(pathname) + Defaults.filename).to_s
@@ -22,8 +26,11 @@ class Settings
     end
 
     module Defaults
+      def self.logger
+        @logger ||= Logger.get self
+      end
+
       def self.filename
-        logger = Logger.get self
         default_file = 'settings.json'
         logger.debug "Using the default settings file name (#{default_file})"
         default_file
