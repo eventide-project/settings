@@ -50,10 +50,9 @@ class Settings
     logger = Logger.get self
 
     logger.trace "Reading file: #{Pathname}"
-    file = ::File.open(pathname)
-    file_data = JSON.load file
-    logger.debug "Read file: #{Pathname}"
-    file_data
+    File.read(pathname).tap do
+      logger.debug "Read file: #{Pathname}"
+    end
   end
 
   def override(override_data)

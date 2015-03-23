@@ -26,6 +26,14 @@ class Settings
       end
     end
 
+    def self.read(pathname)
+      logger.trace "Reading #{pathname}"
+      file = ::File.open(pathname)
+      JSON.load(file).tap do
+        logger.debug "Read #{pathname}"
+      end
+    end
+
     module Defaults
       def self.logger
         @logger ||= Logger.get self
