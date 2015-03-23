@@ -122,7 +122,9 @@ class Settings
     namespace.flatten!
     logger.trace "Getting #{namespace}"
 
-    value = namespace.inject(data) {|memo, k| memo ? memo[k] : nil }
+    string_keys = namespace.map { |n| n.is_a?(String) ? n : n.to_s }
+
+    value = string_keys.inject(data) {|memo, k| memo ? memo[k] : nil }
 
     log_data = value
     log_data = log_data.to_h if log_data.respond_to? :to_h
