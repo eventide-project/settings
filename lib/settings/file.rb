@@ -20,8 +20,9 @@ class Settings
       pathname = Pathname.new pathname
 
       unless pathname.file?
-        # TODO Log error [Scott, Sun Mar 22 2015]
-        raise "Settings cannot be read from #{pathname}. The file doesn't exist."
+        msg = "Settings cannot be read from #{pathname}. The file doesn't exist."
+        logger.error msg
+        raise msg
       end
     end
 
