@@ -134,14 +134,13 @@ class Example
 end
 ```
 ```javascript
-// settings.json
 {
   "some_setting": "some value",
   "some_attr": "some attr value"
 }
 ```
 ```ruby
-settings = Settings.build 'settings.json'
+settings = Settings.build
 example = Example.new
 settings.set example
 
@@ -312,8 +311,101 @@ val == "some value"
 # => true
 ```
 
+## Overriding and Reseting Data
 
+Once data has been read into the `settings` object, it can be overridden with other data. This can be useful for testing outcomes when the settings data is wrong. It can also be useful for creating hierarchies of settings at different hierarchical levels of namespaces in the implementation.
 
-- overriding and reseting data
-- getting data
-- confstruct
+```javascript
+{
+  "some_setting": "some value",
+  "some_other_setting": "some other value"
+}
+```
+```ruby
+settings = Settings.build
+
+settings.override { some_setting: "some overridden value"}
+
+settings.set example
+example.some_setting == "some overridden value"
+# => true
+```
+
+If the override data includes settings that are not in the original data, the new settings are added to the data:
+
+```ruby
+settings.override { yet_another_setting: "yet another value"}
+
+val = settings.get :yet_another_setting
+val == "yet another value"
+# => true
+```
+
+Overriding works with namespaces as well:
+
+```javascript
+{
+  "some_namespace": {
+    "some_setting": "some value"
+  }
+}
+```
+```ruby
+settings.override { some_namespace: { some_setting: "some overridden value"}}
+
+val = settings.get :some_namespace, :some_setting
+val == "some overridden value"
+# => true
+```
+
+### Resetting Overridden Data
+
+The settings data can be reset to its original state using the `reset` method:
+
+```ruby
+settings.override { some_setting: "some overridden value"}
+
+val = settings.get :some_setting
+val == "some overridden value"
+# => true
+
+settings.reset
+
+val = settings.get :some_setting
+val == "some value"
+# => true
+```
+
+## Confstruct
+
+This library uses the [confstruct](https://github.com/mbklein/confstruct) as its underlying data structure.
+
+The underlying confstruct data source can be accessed (and manipulated directly using confstruct's API) via the `data` attribute of a `settings` object.
+
+```ruby
+data = settings.data
+```
+
+A `confstruct` object can be used either as a hash or as a struct, and responds to all methods available to hash, as well as providing entity-centric access to values via "." addressing of the keys:
+
+```ruby
+val = data.some_namespace.some_setting
+```
+
+Also, any time that data is retrieved from the `settings` object that doesn't resolve to a simple string setting, the data will be returned as a `confstruct` that can be treated as a hash or an entity:
+
+```javascript
+{
+  "some_namespace": {
+    "some_setting": "some value"
+  }
+}
+```
+```ruby
+some_namespace = settings.get :some_namespace
+
+some_namespace[:some_setting] == "some value"
+# => true
+some_namespace.some_setting == "some value"
+# => true
+```
