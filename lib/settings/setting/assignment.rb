@@ -7,34 +7,34 @@ class Settings
         @logger ||= Logger.get self
       end
 
-      def assign(receiver, attr_name, value, strict=false)
-        settable = assure_settable(receiver, attr_name, strict)
+      def assign(receiver, attribute, value, strict=false)
+        settable = assure_settable(receiver, attribute, strict)
         if settable
-          assign_value(receiver, attr_name, value)
+          assign_value(receiver, attribute, value)
         end
 
         receiver
       end
 
-      def assign_value(receiver, attr_name, value)
-        logger.trace "Assigning to #{attr_name}"
-        receiver.send("#{attr_name}=", value).tap do
-          logger.debug "Assigning to #{attr_name}"
-          logger.data "Assigned #{value} to #{attr_name}"
+      def assign_value(receiver, attribute, value)
+        logger.trace "Assigning to #{attribute}"
+        receiver.send("#{attribute}=", value).tap do
+          logger.debug "Assigning to #{attribute}"
+          logger.data "Assigned #{value} to #{attribute}"
         end
       end
 
-      def setting?(receiver, attr_name)
+      def setting?(receiver, attribute)
         receiver_class = receiver.class
-        Settings::Registry.instance.setting? receiver_class, attr_name
+        Settings::Registry.instance.setting? receiver_class, attribute
       end
 
-      def assignable?(receiver, attr_name)
-        receiver.respond_to? setter_name(attr_name)
+      def assignable?(receiver, attribute)
+        receiver.respond_to? setter_name(attribute)
       end
 
-      def setter_name(attr_name)
-        :"#{attr_name.to_s}=" unless attr_name.to_s.end_with? '='
+      def setter_name(attribute)
+        :"#{attribute.to_s}=" unless attribute.to_s.end_with? '='
       end
 
       def digest(receiver, attribute, strict)
@@ -53,24 +53,24 @@ class Settings
           @logger ||= Logger.get self
         end
 
-        def self.assure_settable(receiver, attr_name, strict=true)
-          logger.trace "Approving attribute (#{digest(receiver, attr_name, strict)})"
+        def self.assure_settable(receiver, attribute, strict=true)
+          logger.trace "Approving attribute (#{digest(receiver, attribute, strict)})"
 
           if strict
-            setting = setting?(receiver, attr_name)
+            setting = setting?(receiver, attribute)
             unless setting
-              logger.warn "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
+              logger.warn "Can't set \"#{attribute}\". It isn't a setting of #{receiver}."
               return false
             end
           end
 
-          assignable = assignable? receiver, attr_name
+          assignable = assignable? receiver, attribute
           unless assignable
-            logger.warn "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
+            logger.warn "Can't set \"#{attribute}\". It isn't assignable to #{receiver}."
             return false
           end
 
-          logger.debug "\"#{attr_name}\" can be set"
+          logger.debug "\"#{attribute}\" can be set"
           true
         end
       end
@@ -82,24 +82,24 @@ class Settings
           @logger ||= Logger.get self
         end
 
-        def self.assure_settable(receiver, attr_name, strict=true)
+        def self.assure_settable(receiver, attribute, strict=true)
           if strict
-            setting = setting? receiver, attr_name
+            setting = setting? receiver, attribute
             unless setting
-              msg = "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
+              msg = "Can't set \"#{attribute}\". It isn't a setting of #{receiver}."
               logger.error msg
               raise msg
             end
           end
 
-          assignable = assignable? receiver, attr_name
+          assignable = assignable? receiver, attribute
           unless assignable
-            msg = "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
+            msg = "Can't set \"#{attribute}\". It isn't assignable to #{receiver}."
             logger.error msg
             raise msg
           end
 
-          logger.debug "\"#{attr_name}\" can be set"
+          logger.debug "\"#{attribute}\" can be set"
           true
         end
       end
