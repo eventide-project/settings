@@ -59,14 +59,14 @@ class Settings
           if strict
             setting = setting?(receiver, attr_name)
             unless setting
-              logger.debug "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
+              logger.warn "Can't set \"#{attr_name}\". It isn't a setting of #{receiver}."
               return false
             end
           end
 
           assignable = assignable? receiver, attr_name
           unless assignable
-            logger.debug "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
+            logger.warn "Can't set \"#{attr_name}\". It isn't assignable to #{receiver}."
             return false
           end
 
