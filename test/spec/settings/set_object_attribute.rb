@@ -1,7 +1,7 @@
 module SetObjectPlainOldAttribute
   def self.data
     {
-      "some_attr" => "some attr value",
+      "some_attr" => "some attr value"
     }
   end
 

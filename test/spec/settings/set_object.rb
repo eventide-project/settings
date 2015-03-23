@@ -3,7 +3,7 @@ module SetObject
     {
       "some_setting" => "some value",
       "some_other_setting" => "some other value",
-      "some_attr" => "some attr value",
+      "some_attr" => "some attr value"
     }
   end
 

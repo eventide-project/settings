@@ -35,8 +35,10 @@ module Override
   end
 end
 
+# Namespace, not nested
+
 describe "Override settings" do
-  specify "An override setting that is in the settings data is replaced by the override data" do
+  xspecify "An override setting that is in the settings data is replaced by the override data" do
     settings = Override.override
 
     another_nested_setting = settings.get('some_setting', 'some_nested_setting', 'another_nested_setting')
@@ -44,7 +46,7 @@ describe "Override settings" do
     assert(another_nested_setting == "some other nested value")
   end
 
-  specify "An override setting that is not in the settings data is added to the data" do
+  xspecify "An override setting that is not in the settings data is added to the data" do
     settings = Override.override
 
     yet_another_nested_setting = settings.get(['some_setting', 'some_nested_setting', 'yet_another_nested_setting'])
