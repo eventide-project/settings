@@ -2,7 +2,7 @@ module SetObjectFromNamespace
   def self.data
     {
       "some_namespace" => {
-        "some_setting" => "some value",
+        "some_setting" => "some value"
       }
     }
   end

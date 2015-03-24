@@ -5,16 +5,16 @@ class Settings
     end
     attr_writer :data
 
-    def register(cls, attr_name)
-      unless setting?(cls, attr_name)
-        registered?(cls) ? @data[cls].push(attr_name) : @data[cls] = [attr_name]
+    def register(cls, attribute)
+      unless setting?(cls, attribute)
+        registered?(cls) ? @data[cls].push(attribute) : @data[cls] = [attribute]
       end
 
       data[cls]
     end
 
-    def setting?(cls, attr_name)
-      registered?(cls) ? data[cls].include?(attr_name) : false
+    def setting?(cls, attribute)
+      registered?(cls) ? data[cls].include?(attribute) : false
     end
 
     def registered?(cls)
@@ -26,12 +26,12 @@ class Settings
         @instance ||= new
       end
 
-      def register(cls, attr_name)
-        instance.register(cls, attr_name)
+      def register(cls, attribute)
+        instance.register(cls, attribute)
       end
 
-      def setting?(cls, attr_name)
-        instance.setting?(cls, attr_name)
+      def setting?(cls, attribute)
+        instance.setting?(cls, attribute)
       end
     end
   end
