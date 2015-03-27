@@ -41,9 +41,9 @@ class Settings
 
   def self.confstruct(raw_data)
     logger.trace "Building confstruct"
-    cfs = Confstruct::Configuration.new(raw_data)
-    logger.debug "Built confstruct"
-    cfs
+    Confstruct::Configuration.new(raw_data).tap do
+      logger.debug "Built confstruct"
+    end
   end
 
   def self.read_file(pathname)
