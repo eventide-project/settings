@@ -22,7 +22,7 @@ class Settings
     else
       logger.trace "Building based on a pathname"
       pathname = data_source
-      pathname ||= File::Defaults.filename
+      pathname ||= get_pathname
       pathname = File.canonical(pathname)
       File.validate(pathname)
       raw_data = read_file(pathname)
@@ -37,6 +37,25 @@ class Settings
     logger.debug "Built"
 
     instance
+  end
+
+  def self.get_pathname
+    pathname ||= implementer_pathname
+    pathname ||= File::Defaults.filename
+    pathname
+  end
+
+  def self.implementer_pathname
+    logger.trace "Getting pathname from the implementer"
+
+    unless self.respond_to? :pathname
+      logger.trace "Implementer doesn't provide a pathname"
+      return nil
+    end
+
+    self.pathname.tap do |pathname|
+      logger.trace "Got pathname from the implementer (#{pathname})"
+    end
   end
 
   def self.confstruct(raw_data)
