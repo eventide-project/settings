@@ -49,9 +49,9 @@ class Settings
   def self.read_file(pathname)
     logger = Logger.get self
 
-    logger.trace "Reading file: #{Pathname}"
+    logger.trace "Reading file: #{pathname}"
     File.read(pathname).tap do
-      logger.debug "Read file: #{Pathname}"
+      logger.debug "Read file: #{pathname}"
     end
   end
 
