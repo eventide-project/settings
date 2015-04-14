@@ -48,13 +48,13 @@ class Settings
   def self.implementer_pathname
     logger.trace "Getting pathname from the implementer"
 
-    unless self.respond_to? :pathname
+    unless self.respond_to? :data_source
       logger.trace "Implementer doesn't provide a pathname"
       return nil
     end
 
-    self.pathname.tap do |pathname|
-      logger.trace "Got pathname from the implementer (#{pathname})"
+    self.data_source.tap do |data_source|
+      logger.trace "Got pathname from the implementer (#{data_source})"
     end
   end
 
