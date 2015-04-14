@@ -5,12 +5,12 @@ module ImplementerPathname
 
   class Example < Settings
     def self.pathname
-      ::File.expand_path('../implementer_settings.json', __FILE__)
+      ::File.expand_path('../settings.json', __FILE__)
     end
   end
 end
 
-describe "Implementer Pathname" do
+describe "Implementer Pathname", :* do
   specify "A subclass can specify the pathname by implementing a class method named 'pathname'" do
     settings = ImplementerPathname.settings
     pathname = ImplementerPathname::Example.pathname
