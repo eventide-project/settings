@@ -4,7 +4,7 @@ prox_gem 'clock'
 prox_gem 'attribute'
 prox_gem 'null_attr'
 prox_gem 'dependency'
-prox_gem 'logger'
+prox_gem 'telemetry_logger'
 
 source 'https://rubygems.org'
 
