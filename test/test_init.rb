@@ -7,4 +7,4 @@ puts RUBY_DESCRIPTION
 require_relative '../init.rb'
 Settings.activate
 
-TestLogger = ::Telemetry::Logger.register 'Test Output'
+TestLogger = ::Telemetry::Logger.get 'Test Output'
