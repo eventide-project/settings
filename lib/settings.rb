@@ -1,5 +1,5 @@
 require 'pathname'
-require 'logger'
+require 'telemetry/logger'
 require 'attribute'
 require 'dependency'; Dependency.activate
 require 'json'

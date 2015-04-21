@@ -2,7 +2,7 @@ class Settings
   attr_reader :data
   attr_reader :pathname
 
-  dependency :logger
+  dependency :logger, ::Telemetry::Logger
 
   def initialize(data, pathname=nil)
     @data = data
@@ -10,7 +10,7 @@ class Settings
   end
 
   def self.logger
-    @logger ||= Logger.get self
+    @logger ||= ::Telemetry::Logger.get self
   end
 
   def self.build(data_source=nil)
@@ -32,7 +32,7 @@ class Settings
 
     instance = new data, pathname
 
-    Logger.configure instance
+    ::Telemetry::Logger.configure instance
 
     logger.debug "Built"
 
@@ -66,7 +66,7 @@ class Settings
   end
 
   def self.read_file(pathname)
-    logger = Logger.get self
+    logger = ::Telemetry::Logger.get self
 
     logger.trace "Reading file: #{pathname}"
     File.read(pathname).tap do

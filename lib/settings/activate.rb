@@ -6,7 +6,7 @@ class Settings
 
     return if target_class.ancestors.include? macro_module
 
-    logger = Logger.get self
+    logger = ::Telemetry::Logger.get self
 
     logger.trace "Activating the Settings macro"
     target_class.extend(macro_module).tap do

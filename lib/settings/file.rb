@@ -1,7 +1,7 @@
 class Settings
   module File
     def self.logger
-      @logger ||= Logger.get self
+      @logger ||= ::Telemetry::Logger.get self
     end
 
     def self.canonical(pathname)
@@ -36,7 +36,7 @@ class Settings
 
     module Defaults
       def self.logger
-        @logger ||= Logger.get self
+        @logger ||= ::Telemetry::Logger.get self
       end
 
       def self.filename

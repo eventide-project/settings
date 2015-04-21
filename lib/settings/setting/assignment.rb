@@ -4,7 +4,7 @@ class Settings
       extend self
 
       def logger
-        @logger ||= Logger.get self
+        @logger ||= ::Telemetry::Logger.get self
       end
 
       def assign(receiver, attribute, value, strict=false)
@@ -50,7 +50,7 @@ class Settings
         extend Assignment
 
         def logger
-          @logger ||= Logger.get self
+          @logger ||= ::Telemetry::Logger.get self
         end
 
         def self.assure_settable(receiver, attribute, strict=true)
@@ -79,7 +79,7 @@ class Settings
         extend Assignment
 
         def logger
-          @logger ||= Logger.get self
+          @logger ||= ::Telemetry::Logger.get self
         end
 
         def self.assure_settable(receiver, attribute, strict=true)
