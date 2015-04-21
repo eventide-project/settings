@@ -4,14 +4,18 @@ class Settings
       logger = Telemetry::Logger.get self
       logger.trace "Building (Data Source Type: #{input.class.name})"
 
-      source = nil
-      source = Settings::DataSource::Hash.build(input) if input.is_a?(::Hash)
+      data_source_type = type(input)
 
-      raise "Data source is not supported: #{input}" unless source
+      data_source_type.build(input).tap do |instance|
+        logger.debug "Built (#{instance})"
+      end
+    end
 
-      logger.debug "Built (#{source})"
+    def self.type(input)
+      return Settings::DataSource::Hash if input.is_a?(::Hash)
+      return Settings::DataSource::File if input.is_a?(String)
 
-      source
+      raise "Data source is not supported: #{input}"
     end
   end
 end
