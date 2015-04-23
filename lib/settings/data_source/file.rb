@@ -25,7 +25,7 @@ class Settings
         filepath = nil
 
         unless source.nil?
-          if ::File.extname(source) == ""
+          unless file?(source)
             dirpath = Pathname.new(source)
             filepath = Pathname.new(Defaults.filename)
           end
@@ -35,13 +35,21 @@ class Settings
           dirpath = Pathname.new(Directory::Defaults.pathname)
           filepath = Pathname.new(Defaults.filename)
         else
-          if ::File.dirname(source) == "."
+          unless dir?(source)
             dirpath = Pathname.new(Directory::Defaults.pathname)
             filepath = Pathname.new(source)
           end
         end
 
         (dirpath + filepath).to_s
+      end
+
+      def file?(filepath)
+        ::File.extname(filepath) != ""
+      end
+
+      def dir?(dirpath)
+        ::File.dirname(dirpath) != "."
       end
 
       module Defaults
