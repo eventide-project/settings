@@ -22,7 +22,7 @@ class Settings
 
       def canonical
         return default_filepath if source.nil?
-        return source if full_path(source)
+        return source if full_path?(source)
 
         dirpath = Pathname.new(source)
         filepath = Pathname.new(source)
@@ -47,7 +47,7 @@ class Settings
         (dirpath + filepath).to_s
       end
 
-      def full_path(source)
+      def full_path?(source)
         file?(source) && dir?(source)
       end
 
