@@ -37,9 +37,7 @@ describe "Canonized Filepath", :* do
 
     assert(pathname == Canonized.working_dir_filepath('some_file.json'))
   end
-end
 
-describe "Default Pathname", :* do
   specify "The current working directory and the default filename are used when the path is not specified" do
     data_source = Canonized.data_source(nil)
 
@@ -48,4 +46,3 @@ describe "Default Pathname", :* do
     assert(pathname == Canonized.working_dir_filepath)
   end
 end
-
