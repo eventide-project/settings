@@ -11,11 +11,12 @@ class Settings
       end
 
       def self.build(source=nil)
-        logger = Telemetry::Logger.get self
-
         logger.trace "Building"
 
-        new(source).tap do |instance|
+        canonical = canonical(source)
+        validate(canonical)
+
+        new(canonical).tap do |instance|
           Telemetry::Logger.configure instance
           logger.debug "Built"
         end
@@ -58,6 +59,20 @@ class Settings
 
       def self.dir?(dirpath)
         ::File.dirname(dirpath) != "."
+      end
+
+      def self.validate(pathname)
+        pathname = Pathname.new(pathname)
+
+        unless pathname.file?
+          msg = "Settings cannot be read from #{pathname}. The file doesn't exist."
+          logger.error msg
+          raise msg
+        end
+      end
+
+      def self.logger
+        @logger ||= ::Telemetry::Logger.get self
       end
 
       module Defaults

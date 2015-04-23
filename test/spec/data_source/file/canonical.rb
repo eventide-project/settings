@@ -21,7 +21,7 @@ module Canonical
   end
 end
 
-describe "Canonical Filepath", :* do
+describe "Canonical Filepath" do
   specify "The default settings filename (settings.json) is used when the source is a directory" do
     pathname = Canonical.canonical(Canonical.current_dir)
 
