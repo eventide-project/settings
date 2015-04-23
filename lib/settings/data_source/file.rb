@@ -22,22 +22,19 @@ class Settings
 
       def canonical
         return default_filepath if source.nil?
+        return source if full_path(source)
 
         dirpath = nil
         filepath = nil
 
-        unless file?(source)
-          dirpath = Pathname.new(source)
-          filepath = Pathname.new(Defaults.filename)
-        end
-
-        unless dir?(source)
+        if file?(source)
           dirpath = Pathname.new(Directory::Defaults.pathname)
           filepath = Pathname.new(source)
         end
 
-        if file?(source) && dir?(source)
-          return Pathname.new(source).to_s
+        if dir?(source)
+          dirpath = Pathname.new(source)
+          filepath = Pathname.new(Defaults.filename)
         end
 
         (dirpath + filepath).to_s
@@ -48,6 +45,10 @@ class Settings
         filepath = Pathname.new(Defaults.filename)
 
         (dirpath + filepath).to_s
+      end
+
+      def full_path(source)
+        file?(source) && dir?(source)
       end
 
       def file?(filepath)
