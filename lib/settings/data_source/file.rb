@@ -23,21 +23,27 @@ class Settings
       def canonical
         pathname = nil
 
+        dirpath = nil
+        filepath = nil
+
         unless source.nil?
           if ::File.extname(source) == ""
-            pathname = (Pathname.new(source) + Defaults.filename).to_s
+            dirpath = Pathname.new(source)
+            filepath = Pathname.new(Defaults.filename)
           end
         end
 
         if source.nil?
-          pathname = (Pathname.new(Directory::Defaults.pathname) + Defaults.filename).to_s
+          dirpath = Pathname.new(Directory::Defaults.pathname)
+          filepath = Pathname.new(Defaults.filename)
         else
           if ::File.dirname(source) == "."
-            pathname = (Pathname.new(Directory::Defaults.pathname) + source).to_s
+            dirpath = Pathname.new(Directory::Defaults.pathname)
+            filepath = Pathname.new(source)
           end
         end
 
-        pathname
+        (dirpath + filepath).to_s
       end
 
       module Defaults
