@@ -36,6 +36,10 @@ class Settings
           filepath = Pathname.new(source)
         end
 
+        if file?(source) && dir?(source)
+          return Pathname.new(source).to_s
+        end
+
         (dirpath + filepath).to_s
       end
 
