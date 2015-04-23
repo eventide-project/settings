@@ -45,4 +45,12 @@ describe "Canonized Filepath", :* do
 
     assert(pathname == Canonized.working_dir_filepath)
   end
+
+  specify "The specified pathname is used when it includes both the directory and the filename" do
+    data_source = Canonized.data_source('some_dir/some_file.json')
+
+    pathname = data_source.canonical
+
+    assert(pathname == 'some_dir/some_file.json')
+  end
 end
