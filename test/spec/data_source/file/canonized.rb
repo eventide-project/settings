@@ -1,4 +1,4 @@
-module Canonize
+module Canonized
   def self.data_source(path)
     Settings::DataSource::File.build(path)
   end
@@ -21,30 +21,31 @@ module Canonize
   end
 end
 
-describe "Default Filepath", :* do
+describe "Canonized Filepath", :* do
   specify "The default settings filename (settings.json) is used when the source is a directory" do
-    data_source = Canonize.data_source(Canonize.current_dir)
+    data_source = Canonized.data_source(Canonized.current_dir)
 
     pathname = data_source.canonical
 
-    assert(pathname == Canonize.current_dir_filepath)
+    assert(pathname == Canonized.current_dir_filepath)
   end
 
   specify "The current working directory is used when the source is a filename" do
-    data_source = Canonize.data_source('some_file.json')
+    data_source = Canonized.data_source('some_file.json')
 
     pathname = data_source.canonical
 
-    assert(pathname == Canonize.working_dir_filepath('some_file.json'))
+    assert(pathname == Canonized.working_dir_filepath('some_file.json'))
   end
 end
 
-describe Settings, "Default Pathname", :* do
+describe "Default Pathname", :* do
   specify "The current working directory and the default filename are used when the path is not specified" do
-    data_source = Canonize.data_source(nil)
+    data_source = Canonized.data_source(nil)
 
     pathname = data_source.canonical
 
-    assert(pathname == Canonize.working_dir_filepath)
+    assert(pathname == Canonized.working_dir_filepath)
   end
 end
+
