@@ -4,6 +4,7 @@ class Settings
       dependency :logger, Telemetry::Logger
 
       attr_reader :source
+      attr_accessor :pathname
 
       def initialize(source)
         @source = source
@@ -20,7 +21,7 @@ class Settings
         end
       end
 
-      def canonical
+      def self.canonical(source)
         return default_filepath if source.nil?
         return source if full_path?(source)
 
@@ -36,26 +37,26 @@ class Settings
         pathname(filepath, dirpath)
       end
 
-      def default_filepath
+      def self.default_filepath
         dirpath = Pathname.new(Directory::Defaults.pathname)
         filepath = Pathname.new(Defaults.filename)
 
         pathname(filepath, dirpath)
       end
 
-      def pathname(filepath, dirpath)
+      def self.pathname(filepath, dirpath)
         (dirpath + filepath).to_s
       end
 
-      def full_path?(source)
+      def self.full_path?(source)
         file?(source) && dir?(source)
       end
 
-      def file?(filepath)
+      def self.file?(filepath)
         ::File.extname(filepath) != ""
       end
 
-      def dir?(dirpath)
+      def self.dir?(dirpath)
         ::File.dirname(dirpath) != "."
       end
 

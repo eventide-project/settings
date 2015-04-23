@@ -1,4 +1,4 @@
-describe "Data Source Type", :* do
+describe "Data Source Type" do
   specify "DataSource::Hash when the input is a hash" do
     data_source_type = Settings::DataSource.type({})
     assert(data_source_type == Settings::DataSource::Hash)
