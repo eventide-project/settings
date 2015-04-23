@@ -21,8 +21,6 @@ class Settings
       end
 
       def canonical
-        pathname = nil
-
         dirpath = nil
         filepath = nil
 
