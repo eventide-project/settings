@@ -23,6 +23,14 @@ class Settings
       end
 
       def self.canonical(source)
+        logger.trace "Canonizing the file source (#{source})"
+
+        canonize(source).tap do |instance|
+          logger.debug "Canonized the file source (#{source})"
+        end
+      end
+
+      def self.canonize(source)
         return default_filepath if source.nil?
         return source if full_path?(source)
 
