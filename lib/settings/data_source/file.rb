@@ -30,9 +30,7 @@ class Settings
         if file?(source)
           dirpath = Pathname.new(Directory::Defaults.pathname)
           filepath = Pathname.new(source)
-        end
-
-        if dir?(source)
+        else
           dirpath = Pathname.new(source)
           filepath = Pathname.new(Defaults.filename)
         end
