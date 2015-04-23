@@ -1,6 +1,6 @@
 describe "File Data Source" do
-  specify "canonizes"
-  specify "validates"
-  specify "reads"
-  specify "delegates to hash data source"
+  specify "Canonizes the pathname"
+  specify "Validates to file's existence"
+  specify "Reads the file data"
+  specify "Delegates to hash data source to convert the raw data into a Confstruct"
 end

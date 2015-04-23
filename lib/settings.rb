@@ -9,8 +9,9 @@ require 'settings/data_source/hash'
 require 'settings/data_source/file'
 require 'settings/data_source/data_source'
 require 'settings/registry'
-require 'settings/directory'
+
 require 'settings/file'
+
 require 'settings/settings'
 require 'settings/activate'
 require 'settings/setting/assignment'
