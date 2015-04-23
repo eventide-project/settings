@@ -70,6 +70,8 @@ class Settings
       end
 
       def self.validate(pathname)
+        logger.trace "Validating the pathname (#{pathname})"
+
         pathname = Pathname.new(pathname)
 
         unless pathname.file?
@@ -77,6 +79,8 @@ class Settings
           logger.error msg
           raise msg
         end
+
+        logger.trace "Validated the pathname (#{pathname})"
       end
 
       def self.logger
