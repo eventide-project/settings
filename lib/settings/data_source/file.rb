@@ -24,17 +24,15 @@ class Settings
         dirpath = nil
         filepath = nil
 
-        unless source.nil?
-          unless file?(source)
-            dirpath = Pathname.new(source)
-            filepath = Pathname.new(Defaults.filename)
-          end
-        end
-
         if source.nil?
           dirpath = Pathname.new(Directory::Defaults.pathname)
           filepath = Pathname.new(Defaults.filename)
         else
+          unless file?(source)
+            dirpath = Pathname.new(source)
+            filepath = Pathname.new(Defaults.filename)
+          end
+
           unless dir?(source)
             dirpath = Pathname.new(Directory::Defaults.pathname)
             filepath = Pathname.new(source)
