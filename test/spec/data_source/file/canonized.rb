@@ -21,7 +21,7 @@ module Canonized
   end
 end
 
-describe "Canonized Filepath", :* do
+describe "Canonized Filepath" do
   specify "The default settings filename (settings.json) is used when the source is a directory" do
     data_source = Canonized.data_source(Canonized.current_dir)
 

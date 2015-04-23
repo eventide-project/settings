@@ -1,6 +1,6 @@
 class Settings
   module DataSource
-    def self.build(input)
+    def self.build(input=nil)
       logger = Telemetry::Logger.get self
       logger.trace "Building (Data Source Type: #{input.class.name})"
 
@@ -11,9 +11,9 @@ class Settings
       end
     end
 
-    def self.type(input)
+    def self.type(input=nil)
       return Settings::DataSource::Hash if input.is_a?(::Hash)
-      return Settings::DataSource::File if input.is_a?(String)
+      return Settings::DataSource::File if input.is_a?(String) || input.nil?
 
       raise "Data source is not supported: #{input}"
     end
