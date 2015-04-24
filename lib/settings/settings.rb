@@ -16,7 +16,7 @@ class Settings
   def self.build(source=nil)
     source ||= implementer_source
 
-    data_source = DataSource.build source
+    data_source = DataSource::Build.! source
 
     data = data_source.get_data
 

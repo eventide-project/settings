@@ -1,5 +1,5 @@
 class Settings
-  module DataSource
+  class DataSource
     class Hash
       dependency :logger, Telemetry::Logger
 
