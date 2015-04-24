@@ -13,24 +13,14 @@ class Settings
     @logger ||= ::Telemetry::Logger.get self
   end
 
-  def self.build(data_source=nil)
-    raw_data = nil
-    if data_source.is_a? Hash
-      logger.trace "Building based on a hash"
-      raw_data = data_source
-      logger.data raw_data
-    else
-      logger.trace "Building based on a pathname"
-      pathname = data_source
-      pathname ||= get_pathname
-      pathname = File.canonical(pathname)
-      File.validate(pathname)
-      raw_data = read_file(pathname)
-    end
+  def self.build(source=nil)
+    source ||= implementer_source
 
-    data = confstruct(raw_data)
+    data_source = DataSource.build source
 
-    instance = new data, pathname
+    data = data_source.get_data
+
+    instance = new data
 
     ::Telemetry::Logger.configure instance
 
@@ -39,38 +29,16 @@ class Settings
     instance
   end
 
-  def self.get_pathname
-    pathname ||= implementer_pathname
-    pathname ||= File::Defaults.filename
-    pathname
-  end
-
-  def self.implementer_pathname
-    logger.trace "Getting pathname from the implementer"
+  def self.implementer_source
+    logger.trace "Getting data source from the implementer"
 
     unless self.respond_to? :data_source
-      logger.trace "Implementer doesn't provide a pathname"
+      logger.trace "Implementer doesn't provide a data_source"
       return nil
     end
 
     self.data_source.tap do |data_source|
-      logger.trace "Got pathname from the implementer (#{data_source})"
-    end
-  end
-
-  def self.confstruct(raw_data)
-    logger.trace "Building confstruct"
-    Confstruct::Configuration.new(raw_data).tap do
-      logger.debug "Built confstruct"
-    end
-  end
-
-  def self.read_file(pathname)
-    logger = ::Telemetry::Logger.get self
-
-    logger.trace "Reading file: #{pathname}"
-    File.read(pathname).tap do
-      logger.debug "Read file: #{pathname}"
+      logger.trace "Got data source from the implementer (#{data_source})"
     end
   end
 
