@@ -6,6 +6,6 @@ describe "File Data Source", :* do
     settings = Settings::DataSource::File.build(settings_file)
     data = settings.get_data
 
-    assert(data == { "some_setting" => "some value" })
+    assert(data.to_h == { some_setting: "some value" })
   end
 end

@@ -89,17 +89,12 @@ class Settings
       def get_data
         logger.trace "Reading file: #{source}"
         file = ::File.open(source)
-        JSON.load(file).tap do
+        data = JSON.load(file).tap do
           logger.debug "Read file: #{source}"
         end
-      end
 
-      def self.read(pathname)
-        logger.trace "Reading #{pathname}"
-        file = ::File.open(pathname)
-        JSON.load(file).tap do
-          logger.debug "Read #{pathname}"
-        end
+        hash_data_source = Hash.build data
+        hash_data_source.get_data
       end
 
       module Defaults
