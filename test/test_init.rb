@@ -1,6 +1,6 @@
 ENV['CONSOLE_DEVICE'] ||= 'stdout'
 ENV['CONSOLE_COLOR'] ||= 'on'
-ENV['LOG_LEVEL'] ||= 'trace'
+ENV['LOG_LEVEL'] ||= 'error'
 
 puts RUBY_DESCRIPTION
 
