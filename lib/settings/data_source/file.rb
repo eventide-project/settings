@@ -33,14 +33,17 @@ class Settings
         return default_filepath if source.nil?
         return source if full_path?(source)
 
-        dirpath = Pathname.new(source)
-        filepath = Pathname.new(source)
+        dirpath = nil
+        filepath = nil
 
         if file?(source)
           dirpath = Pathname.new(Directory::Defaults.pathname)
         else
           filepath = Pathname.new(Defaults.filename)
         end
+
+        dirpath ||= Pathname.new(source)
+        filepath ||= Pathname.new(source)
 
         pathname(filepath, dirpath)
       end
