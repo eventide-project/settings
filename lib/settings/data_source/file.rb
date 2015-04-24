@@ -1,14 +1,6 @@
 class Settings
   class DataSource
-    class File
-      dependency :logger, Telemetry::Logger
-
-      attr_reader :source
-
-      def initialize(source)
-        @source = source
-      end
-
+    class File < DataSource
       def self.build(source=nil)
         logger.trace "Building"
 

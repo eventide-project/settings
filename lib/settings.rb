@@ -5,6 +5,7 @@ require 'dependency'; Dependency.activate
 require 'json'
 require 'confstruct'
 
+require 'settings/data_source/data_source'
 require 'settings/data_source/hash'
 require 'settings/data_source/file'
 require 'settings/data_source/build'
