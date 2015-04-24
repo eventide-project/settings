@@ -8,9 +8,6 @@ describe "File Data Source Validation" do
   end
 
   specify "A file that does exist is valid" do
-    file_that_doesnt_exist = "file-that-does-not-exist.json"
-
-    working_dir = Dir.pwd
     settings_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
     settings_file = File.join(settings_dir, 'settings.json')
 

@@ -20,7 +20,7 @@ class Settings
         end
       end
 
-      def get
+      def get_data
         logger.trace "Converting the raw source data to Confstruct"
         Confstruct::Configuration.new(source).tap do |instance|
           logger.debug "Converted the raw source data to Confstruct"

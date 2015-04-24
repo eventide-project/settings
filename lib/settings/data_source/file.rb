@@ -4,7 +4,6 @@ class Settings
       dependency :logger, Telemetry::Logger
 
       attr_reader :source
-      attr_accessor :pathname
 
       def initialize(source)
         @source = source
@@ -86,6 +85,23 @@ class Settings
       def self.logger
         @logger ||= ::Telemetry::Logger.get self
       end
+
+      def get_data
+        logger.trace "Reading file: #{source}"
+        file = ::File.open(source)
+        data = JSON.load(file).tap do
+          logger.debug "Read file: #{source}"
+        end
+      end
+
+      def self.read(pathname)
+        logger.trace "Reading #{pathname}"
+        file = ::File.open(pathname)
+        JSON.load(file).tap do
+          logger.debug "Read #{pathname}"
+        end
+      end
+
 
       module Defaults
         def self.logger
