@@ -89,7 +89,7 @@ class Settings
       def get_data
         logger.trace "Reading file: #{source}"
         file = ::File.open(source)
-        data = JSON.load(file).tap do
+        JSON.load(file).tap do
           logger.debug "Read file: #{source}"
         end
       end
@@ -101,7 +101,6 @@ class Settings
           logger.debug "Read #{pathname}"
         end
       end
-
 
       module Defaults
         def self.logger
