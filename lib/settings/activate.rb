@@ -4,7 +4,7 @@ class Settings
 
     macro_module = Settings::Setting::Macro
 
-    return if target_class.ancestors.include? macro_module
+    return if target_class.is_a? macro_module
 
     logger = ::Telemetry::Logger.get self
 
