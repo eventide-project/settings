@@ -429,3 +429,7 @@ some_namespace[:some_setting] == "some value"
 some_namespace.some_setting == "some value"
 # => true
 ```
+
+## License
+
+The `settings` library is released under the [MIT License](https://github.com/obsidian-btc/settings/blob/master/MIT-License.txt).
