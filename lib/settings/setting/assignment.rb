@@ -19,8 +19,8 @@ class Settings
       def assign_value(receiver, attribute, value)
         logger.trace "Assigning to #{attribute}"
         receiver.send("#{attribute}=", value).tap do
-          logger.debug "Assigning to #{attribute}"
-          logger.data "Assigned #{value} to #{attribute}"
+          logger.debug "Assigned to #{attribute}"
+          logger.data "#{attribute}: #{value}"
         end
       end
 
