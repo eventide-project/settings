@@ -88,7 +88,7 @@ class Settings
     log_value = value
     log_value = log_value.to_h if log_value.respond_to? :to_h
 
-    logger.info "Set #{receiver} #{attribute} to #{log_value}"
+    logger.debug "Set #{receiver} #{attribute} to #{log_value}"
 
     value
   end
@@ -97,7 +97,7 @@ class Settings
     logger.trace "Setting #{receiver} object (#{digest(namespace, nil, strict)})"
     data = get(namespace)
     data.each {|attribute, value| Settings::Setting::Assignment::Object.assign(receiver, attribute.to_sym, value, strict) }
-    logger.info "Set #{receiver} object (#{digest(namespace, nil, strict)})"
+    logger.debug "Set #{receiver} object (#{digest(namespace, nil, strict)})"
     receiver
   end
 
