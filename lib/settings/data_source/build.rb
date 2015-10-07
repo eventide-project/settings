@@ -1,7 +1,7 @@
 class Settings
   class DataSource
     module Build
-      def self.!(input=nil)
+      def self.call(input=nil)
         logger = Telemetry::Logger.get self
         logger.trace "Building (Input Type: #{input.class.name})"
 
@@ -11,6 +11,7 @@ class Settings
           logger.debug "Built (#{instance})"
         end
       end
+      class << self; alias :! :call; end # TODO: Remove deprecated actuator [Kelsey, Thu Oct 08 2015]
 
       def self.type(input=nil)
         return Settings::DataSource::Hash if input.is_a?(::Hash)
