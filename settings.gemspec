@@ -10,4 +10,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.2'
 
   s.add_runtime_dependency 'confstruct', '0.2.7'
+
+  s.add_runtime_dependency 'telemetry-logger'
+  s.add_runtime_dependency 'attribute'
+  s.add_runtime_dependency 'dependency'
 end
