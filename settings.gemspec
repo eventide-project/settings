@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.name = 'settings'
   s.summary = 'Settings data access'
-  s.version = '0.0.0'
+  s.version = '0.1.0'
   s.authors = ['']
   s.require_paths = ['lib']
   s.files = Dir.glob('{lib}/**/*')
