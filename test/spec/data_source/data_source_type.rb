@@ -1,3 +1,5 @@
+require_relative '../spec_init'
+
 describe "Data Source Type" do
   specify "DataSource::Hash when the input is a hash" do
     data_source_type = Settings::DataSource::Build.type({})

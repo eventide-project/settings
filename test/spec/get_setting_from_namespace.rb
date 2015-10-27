@@ -1,3 +1,5 @@
+require_relative './spec_init'
+
 module GetSettingFromNamespace
   def self.data
     {

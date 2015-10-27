@@ -1,3 +1,5 @@
+require_relative '../../spec_init'
+
 module Canonical
   def self.canonical(path)
     Settings::DataSource::File.canonical(path)

@@ -1,3 +1,5 @@
+require_relative '../spec_init'
+
 module HashDataSource
   def self.build
     Settings::DataSource::Hash.build(data)

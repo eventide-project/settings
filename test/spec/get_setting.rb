@@ -1,3 +1,5 @@
+require_relative './spec_init'
+
 module GetSetting
   def self.data
     {
@@ -17,11 +19,11 @@ end
 describe "Get Settings" do
   specify "Gets the setting's value" do
     setting = GetSetting.get 'some_setting'
-    expect(setting == 'some value').to be
+    assert(setting == 'some value')
   end
 
   specify "Trying to get a setting that isn't in the data gets a nil" do
     setting = GetSetting.get 'setting_that_isnt_in_the_data'
-    expect(setting == nil).to be
+    assert(setting == nil)
   end
 end
