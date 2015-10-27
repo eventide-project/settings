@@ -18,8 +18,10 @@ function symlink-library {
   echo "- - -"
 
   for entry in $LIBRARIES_DIR/$name*; do
-    echo "- removing symlink: $entry"
-    rm $entry
+    if [ -e "$entry" ]; then
+      echo "- removing symlink: $entry"
+      rm $entry
+    fi
   done
 
   echo "- creating symlinks"
