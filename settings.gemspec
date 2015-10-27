@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'settings'
-  s.summary = 'Settings data access'
+  s.summary = 'Settings data access and assignment'
   s.version = '0.1.0'
   s.authors = ['']
   s.require_paths = ['lib']
@@ -14,4 +14,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'telemetry-logger'
   s.add_runtime_dependency 'attribute'
   s.add_runtime_dependency 'dependency'
+
+  s.add_development_dependency 'minitest'
+  s.add_development_dependency 'minitest-spec-context'
+  s.add_development_dependency 'pry'
+  s.add_development_dependency 'runner'
 end
