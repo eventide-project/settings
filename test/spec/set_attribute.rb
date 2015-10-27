@@ -1,3 +1,5 @@
+require_relative './spec_init'
+
 module SetPlainOldAttribute
   def self.data
     {
