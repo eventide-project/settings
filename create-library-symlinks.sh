@@ -17,15 +17,23 @@ function symlink-library {
   echo "Symlinking $name"
   echo "- - -"
 
-  for entry in $LIBRARIES_DIR/$name*; do
-    if [ -e "$entry" ]; then
-      echo "- removing symlink: $entry"
-      rm $entry
-    fi
-  done
+  for entry in $(PWD)/lib/$name*; do
+    filename=$(basename $entry)
+    dest="$LIBRARIES_DIR/$filename"
 
-  echo "- creating symlinks"
-  ln -s $(PWD)/lib/$name* $LIBRARIES_DIR/
+    if [ -h "$dest" ]; then
+      echo "- removing symlink: $entry"
+      rm $dest
+    fi
+
+    echo "- symlinking $filename to $LIBRARIES_DIR"
+
+    cmd="ln -s $entry $dest"
+    echo $cmd
+    ($cmd)
+
+    echo
+  done
 
   echo "- - -"
   echo "($name done)"
