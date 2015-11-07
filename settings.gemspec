@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'telemetry-logger', '~> 0'
   s.add_runtime_dependency 'dependency', '~> 0'
 
-  s.add_runtime_dependency 'confstruct', '0.2.7'
+  s.add_runtime_dependency 'confstruct', ' ~> 0'
 
   s.add_development_dependency 'minitest', '~> 1'
   s.add_development_dependency 'minitest-spec-context', '~> 0'
