@@ -1,3 +1,3 @@
-source ./create-library-symlinks.sh
+source ./library-symlinks.sh
 
 symlink_lib 'settings'
