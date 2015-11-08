@@ -10,29 +10,68 @@ if [ ! -d "$LIBRARIES_DIR" ]; then
   exit 1
 fi
 
-function symlink-library {
+function make_directory {
+  directory=$1
+
+  lib_directory="$LIBRARIES_DIR/$directory"
+
+  if [ ! -d "$lib_directory" ]; then
+    echo "- making directory $lib_directory"
+    mkdir -p "$lib_directory"
+  fi
+}
+
+function remove_lib_symlinks {
   name=$1
+  directory=$2
+
+  dest="$LIBRARIES_DIR"
+  if [ ! -z "$directory" ]; then
+    dest="$dest/$directory"
+  fi
+  dest="$dest/$name"
+
+  for entry in $dest*; do
+    if [ -h "$entry" ]; then
+      echo "- removing symlink: $entry"
+      rm $entry
+    fi
+  done
+}
+
+function symlink_lib {
+  name=$1
+  directory=$2
 
   echo
   echo "Symlinking $name"
   echo "- - -"
 
-  for entry in $(PWD)/lib/$name*; do
-    filename=$(basename $entry)
-    dest="$LIBRARIES_DIR/$filename"
+  remove_lib_symlinks $name $directory
 
-    if [ -h "$dest" ]; then
-      echo "- removing symlink: $entry"
-      rm $dest
-    fi
+  src="$(PWD)/lib"
+  dest="$LIBRARIES_DIR"
+  if [ ! -z "$directory" ]; then
+    src="$src/$directory"
+    dest="$dest/$directory"
 
-    echo "- symlinking $filename to $LIBRARIES_DIR"
+    make_directory $directory
+  fi
+  src="$src/$name"
 
-    cmd="ln -s $entry $dest"
+  echo "- destination is $dest"
+
+  full_name=$directory/$name
+
+  for entry in $src*; do
+    entry_basename=$(basename $entry)
+    dest_item="$dest/$entry_basename"
+
+    echo "- symlinking $entry_basename to $dest_item"
+
+    cmd="ln -s $entry $dest_item"
     echo $cmd
     ($cmd)
-
-    echo
   done
 
   echo "- - -"
