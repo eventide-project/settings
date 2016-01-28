@@ -23,26 +23,26 @@ module Canonical
   end
 end
 
-describe "Canonical Filepath" do
-  specify "The default settings filename (settings.json) is used when the source is a directory" do
+context "Canonical Filepath" do
+  test "The default settings filename (settings.json) is used when the source is a directory" do
     pathname = Canonical.canonical(Canonical.current_dir)
 
     assert(pathname == Canonical.current_dir_filepath)
   end
 
-  specify "The default directory (current working directory) is used when the source is a filename" do
+  test "The default directory (current working directory) is used when the source is a filename" do
     pathname = Canonical.canonical('some_file.json')
 
     assert(pathname == Canonical.working_dir_filepath('some_file.json'))
   end
 
-  specify "The default directory and the default filename are used when the path is not specified" do
+  test "The default directory and the default filename are used when the path is not specified" do
     pathname = Canonical.canonical(nil)
 
     assert(pathname == Canonical.working_dir_filepath)
   end
 
-  specify "The specified pathname is used when it includes both the directory and the filename" do
+  test "The specified pathname is used when it includes both the directory and the filename" do
     pathname = Canonical.canonical('some_dir/some_file.json')
 
     assert(pathname == 'some_dir/some_file.json')

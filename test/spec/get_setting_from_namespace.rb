@@ -18,8 +18,8 @@ module GetSettingFromNamespace
   end
 end
 
-describe "Get a setting from a namespace" do
-  specify "Gets the setting's value" do
+context "Get a setting from a namespace" do
+  test "Gets the setting's value" do
     value = GetSettingFromNamespace.get :some_namespace, :some_setting
     assert(value == "some value")
   end

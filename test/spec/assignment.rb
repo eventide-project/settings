@@ -15,18 +15,18 @@ module Assignment
   end
 end
 
-describe Settings::Setting::Assignment do
-  specify "Determine whether the attribute is a setting" do
+context Settings::Setting::Assignment do
+  test "Determine whether the attribute is a setting" do
     example = Assignment.example
 
     assert(Assignment.assignment.setting?(example, :some_setting))
-    refute(Assignment.assignment.setting?(example, :some_attribute))
+    assert(!Assignment.assignment.setting?(example, :some_attribute))
   end
 
-  specify "Determine whether the attribute is assignable" do
+  test "Determine whether the attribute is assignable" do
     example = Assignment.example
 
     assert(Assignment.assignment.assignable?(example, :some_setting))
-    refute(Assignment.assignment.assignable?(example, :some_attribute))
+    assert(!Assignment.assignment.assignable?(example, :some_attribute))
   end
 end

@@ -24,8 +24,8 @@ module SetObject
   end
 end
 
-describe "Set an object" do
-  specify "Assigns data to corresponding setting attributes" do
+context "Set an object" do
+  test "Assigns data to corresponding setting attributes" do
     example = SetObject.example
     SetObject.settings.set example
 
@@ -33,7 +33,7 @@ describe "Set an object" do
     assert(example.some_other_setting == "some other value")
   end
 
-  specify "A setting that does not have corresponding data is not set" do
+  test "A setting that does not have corresponding data is not set" do
     example = SetObject.example
     SetObject.settings.set example
 

@@ -15,28 +15,31 @@ module AttributeAssignment
   end
 end
 
-describe "Attribute Assignment" do
-  describe Settings::Setting::Assignment::Attribute do
-    specify "Settable when the attribute is a setting" do
+context "Attribute Assignment" do
+  context Settings::Setting::Assignment::Attribute do
+    test "Settable when the attribute is a setting" do
       example = AttributeAssignment.example
       assert(AttributeAssignment.assignment.assure_settable(example, :some_setting))
     end
-  end
 
-  describe Settings::Setting::Assignment::Attribute, "Strict" do
-    specify "Is an error when the attribute is a plain old attribute" do
-      example = AttributeAssignment.example
+    context "Strict" do
+      test "Is an error when the attribute is a plain old attribute" do
+        example = AttributeAssignment.example
 
-      assert_raises RuntimeError do
-        AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = true)
+        begin
+          AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = true)
+        rescue RuntimeError => error
+        end
+
+        assert error
       end
     end
-  end
 
-  describe Settings::Setting::Assignment::Attribute, "Not strict" do
-    specify "Settable when the attribute is a plain old attribute" do
-      example = AttributeAssignment.example
-      assert(AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = false))
+    context "Not strict" do
+      test "Settable when the attribute is a plain old attribute" do
+        example = AttributeAssignment.example
+        assert(AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = false))
+      end
     end
   end
 end

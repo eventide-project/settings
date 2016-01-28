@@ -20,16 +20,19 @@ module SetPlainOldAttribute
   end
 end
 
-describe "Set a plain old attribute" do
-  specify "When setting strictly, it's an error" do
+context "Set a plain old attribute" do
+  test "When setting strictly, it's an error" do
     example = SetPlainOldAttribute.example
 
-    assert_raises RuntimeError do
+    begin
       SetPlainOldAttribute.settings.set example, attribute: :some_attr
+    rescue RuntimeError => error
     end
+
+    assert error
   end
 
-  specify "When not setting strictly, sets the attribute" do
+  test "When not setting strictly, sets the attribute" do
     example = SetPlainOldAttribute.example
     SetPlainOldAttribute.settings.set example, attribute: :some_attr, strict: false
 

@@ -22,8 +22,8 @@ module SetSettingFromNamespace
   end
 end
 
-describe "Set a setting attribute from a namespace" do
-  specify "Assigns data from within that namespace to the corresponding attribute" do
+context "Set a setting attribute from a namespace" do
+  test "Assigns data from within that namespace to the corresponding attribute" do
     example = SetSettingFromNamespace.example
     SetSettingFromNamespace.settings.set example, "some_namespace"
 
