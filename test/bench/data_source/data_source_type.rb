@@ -1,4 +1,4 @@
-require_relative '../spec_init'
+require_relative '../bench_init'
 
 context "Data Source Type" do
   test "DataSource::Hash when the input is a hash" do

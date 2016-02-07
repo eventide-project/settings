@@ -1,4 +1,4 @@
-require_relative '../../spec_init'
+require_relative '../../bench_init'
 
 context "File Data Source" do
   test "Reads the file" do

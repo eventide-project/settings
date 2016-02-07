@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 module SetPlainOldAttribute
   def self.data
@@ -24,12 +24,11 @@ context "Set a plain old attribute" do
   test "When setting strictly, it's an error" do
     example = SetPlainOldAttribute.example
 
-    begin
-      SetPlainOldAttribute.settings.set example, attribute: :some_attr
-    rescue RuntimeError => error
+    assert SetPlainOldAttribute.settings do
+      error? RuntimeError do
+        SetPlainOldAttribute.settings.set example, attribute: :some_attr
+      end
     end
-
-    assert error
   end
 
   test "When not setting strictly, sets the attribute" do

@@ -1,6 +1,6 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
-module SetObjectFromNamespace
+module SetSettingFromNamespace
   def self.data
     {
       "some_namespace" => {
@@ -22,10 +22,10 @@ module SetObjectFromNamespace
   end
 end
 
-context "Set an object from a namespace" do
-  test "Assigns data from within that namespace to corresponding setting attributes" do
-    example = SetObjectFromNamespace.example
-    SetObjectFromNamespace.settings.set example, "some_namespace"
+context "Set a setting attribute from a namespace" do
+  test "Assigns data from within that namespace to the corresponding attribute" do
+    example = SetSettingFromNamespace.example
+    SetSettingFromNamespace.settings.set example, "some_namespace"
 
     assert(example.some_setting == "some value")
   end
