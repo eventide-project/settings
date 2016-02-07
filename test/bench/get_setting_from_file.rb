@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 module GetSettingFromFile
   def self.settings_file
@@ -14,8 +14,8 @@ module GetSettingFromFile
   end
 end
 
-describe "Get a setting from a file" do
-  specify "Retrieves the data from the file" do
+context "Get a setting from a file" do
+  test "Retrieves the data from the file" do
     setting = GetSettingFromFile.get 'some_setting'
     assert(setting == 'some value')
   end

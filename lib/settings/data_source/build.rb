@@ -17,7 +17,7 @@ class Settings
         return Settings::DataSource::Hash if input.is_a?(::Hash)
         return Settings::DataSource::File if input.is_a?(String) || input.nil?
 
-        raise "Input is not supported: #{input}"
+        raise Settings::Error, "Input is not supported: #{input}"
       end
     end
   end

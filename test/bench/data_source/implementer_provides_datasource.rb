@@ -1,4 +1,4 @@
-require_relative '../spec_init'
+require_relative '../bench_init'
 
 module ImplementerProvidesDataSource
   def self.settings
@@ -18,8 +18,8 @@ module ImplementerProvidesDataSource
   end
 end
 
-describe "Implementer Provides the Data Source" do
-  specify "A subclass can specify the datasource by implementing a class method named 'datasource'" do
+context "Implementer Provides the Data Source" do
+  test "A subclass can specify the datasource by implementing a class method named 'datasource'" do
     settings = ImplementerProvidesDataSource.settings
 
     assert(settings.data == ImplementerProvidesDataSource.data)

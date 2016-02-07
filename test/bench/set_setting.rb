@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 module SetSetting
   def self.data
@@ -21,19 +21,21 @@ module SetSetting
   end
 end
 
-describe "Set a setting attribute" do
-  specify "Assigns the data to the corresponding attribute" do
+context "Set a setting attribute" do
+  test "Assigns the data to the corresponding attribute" do
     example = SetSetting.example
     SetSetting.settings.set example, attribute: :some_setting
 
     assert(example.some_setting == "some value")
   end
 
-  specify "When there's no corresponding data, it's an error" do
+  test "When there's no corresponding data, it's an error" do
     example = SetSetting.example
 
-    assert_raises RuntimeError do
-      SetSetting.settings.set example, attribute: :not_in_the_data
+    assert SetSetting.settings do
+      error? RuntimeError do
+        SetSetting.settings.set example, attribute: :not_in_the_data
+      end
     end
   end
 end
