@@ -1,4 +1,6 @@
 class Settings
+  class Error < RuntimeError; end
+
   attr_reader :data
   attr_reader :pathname
 
@@ -80,7 +82,7 @@ class Settings
     if value.nil?
       msg = "#{attribute_namespace} not found in the data"
       logger.error msg
-      raise msg
+      raise Settings::Error, msg
     end
 
     Settings::Setting::Assignment::Attribute.assign(receiver, attribute.to_sym, value, strict)

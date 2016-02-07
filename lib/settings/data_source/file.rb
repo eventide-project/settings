@@ -71,7 +71,7 @@ class Settings
         unless pathname.file?
           msg = "Settings cannot be read from #{pathname}. The file doesn't exist."
           logger.error msg
-          raise msg
+          raise Settings::Error, msg
         end
 
         logger.opt_trace "Validated the pathname (#{pathname})"
