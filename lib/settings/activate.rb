@@ -8,9 +8,9 @@ class Settings
 
     logger = ::Telemetry::Logger.get self
 
-    logger.trace "Activating the Settings macro"
+    logger.opt_trace "Activating the Settings macro"
     target_class.extend(macro_module).tap do
-      logger.debug "Activated the Settings macro"
+      logger.opt_debug "Activated the Settings macro"
     end
   end
 end

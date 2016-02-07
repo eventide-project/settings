@@ -24,41 +24,41 @@ class Settings
 
     ::Telemetry::Logger.configure instance
 
-    logger.debug "Built"
+    logger.opt_debug "Built"
 
     instance
   end
 
   def self.implementer_source
-    logger.trace "Getting data source from the implementer"
+    logger.opt_trace "Getting data source from the implementer"
 
     unless self.respond_to? :data_source
-      logger.trace "Implementer doesn't provide a data_source"
+      logger.opt_trace "Implementer doesn't provide a data_source"
       return nil
     end
 
     self.data_source.tap do |data_source|
-      logger.trace "Got data source from the implementer (#{data_source})"
+      logger.opt_trace "Got data source from the implementer (#{data_source})"
     end
   end
 
   def override(override_data)
-    logger.trace "Overriding settings data"
+    logger.opt_trace "Overriding settings data"
     res = data.push!(override_data)
-    logger.debug "Overrode settings data"
-    logger.data "Override data #{override_data}"
+    logger.opt_debug "Overrode settings data"
+    logger.opt_data "Override data #{override_data}"
     res
   end
 
   def reset
-    logger.trace "Resetting overridden settings data"
+    logger.opt_trace "Resetting overridden settings data"
     res = data.pop!
-    logger.debug "Reset overridden settings data"
+    logger.opt_debug "Reset overridden settings data"
     res
   end
 
   def set(receiver, *namespace, attribute: nil, strict: true)
-    logger.trace "Setting #{receiver} (#{digest(namespace, attribute, strict)})"
+    logger.opt_trace "Setting #{receiver} (#{digest(namespace, attribute, strict)})"
     unless attribute.nil?
       value = set_attribute(receiver, attribute, namespace, strict)
     else
@@ -68,7 +68,7 @@ class Settings
   end
 
   def set_attribute(receiver, attribute, namespace, strict)
-    logger.trace "Setting #{receiver} attribute (#{digest(namespace, attribute, strict)})"
+    logger.opt_trace "Setting #{receiver} attribute (#{digest(namespace, attribute, strict)})"
 
     attribute = attribute.to_s if attribute.is_a? Symbol
 
@@ -88,16 +88,16 @@ class Settings
     log_value = value
     log_value = log_value.to_h if log_value.respond_to? :to_h
 
-    logger.debug "Set #{receiver} #{attribute} to #{log_value}"
+    logger.opt_debug "Set #{receiver} #{attribute} to #{log_value}"
 
     value
   end
 
   def set_object(receiver, namespace, strict)
-    logger.trace "Setting #{receiver} object (#{digest(namespace, nil, strict)})"
+    logger.opt_trace "Setting #{receiver} object (#{digest(namespace, nil, strict)})"
     data = get(namespace)
     data.each {|attribute, value| Settings::Setting::Assignment::Object.assign(receiver, attribute.to_sym, value, strict) }
-    logger.debug "Set #{receiver} object (#{digest(namespace, nil, strict)})"
+    logger.opt_debug "Set #{receiver} object (#{digest(namespace, nil, strict)})"
     receiver
   end
 
@@ -107,7 +107,7 @@ class Settings
 
   def get(*namespace)
     namespace.flatten!
-    logger.trace "Getting #{namespace}"
+    logger.opt_trace "Getting #{namespace}"
 
     string_keys = namespace.map { |n| n.is_a?(String) ? n : n.to_s }
 
@@ -115,9 +115,9 @@ class Settings
 
     log_data = value
     log_data = log_data.to_h if log_data.respond_to? :to_h
-    logger.data "#{namespace}: #{log_data}"
+    logger.opt_data "#{namespace}: #{log_data}"
 
-    logger.debug "Got #{namespace}"
+    logger.opt_debug "Got #{namespace}"
 
     value
   end

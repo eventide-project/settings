@@ -4,18 +4,18 @@ class Settings
       def self.build(source)
         logger = Telemetry::Logger.get self
 
-        logger.trace "Building"
+        logger.opt_trace "Building"
 
         new(source).tap do |instance|
           Telemetry::Logger.configure instance
-          logger.debug "Built"
+          logger.opt_debug "Built"
         end
       end
 
       def get_data
-        logger.trace "Converting the raw source data to Confstruct"
+        logger.opt_trace "Converting the raw source data to Confstruct"
         Confstruct::Configuration.new(source).tap do |instance|
-          logger.debug "Converted the raw source data to Confstruct"
+          logger.opt_debug "Converted the raw source data to Confstruct"
         end
       end
     end

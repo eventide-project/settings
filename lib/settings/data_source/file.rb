@@ -2,22 +2,22 @@ class Settings
   class DataSource
     class File < DataSource
       def self.build(source=nil)
-        logger.trace "Building"
+        logger.opt_trace "Building"
 
         canonical = canonical(source)
         validate(canonical)
 
         new(canonical).tap do |instance|
           Telemetry::Logger.configure instance
-          logger.debug "Built"
+          logger.opt_debug "Built"
         end
       end
 
       def self.canonical(source)
-        logger.trace "Canonizing the file source (#{source})"
+        logger.opt_trace "Canonizing the file source (#{source})"
 
         canonize(source).tap do |instance|
-          logger.debug "Canonized the file source (#{source})"
+          logger.opt_debug "Canonized the file source (#{source})"
         end
       end
 
@@ -64,7 +64,7 @@ class Settings
       end
 
       def self.validate(pathname)
-        logger.trace "Validating the pathname (#{pathname})"
+        logger.opt_trace "Validating the pathname (#{pathname})"
 
         pathname = Pathname.new(pathname)
 
@@ -74,7 +74,7 @@ class Settings
           raise msg
         end
 
-        logger.trace "Validated the pathname (#{pathname})"
+        logger.opt_trace "Validated the pathname (#{pathname})"
       end
 
       def self.logger
@@ -82,10 +82,10 @@ class Settings
       end
 
       def get_data
-        logger.trace "Reading file: #{source}"
+        logger.opt_trace "Reading file: #{source}"
         file = ::File.open(source)
         data = JSON.load(file).tap do
-          logger.debug "Read file: #{source}"
+          logger.opt_debug "Read file: #{source}"
         end
 
         hash_data_source = Hash.build data
@@ -99,7 +99,7 @@ class Settings
 
         def self.filename
           default_file = 'settings.json' # .tap
-          logger.debug "Using the default settings file name (#{default_file})"
+          logger.opt_debug "Using the default settings file name (#{default_file})"
           default_file
         end
       end
@@ -109,7 +109,7 @@ class Settings
           def self.pathname
             logger = ::Telemetry::Logger.get self
             default_dir = Dir.pwd
-            logger.debug "Using the working directory default settings directory (#{default_dir})"
+            logger.opt_debug "Using the working directory default settings directory (#{default_dir})"
             default_dir
           end
         end
