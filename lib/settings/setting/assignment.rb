@@ -17,10 +17,10 @@ class Settings
       end
 
       def assign_value(receiver, attribute, value)
-        logger.trace "Assigning to #{attribute}"
+        logger.opt_trace "Assigning to #{attribute}"
         receiver.send("#{attribute}=", value).tap do
-          logger.debug "Assigned to #{attribute}"
-          logger.data "#{attribute}: #{value}"
+          logger.opt_debug "Assigned to #{attribute}"
+          logger.opt_data "#{attribute}: #{value}"
         end
       end
 
@@ -54,7 +54,7 @@ class Settings
         end
 
         def self.assure_settable(receiver, attribute, strict=true)
-          logger.trace "Approving attribute (#{digest(receiver, attribute, strict)})"
+          logger.opt_trace "Approving attribute (#{digest(receiver, attribute, strict)})"
 
           if strict
             setting = setting?(receiver, attribute)
@@ -70,7 +70,7 @@ class Settings
             return false
           end
 
-          logger.debug "\"#{attribute}\" can be set"
+          logger.opt_debug "\"#{attribute}\" can be set"
           true
         end
       end
@@ -99,7 +99,7 @@ class Settings
             raise msg
           end
 
-          logger.debug "\"#{attribute}\" can be set"
+          logger.opt_debug "\"#{attribute}\" can be set"
           true
         end
       end
