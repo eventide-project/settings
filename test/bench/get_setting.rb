@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 module GetSetting
   def self.data
@@ -16,13 +16,13 @@ module GetSetting
   end
 end
 
-describe "Get Settings" do
-  specify "Gets the setting's value" do
+context "Get Settings" do
+  test "Gets the setting's value" do
     setting = GetSetting.get 'some_setting'
     assert(setting == 'some value')
   end
 
-  specify "Trying to get a setting that isn't in the data gets a nil" do
+  test "Trying to get a setting that isn't in the data gets a nil" do
     setting = GetSetting.get 'setting_that_isnt_in_the_data'
     assert(setting == nil)
   end

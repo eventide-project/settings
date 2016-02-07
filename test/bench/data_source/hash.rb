@@ -1,4 +1,4 @@
-require_relative '../spec_init'
+require_relative '../bench_init'
 
 module HashDataSource
   def self.build
@@ -12,8 +12,8 @@ module HashDataSource
   end
 end
 
-describe "Hash Data Source" do
-  specify "Converts the data to a Confstruct" do
+context "Hash Data Source" do
+  test "Converts the data to a Confstruct" do
     hash_source = HashDataSource.build
     data = hash_source.get_data
     assert(data.is_a? Confstruct::Configuration)

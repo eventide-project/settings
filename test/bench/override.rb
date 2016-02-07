@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 module Override
   def self.data
@@ -33,15 +33,15 @@ module Override
   end
 end
 
-describe "Override settings" do
-  specify "An override setting that is in the settings data is replaced by the override data" do
+context "Override settings" do
+  test "An override setting that is in the settings data is replaced by the override data" do
     settings = Override.override
     overridden_setting = settings.get(:some_namespace, :some_setting)
 
     assert(overridden_setting == "some overridden value")
   end
 
-  specify "An override setting that is not in the settings data is added to the data" do
+  test "An override setting that is not in the settings data is added to the data" do
     settings = Override.override
     some_other_setting = settings.get(:some_namespace, :some_other_setting)
 

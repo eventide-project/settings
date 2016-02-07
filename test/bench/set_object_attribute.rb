@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 module SetObjectPlainOldAttribute
   def self.data
@@ -20,15 +20,15 @@ module SetObjectPlainOldAttribute
   end
 end
 
-describe "Set an object" do
-  specify "When setting strictly, plain old attributes are not set" do
+context "Set an object" do
+  test "When setting strictly, plain old attributes are not set" do
     example = SetObjectPlainOldAttribute.example
     SetObjectPlainOldAttribute.settings.set example
 
     assert(example.some_attr.nil?)
   end
 
-  specify "When not setting strictly, sets the attribute" do
+  test "When not setting strictly, sets the attribute" do
     example = SetObjectPlainOldAttribute.example
     SetObjectPlainOldAttribute.settings.set example, strict: false
 
