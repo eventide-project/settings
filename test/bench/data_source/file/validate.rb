@@ -5,7 +5,7 @@ context "File Data Source Validation" do
     file_that_doesnt_exist = "file-that-does-not-exist.json"
 
     assert Settings::DataSource::File do
-      error? RuntimeError do
+      error? Settings::Error do
         Settings::DataSource::File.validate(file_that_doesnt_exist)
       end
     end

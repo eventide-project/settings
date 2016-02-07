@@ -33,7 +33,7 @@ context "Set a setting attribute" do
     example = SetSetting.example
 
     assert SetSetting.settings do
-      error? RuntimeError do
+      error? Settings::Error do
         SetSetting.settings.set example, attribute: :not_in_the_data
       end
     end
