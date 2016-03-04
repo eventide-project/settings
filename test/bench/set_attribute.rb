@@ -24,10 +24,12 @@ context "Set a plain old attribute" do
   test "When setting strictly, it's an error" do
     example = SetPlainOldAttribute.example
 
-    assert SetPlainOldAttribute.settings do
-      error? RuntimeError do
-        SetPlainOldAttribute.settings.set example, attribute: :some_attr
-      end
+    set_plain_old_attribute = Proc.new do
+      SetPlainOldAttribute.settings.set example, attribute: :some_attr
+    end
+
+    assert set_plain_old_attribute do
+      raises_error? RuntimeError
     end
   end
 

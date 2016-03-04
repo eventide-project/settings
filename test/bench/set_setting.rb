@@ -32,10 +32,12 @@ context "Set a setting attribute" do
   test "When there's no corresponding data, it's an error" do
     example = SetSetting.example
 
-    assert SetSetting.settings do
-      error? Settings::Error do
-        SetSetting.settings.set example, attribute: :not_in_the_data
-      end
+    assign_attribute_not_in_data = Proc.new do
+      SetSetting.settings.set example, attribute: :not_in_the_data
+    end
+
+    assert assign_attribute_not_in_data do
+      raises_error? Settings::Error
     end
   end
 end
