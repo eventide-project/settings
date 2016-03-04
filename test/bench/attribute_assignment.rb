@@ -27,7 +27,7 @@ context "Attribute Assignment" do
     test "Is an error when the attribute is a plain old attribute" do
       example = AttributeAssignment.example
 
-      assign_plain_attribute_strict = -> do
+      assign_plain_attribute_strict = Proc.new do
         AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = true)
       end
 

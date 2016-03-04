@@ -4,7 +4,7 @@ context "File Data Source Validation" do
   test "A file that doesn't exist is invalid" do
     file_that_doesnt_exist = "file-that-does-not-exist.json"
 
-    validate_file_that_doesnt_exist = -> do
+    validate_file_that_doesnt_exist = Proc.new do
       Settings::DataSource::File.validate(file_that_doesnt_exist)
     end
 
