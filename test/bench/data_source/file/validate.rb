@@ -4,10 +4,12 @@ context "File Data Source Validation" do
   test "A file that doesn't exist is invalid" do
     file_that_doesnt_exist = "file-that-does-not-exist.json"
 
-    assert Settings::DataSource::File do
-      error? Settings::Error do
-        Settings::DataSource::File.validate(file_that_doesnt_exist)
-      end
+    validate_file_that_doesnt_exist = -> do
+      Settings::DataSource::File.validate(file_that_doesnt_exist)
+    end
+
+    assert validate_file_that_doesnt_exist do
+      raises_error? Settings::Error
     end
   end
 

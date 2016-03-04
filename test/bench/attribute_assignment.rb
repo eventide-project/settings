@@ -27,10 +27,12 @@ context "Attribute Assignment" do
     test "Is an error when the attribute is a plain old attribute" do
       example = AttributeAssignment.example
 
-      assert AttributeAssignment.assignment do
-        error? RuntimeError do
-          AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = true)
-        end
+      assign_plain_attribute_strict = -> do
+        AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = true)
+      end
+
+      assert assign_plain_attribute_strict do
+        raises_error? RuntimeError
       end
     end
   end
