@@ -24,7 +24,7 @@ context "Set a plain old attribute" do
   test "When setting strictly, it's an error" do
     example = SetPlainOldAttribute.example
 
-    set_plain_old_attribute = Proc.new do
+    set_plain_old_attribute = proc do
       SetPlainOldAttribute.settings.set example, attribute: :some_attr
     end
 
