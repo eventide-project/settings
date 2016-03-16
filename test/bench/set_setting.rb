@@ -32,7 +32,7 @@ context "Set a setting attribute" do
   test "When there's no corresponding data, it's an error" do
     example = SetSetting.example
 
-    assign_attribute_not_in_data = Proc.new do
+    assign_attribute_not_in_data = proc do
       SetSetting.settings.set example, attribute: :not_in_the_data
     end
 
