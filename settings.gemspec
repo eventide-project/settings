@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.summary = 'Settings data access and assignment'
   s.description = ' '
 
-  s.authors = ['Obsidian Software, Inc']
-  s.email = 'opensource@obsidianexchange.com'
+  s.authors = ['The Eventide Project']
+  s.email = 'opensource@eventide-project.org'
   s.homepage = 'https://github.com/obsidian-btc/settings'
   s.licenses = ['MIT']
 
