@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.2.3'
 
   s.add_runtime_dependency 'telemetry-logger'
+  s.add_runtime_dependency 'casing'
 
   s.add_runtime_dependency 'confstruct'
 

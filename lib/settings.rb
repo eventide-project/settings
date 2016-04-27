@@ -1,8 +1,10 @@
 require 'pathname'
+require 'json'
+
 require 'telemetry/logger'
+require 'casing'
 require 'attribute'
 require 'dependency'; Dependency.activate
-require 'json'
 require 'confstruct'
 
 require 'settings/data_source/data_source'

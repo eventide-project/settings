@@ -88,6 +88,8 @@ class Settings
           logger.opt_debug "Read file: #{source}"
         end
 
+        data = Casing::Underscore.(data)
+
         hash_data_source = Hash.build data
         hash_data_source.get_data
       end
@@ -98,7 +100,7 @@ class Settings
         end
 
         def self.filename
-          default_file = 'settings.json' # .tap
+          default_file = 'settings.json'
           logger.opt_debug "Using the default settings file name (#{default_file})"
           default_file
         end
