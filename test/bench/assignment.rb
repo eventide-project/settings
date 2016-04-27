@@ -15,7 +15,7 @@ module Assignment
   end
 end
 
-context Settings::Setting::Assignment do
+context "Assignment" do
   test "Determine whether the attribute is a setting" do
     example = Assignment.example
 

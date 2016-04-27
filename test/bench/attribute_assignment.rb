@@ -16,15 +16,13 @@ module AttributeAssignment
 end
 
 context "Attribute Assignment" do
-  context Settings::Setting::Assignment::Attribute do
-    test "Settable when the attribute is a setting" do
-      example = AttributeAssignment.example
-      assert(AttributeAssignment.assignment.assure_settable(example, :some_setting))
-    end
+  test "Settable when the attribute is a setting" do
+    example = AttributeAssignment.example
+    assert(AttributeAssignment.assignment.assure_settable(example, :some_setting))
   end
 
-  context "Settings::Setting::Assignment::Attribute, Strict" do
-    test "Is an error when the attribute is a plain old attribute" do
+  context "Strict" do
+    test "Is an error when setting an attribute that is a plain old attribute" do
       example = AttributeAssignment.example
 
       assign_plain_attribute_strict = proc do
@@ -37,7 +35,7 @@ context "Attribute Assignment" do
     end
   end
 
-  context "Settings::Setting::Assignment::Attribute, Not strict" do
+  context "Not strict" do
     test "Settable when the attribute is a plain old attribute" do
       example = AttributeAssignment.example
       assert(AttributeAssignment.assignment.assure_settable(example, :some_attribute, strict = false))

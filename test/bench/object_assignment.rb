@@ -16,21 +16,19 @@ module ObjectAssignment
 end
 
 context "Object Assignment" do
-  context Settings::Setting::Assignment::Object do
-    test "Settable when the attribute is a setting" do
-      example = ObjectAssignment.example
-      assert(ObjectAssignment.assignment.assure_settable(example, :some_setting))
-    end
+  test "Settable when the attribute is a setting" do
+    example = ObjectAssignment.example
+    assert(ObjectAssignment.assignment.assure_settable(example, :some_setting))
   end
 
-  context "Settings::Setting::Assignment::Object, Strict" do
-    test "Is not settable when the attribute is a plain old attribute" do
+  context "Strict" do
+    test "Attribute is not settable when it's a plain old attribute" do
       example = ObjectAssignment.example
       assert(!ObjectAssignment.assignment.assure_settable(example, :some_attribute, strict = true))
     end
   end
 
-  context "Settings::Setting::Assignment::Object, Not strict" do
+  context "Not strict" do
     test "Settable when the attribute is a plain old attribute" do
       example = ObjectAssignment.example
       assert(ObjectAssignment.assignment.assure_settable(example, :some_attribute, strict = false))
