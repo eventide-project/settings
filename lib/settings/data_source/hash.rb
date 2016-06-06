@@ -7,7 +7,7 @@ class Settings
         logger.opt_trace "Building"
 
         new(source).tap do |instance|
-          Telemetry::Logger.configure instance
+          # Telemetry::Logger.configure instance
           logger.opt_debug "Built"
         end
       end

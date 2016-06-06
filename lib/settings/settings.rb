@@ -24,7 +24,7 @@ class Settings
 
     instance = new data
 
-    ::Telemetry::Logger.configure instance
+    # ::Telemetry::Logger.configure instance
 
     logger.opt_debug "Built"
 
