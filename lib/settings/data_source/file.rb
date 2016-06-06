@@ -78,7 +78,8 @@ class Settings
       end
 
       def self.logger
-        @logger ||= ::Telemetry::Logger.get self
+        # @logger ||= ::Telemetry::Logger.get self
+        @logger ||= SubstAttr::Substitute.build(::Telemetry::Logger)
       end
 
       def get_data
@@ -96,7 +97,8 @@ class Settings
 
       module Defaults
         def self.logger
-          @logger ||= ::Telemetry::Logger.get self
+          # @logger ||= ::Telemetry::Logger.get self
+          @logger ||= SubstAttr::Substitute.build(::Telemetry::Logger)
         end
 
         def self.filename
@@ -109,7 +111,9 @@ class Settings
       module Directory
         module Defaults
           def self.pathname
-            logger = ::Telemetry::Logger.get self
+            # logger = ::Telemetry::Logger.get self
+            logger = SubstAttr::Substitute.build(::Telemetry::Logger)
+
             default_dir = Dir.pwd
             logger.opt_debug "Using the working directory default settings directory (#{default_dir})"
             default_dir

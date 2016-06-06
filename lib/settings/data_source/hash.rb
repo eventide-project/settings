@@ -2,7 +2,8 @@ class Settings
   class DataSource
     class Hash < DataSource
       def self.build(source)
-        logger = Telemetry::Logger.get self
+        # logger = Telemetry::Logger.get self
+        logger = SubstAttr::Substitute.build(::Telemetry::Logger)
 
         logger.opt_trace "Building"
 

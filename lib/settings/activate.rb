@@ -6,8 +6,6 @@ class Settings
 
     return if target_class.is_a? macro_module
 
-    logger = ::Telemetry::Logger.get self
-
     target_class.extend(macro_module)
   end
 end

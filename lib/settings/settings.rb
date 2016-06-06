@@ -12,7 +12,8 @@ class Settings
   end
 
   def self.logger
-    @logger ||= ::Telemetry::Logger.get self
+    # @logger ||= ::Telemetry::Logger.get self
+    @logger ||= SubstAttr::Substitute.build(::Telemetry::Logger)
   end
 
   def self.build(source=nil)

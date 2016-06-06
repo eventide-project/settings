@@ -2,14 +2,8 @@ class Settings
   class DataSource
     module Build
       def self.call(input=nil)
-        logger = Telemetry::Logger.get self
-        logger.opt_trace "Building (Input Type: #{input.class.name})"
-
         data_source_type = type(input)
-
-        data_source_type.build(input).tap do |instance|
-          logger.opt_debug "Built (#{instance})"
-        end
+        data_source_type.build(input)
       end
       class << self; alias :! :call; end # TODO: Remove deprecated actuator [Kelsey, Thu Oct 08 2015]
 
