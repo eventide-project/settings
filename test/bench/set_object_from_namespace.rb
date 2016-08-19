@@ -29,4 +29,12 @@ context "Set an object from a namespace" do
 
     assert(example.some_setting == "some value")
   end
+
+  test "When namespace isn't found in data, it's an error" do
+    example = SetObjectFromNamespace.example
+
+    assert proc { SetObjectFromNamespace.settings.set example, "other_namespace" } do
+      raises_error? Settings::Error
+    end
+  end
 end
