@@ -98,9 +98,21 @@ class Settings
 
   def set_object(receiver, namespace, strict)
     logger.opt_trace "Setting #{receiver} object (#{digest(namespace, nil, strict)})"
+
     data = get(namespace)
-    data.each {|attribute, value| Settings::Setting::Assignment::Object.assign(receiver, attribute.to_sym, value, strict) }
+
+    if data.nil?
+      msg = "#{namespace} not found in the data"
+      logger.error msg
+      raise Settings::Error, msg
+    end
+
+    data.each do |attribute, value|
+      Settings::Setting::Assignment::Object.assign(receiver, attribute.to_sym, value, strict)
+    end
+
     logger.opt_debug "Set #{receiver} object (#{digest(namespace, nil, strict)})"
+
     receiver
   end
 
