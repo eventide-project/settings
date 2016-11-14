@@ -1,4 +1,4 @@
-require_relative './bench_init'
+require_relative './automated_init'
 
 module GetSettingFromFile
   def self.settings_file

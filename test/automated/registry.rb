@@ -1,4 +1,4 @@
-require_relative './bench_init'
+require_relative './automated_init'
 
 context "Settings Registry" do
   test "A registered setting is be stored in the settings registry by its class name" do

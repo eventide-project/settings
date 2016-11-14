@@ -1,4 +1,4 @@
-require_relative '../../bench_init'
+require_relative '../../automated_init'
 
 context "File Data Source Validation" do
   test "A file that doesn't exist is invalid" do
