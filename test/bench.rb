@@ -1,5 +1,4 @@
 require_relative 'test_init'
-require_relative './bench/bench_init'
 
 TestBench::Runner.(
   'bench/**/*.rb',

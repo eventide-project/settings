@@ -1,6 +1,6 @@
 class Settings
   class DataSource
-    dependency :logger, Telemetry::Logger
+    include Log::Dependency
 
     attr_reader :source
 
