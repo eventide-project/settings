@@ -4,8 +4,7 @@ class Settings
       extend self
 
       def logger
-        # @logger ||= ::Telemetry::Logger.get self
-        @logger ||= SubstAttr::Substitute.build(::Telemetry::Logger)
+        @logger ||= Log.get(self)
       end
 
       def assign(receiver, attribute, value, strict=false)
@@ -18,10 +17,10 @@ class Settings
       end
 
       def assign_value(receiver, attribute, value)
-        logger.opt_trace "Assigning to #{attribute}"
+        logger.trace { "Assigning to #{attribute}" }
         receiver.public_send("#{attribute}=", value).tap do
-          logger.opt_debug "Assigned to #{attribute}"
-          logger.opt_data "#{attribute}: #{value}"
+          logger.debug { "Assigned to #{attribute}" }
+          logger.debug(tag: :data) { "#{attribute}: #{value}" }
         end
       end
 
@@ -51,28 +50,27 @@ class Settings
         extend Assignment
 
         def logger
-          # @logger ||= ::Telemetry::Logger.get self
-          @logger ||= SubstAttr::Substitute.build(::Telemetry::Logger)
+          @logger ||= Log.get(self)
         end
 
         def self.assure_settable(receiver, attribute, strict=true)
-          logger.opt_trace "Approving attribute (#{digest(receiver, attribute, strict)})"
+          logger.trace { "Approving attribute (#{digest(receiver, attribute, strict)})" }
 
           if strict
             setting = setting?(receiver, attribute)
             unless setting
-              logger.warn "Can't set \"#{attribute}\". It isn't a setting of #{receiver}."
+              logger.warn { "Can't set \"#{attribute}\". It isn't a setting of #{receiver}." }
               return false
             end
           end
 
           assignable = assignable? receiver, attribute
           unless assignable
-            logger.warn "Can't set \"#{attribute}\". It isn't assignable to #{receiver}."
+            logger.warn { "Can't set \"#{attribute}\". It isn't assignable to #{receiver}." }
             return false
           end
 
-          logger.opt_debug "\"#{attribute}\" can be set"
+          logger.debug { "\"#{attribute}\" can be set" }
           true
         end
       end
@@ -81,8 +79,7 @@ class Settings
         extend Assignment
 
         def logger
-          # @logger ||= ::Telemetry::Logger.get self
-          @logger ||= SubstAttr::Substitute.build(::Telemetry::Logger)
+          @logger ||= Log.get(self)
         end
 
         def self.assure_settable(receiver, attribute, strict=true)
@@ -90,7 +87,7 @@ class Settings
             setting = setting? receiver, attribute
             unless setting
               msg = "Can't set \"#{attribute}\". It isn't a setting of #{receiver}."
-              logger.error msg
+              logger.error { msg }
               raise msg
             end
           end
@@ -98,11 +95,11 @@ class Settings
           assignable = assignable? receiver, attribute
           unless assignable
             msg = "Can't set \"#{attribute}\". It isn't assignable to #{receiver}."
-            logger.error msg
+            logger.error { msg }
             raise msg
           end
 
-          logger.opt_debug "\"#{attribute}\" can be set"
+          logger.debug { "\"#{attribute}\" can be set" }
           true
         end
       end

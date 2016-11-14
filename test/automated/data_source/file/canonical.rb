@@ -1,4 +1,4 @@
-require_relative '../../bench_init'
+require_relative '../../automated_init'
 
 module Canonical
   def self.canonical(path)

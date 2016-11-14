@@ -1,10 +1,10 @@
 class Settings
   class Error < RuntimeError; end
 
+  include Log::Dependency
+
   attr_reader :data
   attr_reader :pathname
-
-  dependency :logger, ::Telemetry::Logger
 
   def initialize(data, pathname=nil)
     @data = data
@@ -12,8 +12,7 @@ class Settings
   end
 
   def self.logger
-    # @logger ||= ::Telemetry::Logger.get self
-    @logger ||= SubstAttr::Substitute.build(::Telemetry::Logger)
+    @logger ||= Log.get(self)
   end
 
   def self.build(source=nil)
@@ -25,43 +24,39 @@ class Settings
 
     instance = new data
 
-    # ::Telemetry::Logger.configure instance
-
-    logger.opt_debug "Built"
-
     instance
   end
 
   def self.implementer_source
-    logger.opt_trace "Getting data source from the implementer"
+    logger.trace { "Getting data source from the implementer" }
 
     unless self.respond_to? :data_source
-      logger.opt_trace "Implementer doesn't provide a data_source"
+      logger.trace { "Implementer doesn't provide a data_source" }
       return nil
     end
 
     self.data_source.tap do |data_source|
-      logger.opt_trace "Got data source from the implementer (#{data_source})"
+      logger.trace { "Got data source from the implementer (#{data_source})" }
     end
   end
 
   def override(override_data)
-    logger.opt_trace "Overriding settings data"
+    logger.trace { "Overriding settings data" }
     res = data.push!(override_data)
-    logger.opt_debug "Overrode settings data"
-    logger.opt_data "Override data #{override_data}"
+    logger.debug { "Overrode settings data" }
+    logger.debug(tag: :data) { "Override data #{override_data}" }
     res
   end
 
   def reset
-    logger.opt_trace "Resetting overridden settings data"
+    logger.trace { "Resetting overridden settings data" }
     res = data.pop!
-    logger.opt_debug "Reset overridden settings data"
+    logger.debug { "Reset overridden settings data" }
     res
   end
 
   def set(receiver, *namespace, attribute: nil, strict: true)
-    logger.opt_trace "Setting #{receiver} (#{digest(namespace, attribute, strict)})"
+    logger.trace { "Setting #{receiver} (#{digest(namespace, attribute, strict)})" }
     unless attribute.nil?
       value = set_attribute(receiver, attribute, namespace, strict)
     else
@@ -71,7 +66,7 @@ class Settings
   end
 
   def set_attribute(receiver, attribute, namespace, strict)
-    logger.opt_trace "Setting #{receiver} attribute (#{digest(namespace, attribute, strict)})"
+    logger.trace { "Setting #{receiver} attribute (#{digest(namespace, attribute, strict)})" }
 
     attribute = attribute.to_s if attribute.is_a? Symbol
 
@@ -82,7 +77,7 @@ class Settings
 
     if value.nil?
       msg = "#{attribute_namespace} not found in the data"
-      logger.error msg
+      logger.error { msg }
       raise Settings::Error, msg
     end
 
@@ -91,19 +86,19 @@ class Settings
     log_value = value
     log_value = log_value.to_h if log_value.respond_to? :to_h
 
-    logger.opt_debug "Set #{receiver} #{attribute} to #{log_value}"
+    logger.debug { "Set #{receiver} #{attribute} to #{log_value}" }
 
     value
   end
 
   def set_object(receiver, namespace, strict)
-    logger.opt_trace "Setting #{receiver} object (#{digest(namespace, nil, strict)})"
+    logger.trace { "Setting #{receiver} object (#{digest(namespace, nil, strict)})" }
 
     data = get(namespace)
 
     if data.nil?
       msg = "#{namespace} not found in the data"
-      logger.error msg
+      logger.error { msg }
       raise Settings::Error, msg
     end
 
@@ -111,7 +106,7 @@ class Settings
       Settings::Setting::Assignment::Object.assign(receiver, attribute.to_sym, value, strict)
     end
 
-    logger.opt_debug "Set #{receiver} object (#{digest(namespace, nil, strict)})"
+    logger.debug { "Set #{receiver} object (#{digest(namespace, nil, strict)})" }
 
     receiver
   end
@@ -122,7 +117,7 @@ class Settings
 
   def get(*namespace)
     namespace.flatten!
-    logger.opt_trace "Getting #{namespace}"
+    logger.trace { "Getting #{namespace}" }
 
     string_keys = namespace.map { |n| n.is_a?(String) ? n : n.to_s }
 
@@ -130,9 +125,9 @@ class Settings
 
     log_data = value
     log_data = log_data.to_h if log_data.respond_to? :to_h
-    logger.opt_data "#{namespace}: #{log_data}"
 
-    logger.opt_debug "Got #{namespace}"
+    logger.debug { "Got #{namespace}" }
+    logger.debug(tag: :data) { "#{namespace}: #{log_data}" }
 
     value
   end

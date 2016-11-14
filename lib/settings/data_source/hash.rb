@@ -1,22 +1,18 @@
 class Settings
   class DataSource
     class Hash < DataSource
+      def self.logger
+        @logger ||= Log.get(self)
+      end
+
       def self.build(source)
-        # logger = Telemetry::Logger.get self
-        logger = SubstAttr::Substitute.build(::Telemetry::Logger)
-
-        logger.opt_trace "Building"
-
-        new(source).tap do |instance|
-          # Telemetry::Logger.configure instance
-          logger.opt_debug "Built"
-        end
+        new(source)
       end
 
       def get_data
-        logger.opt_trace "Converting the raw source data to Confstruct"
+        logger.trace { "Converting the raw source data to Confstruct" }
         Confstruct::Configuration.new(source).tap do |instance|
-          logger.opt_debug "Converted the raw source data to Confstruct"
+          logger.debug { "Converted the raw source data to Confstruct" }
         end
       end
     end
