@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'evt-settings'
-  s.version = '0.2.0.3'
+  s.version = '0.2.0.4'
   s.summary = 'Settings data access and assignment'
   s.description = ' '
 
@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'confstruct'
 
-  s.add_development_dependency 'ntl-test_bench'
+  s.add_development_dependency 'test_bench'
 end
