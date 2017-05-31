@@ -4,6 +4,7 @@ ENV['LOG_LEVEL'] ||= '_min'
 puts RUBY_DESCRIPTION
 
 require_relative '../init.rb'
+Settings.activate
 
 require 'test_bench'; TestBench.activate
 

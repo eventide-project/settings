@@ -8,4 +8,3 @@ unless libraries_dir.nil?
 end
 
 require 'settings'
-Settings.activate
