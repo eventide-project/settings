@@ -1,4 +1,4 @@
-require_relative './automated_init'
+require_relative '../automated_init'
 
 module SetPlainOldAttribute
   def self.data

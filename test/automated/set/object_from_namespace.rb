@@ -1,4 +1,4 @@
-require_relative './automated_init'
+require_relative '../automated_init'
 
 module SetObjectFromNamespace
   def self.data

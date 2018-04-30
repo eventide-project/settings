@@ -12,10 +12,12 @@ module HashDataSource
   end
 end
 
-context "Hash Data Source" do
-  test "Converts the data to a Confstruct" do
-    hash_source = HashDataSource.build
-    data = hash_source.get_data
-    assert(data.is_a? Confstruct::Configuration)
+context "Data Source" do
+  context "Hash" do
+    test "Converts the data to a Confstruct" do
+      hash_source = HashDataSource.build
+      data = hash_source.get_data
+      assert(data.is_a? Confstruct::Configuration)
+    end
   end
 end

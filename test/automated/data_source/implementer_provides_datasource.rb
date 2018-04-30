@@ -18,10 +18,12 @@ module ImplementerProvidesDataSource
   end
 end
 
-context "Implementer Provides the Data Source" do
-  test "A subclass can specify the datasource by implementing a class method named 'datasource'" do
-    settings = ImplementerProvidesDataSource.settings
+context "Data Source" do
+  context "Implementer Provides the Data Source" do
+    test "A subclass can specify the datasource by implementing a class method named 'datasource'" do
+      settings = ImplementerProvidesDataSource.settings
 
-    assert(settings.data == ImplementerProvidesDataSource.data)
+      assert(settings.data == ImplementerProvidesDataSource.data)
+    end
   end
 end

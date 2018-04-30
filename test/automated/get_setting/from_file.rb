@@ -1,8 +1,8 @@
-require_relative './automated_init'
+require_relative '../automated_init'
 
 module GetSettingFromFile
   def self.settings_file
-    File.join(File.dirname(File.expand_path(__FILE__)), "settings.json")
+    File.join(File.dirname(File.expand_path(__FILE__)), "../settings.json")
   end
 
   def self.settings
