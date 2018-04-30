@@ -123,12 +123,8 @@ class Settings
 
     value = string_keys.inject(data) {|memo, k| memo ? memo[k] : nil }
 
-    log_data = value
-    # log_data = log_data.to_h if log_data.respond_to?(:to_h)
-
     logger.debug { "Got #{namespace}" }
-    # logger.debug(tag: :data) { "#{namespace}: #{log_data}" }
-    logger.debug(tag: :data) { "#{namespace}: #{log_data.inspect}" }
+    logger.debug(tag: :data) { "#{namespace}: #{value.inspect}" }
 
     value
   end
