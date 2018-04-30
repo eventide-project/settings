@@ -56,7 +56,7 @@ class Settings
   end
 
   def set(receiver, *namespace, attribute: nil, strict: true)
-    logger.trace { "Setting #{receiver} (#{digest(namespace, attribute, strict)})" }
+    logger.trace { "Setting #{receiver.class.name} (#{digest(namespace, attribute, strict)})" }
     unless attribute.nil?
       value = set_attribute(receiver, attribute, namespace, strict)
     else
@@ -66,7 +66,7 @@ class Settings
   end
 
   def set_attribute(receiver, attribute, namespace, strict)
-    logger.trace { "Setting #{receiver} attribute (#{digest(namespace, attribute, strict)})" }
+    logger.trace { "Setting #{receiver.class.name} attribute (#{digest(namespace, attribute, strict)})" }
 
     attribute = attribute.to_s if attribute.is_a? Symbol
 
@@ -83,16 +83,13 @@ class Settings
 
     Settings::Setting::Assignment::Attribute.assign(receiver, attribute.to_sym, value, strict)
 
-    log_value = value
-    log_value = log_value.to_h if log_value.respond_to? :to_h
-
-    logger.debug { "Set #{receiver} #{attribute} to #{log_value}" }
+    logger.debug { "Set #{receiver.class.name} #{attribute} to #{value.inspect}" }
 
     value
   end
 
   def set_object(receiver, namespace, strict)
-    logger.trace { "Setting #{receiver} object (#{digest(namespace, nil, strict)})" }
+    logger.trace { "Setting #{receiver.class.name} object (#{digest(namespace, nil, strict)})" }
 
     data = get(namespace)
 
@@ -106,7 +103,7 @@ class Settings
       Settings::Setting::Assignment::Object.assign(receiver, attribute.to_sym, value, strict)
     end
 
-    logger.debug { "Set #{receiver} object (#{digest(namespace, nil, strict)})" }
+    logger.debug { "Set #{receiver.class.name} object (#{digest(namespace, nil, strict)})" }
 
     receiver
   end

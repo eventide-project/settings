@@ -40,7 +40,7 @@ class Settings
       def digest(receiver, attribute, strict)
         content = []
         content << "Attribute: #{attribute}" if attribute
-        content << "Receiver: #{receiver}"
+        content << "Receiver: #{receiver.class.name}"
         strict = "<not set>" if strict.nil?
         content << "Strict: #{strict}"
         content.join ', '
@@ -59,14 +59,14 @@ class Settings
           if strict
             setting = setting?(receiver, attribute)
             unless setting
-              logger.warn { "Can't set \"#{attribute}\". It isn't a setting of #{receiver}." }
+              logger.warn { "Can't set \"#{attribute}\". It isn't a setting of #{receiver.class.name}." }
               return false
             end
           end
 
           assignable = assignable? receiver, attribute
           unless assignable
-            logger.warn { "Can't set \"#{attribute}\". It isn't assignable to #{receiver}." }
+            logger.warn { "Can't set \"#{attribute}\". It isn't assignable to #{receiver.class.name}." }
             return false
           end
 
@@ -86,7 +86,7 @@ class Settings
           if strict
             setting = setting? receiver, attribute
             unless setting
-              msg = "Can't set \"#{attribute}\". It isn't a setting of #{receiver}."
+              msg = "Can't set \"#{attribute}\". It isn't a setting of #{receiver.class.name}."
               logger.error { msg }
               raise msg
             end
@@ -94,7 +94,7 @@ class Settings
 
           assignable = assignable? receiver, attribute
           unless assignable
-            msg = "Can't set \"#{attribute}\". It isn't assignable to #{receiver}."
+            msg = "Can't set \"#{attribute}\". It isn't assignable to #{receiver.class.name}."
             logger.error { msg }
             raise msg
           end
