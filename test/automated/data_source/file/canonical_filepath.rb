@@ -26,28 +26,36 @@ end
 context "Data Source" do
   context "File" do
     context "Canonical Filepath" do
-      test "The default settings filename (settings.json) is used when the source is a directory" do
+      context "Source is a Directory" do
         pathname = Canonical.canonical(Canonical.current_dir)
 
-        assert(pathname == Canonical.current_dir_filepath)
+        test "The default settings filename (settings.json) is used" do
+          assert(pathname == Canonical.current_dir_filepath)
+        end
       end
 
-      test "The default directory (current working directory) is used when the source is a filename" do
+      context "Source is a Filename" do
         pathname = Canonical.canonical('some_file.json')
 
-        assert(pathname == Canonical.working_dir_filepath('some_file.json'))
+        test "The current working directory is used" do
+          assert(pathname == Canonical.working_dir_filepath('some_file.json'))
+        end
       end
 
-      test "The default directory and the default filename are used when the path is not specified" do
+      context "Source Is Not Specified" do
         pathname = Canonical.canonical(nil)
 
-        assert(pathname == Canonical.working_dir_filepath)
+        test "The default directory and the default filename are used" do
+          assert(pathname == Canonical.working_dir_filepath)
+        end
       end
 
-      test "The specified pathname is used when it includes both the directory and the filename" do
+      context "Source includes both a directory and filename" do
         pathname = Canonical.canonical('some_dir/some_file.json')
 
-        assert(pathname == 'some_dir/some_file.json')
+        test "The source is used" do
+          assert(pathname == 'some_dir/some_file.json')
+        end
       end
     end
   end

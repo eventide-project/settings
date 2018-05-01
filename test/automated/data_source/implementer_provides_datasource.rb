@@ -20,9 +20,9 @@ end
 
 context "Data Source" do
   context "Implementer Provides the Data Source" do
-    test "A subclass can specify the datasource by implementing a class method named 'datasource'" do
-      settings = ImplementerProvidesDataSource.settings
+    settings = ImplementerProvidesDataSource.settings
 
+    test "A subclass can specify the datasource by implementing a class method named 'datasource'" do
       assert(settings.data == ImplementerProvidesDataSource.data)
     end
   end

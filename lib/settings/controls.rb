@@ -1,1 +1,1 @@
-require 'settings/controls/'
+# require 'settings/controls/'
