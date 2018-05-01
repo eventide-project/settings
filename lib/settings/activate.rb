@@ -4,7 +4,7 @@ class Settings
 
     macro_module = Settings::Setting::Macro
 
-    return if target_class.is_a? macro_module
+    return if target_class.is_a?(macro_module)
 
     target_class.extend(macro_module)
   end

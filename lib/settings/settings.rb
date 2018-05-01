@@ -68,7 +68,7 @@ class Settings
   def set_attribute(receiver, attribute, namespace, strict)
     logger.trace { "Setting #{receiver.class.name} attribute (#{digest(namespace, attribute, strict)})" }
 
-    attribute = attribute.to_s if attribute.is_a? Symbol
+    attribute = attribute.to_s if attribute.is_a?(Symbol)
 
     attribute_namespace = namespace.dup
     attribute_namespace << attribute
