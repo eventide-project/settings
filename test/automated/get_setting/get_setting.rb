@@ -16,14 +16,20 @@ module GetSetting
   end
 end
 
-context "Get Settings" do
-  test "Gets the setting's value" do
+context "Get Setting" do
+  context "Setting is in the data" do
     setting = GetSetting.get 'some_setting'
-    assert(setting == 'some value')
+
+    test "Gets the setting's value" do
+      assert(setting == 'some value')
+    end
   end
 
-  test "Trying to get a setting that isn't in the data gets a nil" do
+  context "Setting isn't in the data" do
     setting = GetSetting.get 'setting_that_isnt_in_the_data'
-    assert(setting == nil)
+
+    test "Gets nil" do
+      assert(setting == nil)
+    end
   end
 end

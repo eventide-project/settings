@@ -22,19 +22,27 @@ module SetObjectFromNamespace
   end
 end
 
-context "Set an object from a namespace" do
-  test "Assigns data from within that namespace to corresponding setting attributes" do
-    example = SetObjectFromNamespace.example
-    SetObjectFromNamespace.settings.set example, "some_namespace"
 
-    assert(example.some_setting == "some value")
-  end
+context "Set" do
+  context "Set an Object from a Namespace" do
+    context "Corresponding Attributes" do
+      example = SetObjectFromNamespace.example
 
-  test "When namespace isn't found in data, it's an error" do
-    example = SetObjectFromNamespace.example
+      SetObjectFromNamespace.settings.set(example, "some_namespace")
 
-    assert proc { SetObjectFromNamespace.settings.set example, "other_namespace" } do
-      raises_error? Settings::Error
+      test "Assigns data to the attributes" do
+        assert(example.some_setting == "some value")
+      end
+    end
+
+    context "Namespace isn't found in data" do
+      example = SetObjectFromNamespace.example
+
+      test "Is an error" do
+        assert proc { SetObjectFromNamespace.settings.set example, "other_namespace" } do
+          raises_error? Settings::Error
+        end
+      end
     end
   end
 end

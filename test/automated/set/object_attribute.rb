@@ -20,18 +20,26 @@ module SetObjectPlainOldAttribute
   end
 end
 
-context "Set an object" do
-  test "When setting strictly, plain old attributes are not set" do
-    example = SetObjectPlainOldAttribute.example
-    SetObjectPlainOldAttribute.settings.set example
+context "Set" do
+  context "Object Attribute" do
+    context "Strict" do
+      example = SetObjectPlainOldAttribute.example
 
-    assert(example.some_attr.nil?)
-  end
+      SetObjectPlainOldAttribute.settings.set(example)
 
-  test "When not setting strictly, sets the attribute" do
-    example = SetObjectPlainOldAttribute.example
-    SetObjectPlainOldAttribute.settings.set example, strict: false
+      test "Attributes are not set" do
+        assert(example.some_attr.nil?)
+      end
+    end
 
-    assert(example.some_attr == "some attr value")
+    context "Not strict" do
+      example = SetObjectPlainOldAttribute.example
+
+      SetObjectPlainOldAttribute.settings.set(example, strict: false)
+
+      test "When not setting strictly, sets the attribute" do
+        assert(example.some_attr == "some attr value")
+      end
+    end
   end
 end

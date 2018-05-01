@@ -14,9 +14,11 @@ module GetSettingFromFile
   end
 end
 
-context "Get a setting from a file" do
-  test "Retrieves the data from the file" do
-    setting = GetSettingFromFile.get 'some_setting'
-    assert(setting == 'some value')
+context "Get Setting" do
+  context "From a file" do
+    test "Retrieves the data from the file" do
+      setting = GetSettingFromFile.get 'some_setting'
+      assert(setting == 'some value')
+    end
   end
 end

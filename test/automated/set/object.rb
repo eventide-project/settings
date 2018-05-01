@@ -25,18 +25,22 @@ module SetObject
 end
 
 context "Set an object" do
-  test "Assigns data to corresponding setting attributes" do
+  context "Corresponding Setting Attributes" do
     example = SetObject.example
     SetObject.settings.set example
 
-    assert(example.some_setting == "some value")
-    assert(example.some_other_setting == "some other value")
+    test "Assigns data to the attributes" do
+      assert(example.some_setting == "some value")
+      assert(example.some_other_setting == "some other value")
+    end
   end
 
-  test "A setting that does not have corresponding data is not set" do
+  context "Attributes that Don't Correspond" do
     example = SetObject.example
     SetObject.settings.set example
 
-    assert(example.not_in_the_data.nil?)
+    test "Data is not set" do
+      assert(example.not_in_the_data.nil?)
+    end
   end
 end

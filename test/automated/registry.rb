@@ -1,12 +1,17 @@
 require_relative './automated_init'
 
-context "Settings Registry" do
-  test "A registered setting is be stored in the settings registry by its class name" do
+context "Registry" do
+  context "Registered Setting" do
     Settings::Registry.register(Object, :some_setting)
-    assert(Settings::Registry.setting?(Object, :some_setting))
+
+    test "Is stored stored in the settings registry by its class name" do
+      assert(Settings::Registry.setting?(Object, :some_setting))
+    end
   end
 
-  test "An unregistered setting will not be stored in the settings registry" do
-    assert(!Settings::Registry.setting?(Object, :some_other_setting))
+  context "Unregistered Setting" do
+    test "Is not stored in the settings registry" do
+      refute(Settings::Registry.setting?(Object, :some_other_setting))
+    end
   end
 end

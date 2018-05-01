@@ -21,23 +21,30 @@ module SetSetting
   end
 end
 
-context "Set a setting attribute" do
-  test "Assigns the data to the corresponding attribute" do
-    example = SetSetting.example
-    SetSetting.settings.set example, attribute: :some_setting
+context "Set" do
+  context "Setting" do
+    context "Corresponding Attributes" do
+      example = SetSetting.example
 
-    assert(example.some_setting == "some value")
-  end
+      SetSetting.settings.set(example, attribute: :some_setting)
 
-  test "When there's no corresponding data, it's an error" do
-    example = SetSetting.example
-
-    assign_attribute_not_in_data = proc do
-      SetSetting.settings.set example, attribute: :not_in_the_data
+      test "Assigns data to the attributes" do
+        assert(example.some_setting == "some value")
+      end
     end
 
-    assert assign_attribute_not_in_data do
-      raises_error? Settings::Error
+    context "Attributes that Don't Correspond" do
+      example = SetSetting.example
+
+      assign_attribute_not_in_data = proc do
+        SetSetting.settings.set(example, attribute: :not_in_the_data)
+      end
+
+      test "Is an error" do
+        assert assign_attribute_not_in_data do
+          raises_error? Settings::Error
+        end
+      end
     end
   end
 end
