@@ -10,7 +10,7 @@ context "Data Source" do
       data = settings.get_data
 
       test "Reads the file" do
-        assert(data.to_h == { some_setting: "some value" })
+        assert(data.to_h == { some_setting: 'some value' })
       end
     end
   end
