@@ -1,38 +1,36 @@
 require_relative '../automated_init'
 
-module ObjectAssignment
-  def self.example
-    Example.new
-  end
-
-  def self.assignment
-    Settings::Setting::Assignment::Object
-  end
-
-  class Example
-    setting :some_setting
-    attr_accessor :some_attribute
-  end
-end
-
 context "Assignment" do
   context "Object" do
-    test "Settable when the attribute is a setting" do
-      example = ObjectAssignment.example
-      assert(ObjectAssignment.assignment.assure_settable(example, :some_setting))
-    end
+    context "Attribute Is a Setting" do
+      example = Settings::Controls::Subject.example
 
-    context "Strict" do
-      test "Attribute is not settable when it's a plain old attribute" do
-        example = ObjectAssignment.example
-        assert(!ObjectAssignment.assignment.assure_settable(example, :some_attribute, strict = true))
+      settable = Settings::Setting::Assignment::Object.assure_settable(example, :some_setting)
+
+      test "Settable when the attribute is a setting" do
+        assert(settable)
       end
     end
 
-    context "Not strict" do
-      test "Settable when the attribute is a plain old attribute" do
-        example = ObjectAssignment.example
-        assert(ObjectAssignment.assignment.assure_settable(example, :some_attribute, strict = false))
+    context "Plain Attribute" do
+      context "Strict" do
+        example = Settings::Controls::Subject.example
+
+        settable = Settings::Setting::Assignment::Object.assure_settable(example, :some_attribute, strict = true)
+
+        test "Not settable" do
+          refute(settable)
+        end
+      end
+
+      context "Not strict" do
+        example = Settings::Controls::Subject.example
+
+        settable = Settings::Setting::Assignment::Object.assure_settable(example, :some_accessor_attribute, strict = false)
+
+        test "Settable" do
+          assert(settable)
+        end
       end
     end
   end
