@@ -4,7 +4,7 @@ context "Set" do
   context "Object" do
     context "Corresponding Setting Attributes" do
       example = Settings::Controls::Subject.example
-      settings = Settings::Controls::Settings::SettingAttributes.example
+      settings = Settings::Controls::Settings::SettingAttributes::Partial.example
 
       settings.set(example)
 
@@ -17,7 +17,9 @@ context "Set" do
 
   context "Attributes that Don't Correspond" do
     example = Settings::Controls::Subject.example
-    settings = Settings::Controls::Settings::SettingAttributes.example
+    settings = Settings::Controls::Settings::SettingAttributes::Partial.example
+
+    settings.set(example)
 
     test "Data is not set" do
       assert(example.yet_another_setting.nil?)

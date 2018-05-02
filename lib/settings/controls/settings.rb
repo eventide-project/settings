@@ -25,6 +25,19 @@ class Settings
             "yet_another_setting" => "yet another value"
           }
         end
+
+        module Partial
+          def self.example
+            ::Settings.new(data)
+          end
+
+          def self.data
+            {
+              "some_setting" => "some value",
+              "some_other_setting" => "some other value",
+            }
+          end
+        end
       end
 
       module AccessorAttribute
