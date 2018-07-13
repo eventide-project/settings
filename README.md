@@ -11,7 +11,7 @@ Some lower-level capabilities allow interaction with the settings data directly,
 ```ruby
 settings = Settings.build ...
 
-settings.set example
+settings.set(example)
 
 example.some_setting == "some value"
 # => true
@@ -53,7 +53,7 @@ A settings object is built by passing it either:
 A frequent use case will be instantiating `Settings` with a directory path:
 
 ```ruby
-settings = Settings.build 'settings/example.json'
+settings = Settings.build('settings/example.json')
 ```
 
 Where the data in `settings/example.json` would be:
@@ -74,7 +74,7 @@ data = {
   some_other_setting: "some other value"
 }
 
-settings = Settings.build data
+settings = Settings.build(data)
 ```
 
 ## Specifying the Data Source in a Subclass
@@ -94,7 +94,7 @@ settings = SomeSettings.build
 There's no need to pass a data source to the build method if a subclass has implemented the `data_source` method. However, if a data source is provided as an argument to the build method when building the subclass, the argument to the build method will have precedence over the subclass's `data_source` method:
 
 ```ruby
-settings = SomeSettings.build 'settings/other_example.json'
+settings = SomeSettings.build('settings/other_example.json')
 ```
 
 ## Setting Individual Setting Attributes
@@ -104,7 +104,7 @@ While it's common to set an object, causing all of its setting attributes with c
 Use the optional keyword argument `attribute` to specify the specific attribute to set:
 
 ```ruby
-settings.set example, attribute: :some_setting
+settings.set(example, attribute: :some_setting)
 
 example.some_setting == "some value"
 # => true
@@ -133,7 +133,7 @@ class Example
 end
 ```
 ```ruby
-settings.set example, attribute: :some_attr
+settings.set(example, attribute: :some_attr)
 # => RuntimeError: Can't set "some_attr". It isn't a setting of Example.
 ```
 
@@ -162,7 +162,7 @@ end
 ```ruby
 settings = Settings.build
 example = Example.new
-settings.set example
+settings.set(example)
 
 example.some_setting == "some value"
 # => true
@@ -179,7 +179,7 @@ However, it's possible to override this behavior with the optional keyword argum
 Turning strictness off using the `strict` argument will also set attributes that are not declared as `settings`:
 
 ```ruby
-settings.set example, strict: false
+settings.set(example, strict: false)
 
 example.some_setting == "some value"
 # => true
@@ -192,7 +192,7 @@ example.some_attr == "some attr value"
 Strictness can also be turned off when setting individual attributes explicitly:
 
 ```ruby
-settings.set example, attribute: :some_attr, strict: false
+settings.set(example, attribute: :some_attr, strict: false)
 
 example.some_attr == "some attr value"
 # => true
@@ -206,7 +206,7 @@ class Example
 end
 ```
 ```ruby
-settings.set example, attribute: :some_attr
+settings.set(example, attribute: :some_attr)
 # => RuntimeError: Can't set "some_attr". It isn't assignable to Example.
 ```
 
@@ -226,7 +226,7 @@ The source data isn't required to be a flat key/value list. The data may be name
 To set the data, the namespace where the data resides is specified:
 
 ```ruby
-settings.set example, "some_namespace"
+settings.set(example, "some_namespace")
 
 example.some_setting == "some value"
 # => true
@@ -237,7 +237,7 @@ example.some_other_setting == "some other value"
 The same can be done with specific attributes as well:
 
 ```ruby
-settings.set example, "some_namespace", attribute: :some_setting
+settings.set(example, "some_namespace", attribute: :some_setting)
 
 example.some_setting == "some value"
 # => true
@@ -256,7 +256,7 @@ And of course, with plain old attributes by turning off stictness
 }
 ```
 ```ruby
-settings.set example, "some_namespace", attribute: :some_attr, strict: false
+settings.set(example, "some_namespace", attribute: :some_attr, strict: false)
 
 example.some_attr == "some attr value"
 # => true
@@ -305,7 +305,7 @@ example.some_other_setting == nil
 And for setting plain old attributes as well:
 
 ```ruby
-settings.set example, "some_namespace", "some_deeper_namespace", "and_so_on", attribute: :some_attr, strict: false
+settings.set(example, "some_namespace", "some_deeper_namespace", "and_so_on", )attribute: :some_attr, strict: false
 
 example.some_attr == "some attr value"
 # => true
@@ -316,7 +316,7 @@ example.some_attr == "some attr value"
 Settings data can be retrieved from a settings object by the name of the data's key:
 
 ```ruby
-val = settings.get :some_setting
+val = settings.get(:some_setting)
 
 val == "some value"
 # => true
@@ -325,7 +325,7 @@ val == "some value"
 Namespaced data can also be retrieved by specifying the path to the setting:
 
 ```ruby
-val = settings.get :some_namespace, :some_deeper_namespace, :and_so_on, :some_setting
+val = settings.get(:some_namespace, :some_deeper_namespace, :and_so_on, :some_setting)
 
 val == "some value"
 # => true
@@ -346,7 +346,7 @@ settings = Settings.build
 
 settings.override { some_setting: "some overridden value"}
 
-settings.set example
+settings.set(example)
 example.some_setting == "some overridden value"
 # => true
 ```
@@ -356,7 +356,7 @@ If the override data includes settings that are not in the original data, the ne
 ```ruby
 settings.override { yet_another_setting: "yet another value"}
 
-val = settings.get :yet_another_setting
+val = settings.get(:yet_another_setting)
 val == "yet another value"
 # => true
 ```
@@ -373,7 +373,7 @@ Overriding works with namespaces as well:
 ```ruby
 settings.override { some_namespace: { some_setting: "some overridden value"}}
 
-val = settings.get :some_namespace, :some_setting
+val = settings.get(:some_namespace, :some_setting)
 val == "some overridden value"
 # => true
 ```
@@ -385,13 +385,13 @@ The settings data can be reset to its original state using the `reset` method:
 ```ruby
 settings.override { some_setting: "some overridden value"}
 
-val = settings.get :some_setting
+val = settings.get(:some_setting)
 val == "some overridden value"
 # => true
 
 settings.reset
 
-val = settings.get :some_setting
+val = settings.get(:some_setting)
 val == "some value"
 # => true
 ```
