@@ -4,11 +4,9 @@ class Settings
   include Log::Dependency
 
   attr_reader :data
-  attr_reader :pathname
 
-  def initialize(data, pathname=nil)
+  def initialize(data)
     @data = data
-    @pathname = pathname
   end
 
   def self.logger
@@ -22,7 +20,7 @@ class Settings
 
     data = data_source.get_data
 
-    instance = new data
+    instance = new(data)
 
     instance
   end

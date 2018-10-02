@@ -63,7 +63,6 @@ Where the data in `settings/example.json` would be:
   "some_setting": "some value",
   "some_other_setting": "some other value"
 }
-
 ```
 
 The same can be achieved using a hash of the data:
