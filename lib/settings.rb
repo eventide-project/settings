@@ -4,7 +4,6 @@ require 'json'
 require 'log'
 require 'casing'
 require 'attribute'
-require 'dependency'; Dependency.activate
 require 'confstruct'
 
 require 'settings/log'
