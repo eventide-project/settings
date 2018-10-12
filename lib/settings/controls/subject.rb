@@ -2,6 +2,8 @@ class Settings
   module Controls
     module Subject
       class Example
+        include Setting
+
         setting :some_setting
         setting :some_other_setting
         setting :yet_another_setting
