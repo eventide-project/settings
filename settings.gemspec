@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'evt-settings'
-  s.version = '0.4.0.1'
+  s.version = '0.5.0.0'
   s.summary = 'Settings data access and assignment'
   s.description = ' '
 
