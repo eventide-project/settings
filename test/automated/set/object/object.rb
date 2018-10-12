@@ -3,8 +3,8 @@ require_relative '../../automated_init'
 context "Set" do
   context "Object" do
     context "Corresponding Setting Attributes" do
-      example = Settings::Controls::Subject.example
-      settings = Settings::Controls::Settings::SettingAttributes::Partial.example
+      example = Controls::Subject.example
+      settings = Controls::Settings::SettingAttributes::Partial.example
 
       settings.set(example)
 
@@ -16,8 +16,8 @@ context "Set" do
   end
 
   context "Attributes that Don't Correspond" do
-    example = Settings::Controls::Subject.example
-    settings = Settings::Controls::Settings::SettingAttributes::Partial.example
+    example = Controls::Subject.example
+    settings = Controls::Settings::SettingAttributes::Partial.example
 
     settings.set(example)
 

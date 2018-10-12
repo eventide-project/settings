@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Get Setting" do
-  settings = Settings::Controls::Settings::SettingAttribute.example
+  settings = Controls::Settings::SettingAttribute.example
 
   context "Setting is in the data" do
     value = settings.get('some_setting')

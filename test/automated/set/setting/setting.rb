@@ -3,9 +3,9 @@ require_relative '../../automated_init'
 context "Set" do
   context "Setting" do
     context "Corresponding Attributes" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
-      settings = Settings::Controls::Settings::SettingAttribute.example
+      settings = Controls::Settings::SettingAttribute.example
 
       settings.set(example, attribute: :some_setting)
 
@@ -15,9 +15,9 @@ context "Set" do
     end
 
     context "Attribute that Doesn't Correspond" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
-      settings = Settings::Controls::Settings::SettingAttribute.example
+      settings = Controls::Settings::SettingAttribute.example
 
       random_attribute_name = SecureRandom.hex.to_sym
 

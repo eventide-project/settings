@@ -3,9 +3,9 @@ require_relative '../../automated_init'
 context "Set" do
   context "Object Attribute" do
     context "Strict" do
-      settings = Settings::Controls::Settings::AccessorAttribute.example
+      settings = Controls::Settings::AccessorAttribute.example
 
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
       settings.set(example)
 
@@ -15,9 +15,9 @@ context "Set" do
     end
 
     context "Not Strict" do
-      settings = Settings::Controls::Settings::AccessorAttribute.example
+      settings = Controls::Settings::AccessorAttribute.example
 
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
       settings.set(example, strict: false)
 

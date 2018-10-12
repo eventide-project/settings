@@ -2,7 +2,7 @@ require_relative './automated_init'
 
 context "Override" do
   context "Setting That Is in the Data" do
-    settings = Settings::Controls::Settings::Namespace::Override.example
+    settings = Controls::Settings::Namespace::Override.example
 
     overridden_setting = settings.get(:some_namespace, :some_setting)
 
@@ -12,7 +12,7 @@ context "Override" do
   end
 
   context "Setting That Is Not in the Data" do
-    settings = Settings::Controls::Settings::Namespace::Override.example
+    settings = Controls::Settings::Namespace::Override.example
 
     some_other_setting = settings.get(:some_namespace, :some_other_setting)
 

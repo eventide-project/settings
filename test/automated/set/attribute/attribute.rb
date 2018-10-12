@@ -2,10 +2,10 @@ require_relative '../../automated_init'
 
 context "Set" do
   context "Attribute" do
-    settings = Settings::Controls::Settings::AccessorAttribute.example
+    settings = Controls::Settings::AccessorAttribute.example
 
     context "Strict" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
       set_attribute = proc do
         settings.set(example, attribute: :some_accessor_attribute)
@@ -19,7 +19,7 @@ context "Set" do
     end
 
     context "Not Strict" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
       settings.set(example, attribute: :some_accessor_attribute, strict: false)
 

@@ -3,9 +3,9 @@ require_relative '../../automated_init'
 context "Set" do
   context "From a Namespace" do
     context "Corresponding Attributes" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
-      settings = Settings::Controls::Settings::Namespace.example
+      settings = Controls::Settings::Namespace.example
 
       settings.set(example, 'some_namespace')
 
@@ -15,9 +15,9 @@ context "Set" do
     end
 
     context "Namespace isn't found in data" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
-      settings = Settings::Controls::Settings::Namespace.example
+      settings = Controls::Settings::Namespace.example
 
       random_namespace = SecureRandom.hex
 

@@ -14,3 +14,4 @@ require 'pp'
 require 'securerandom'
 
 require 'settings/controls'
+Controls = Settings::Controls

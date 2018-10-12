@@ -3,7 +3,7 @@ require_relative '../automated_init'
 context "Assignment" do
   context "Attribute" do
     context "Attribute is a Setting" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
       settable = Settings::Setting::Assignment::Attribute.assure_settable(example, :some_setting)
 
@@ -13,7 +13,7 @@ context "Assignment" do
     end
 
     context "Strict" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
       assign_plain_attribute_strict = proc do
         Settings::Setting::Assignment::Attribute.assure_settable(example, :some_acessor_attribute, strict = true)
@@ -27,7 +27,7 @@ context "Assignment" do
     end
 
     context "Not strict" do
-      example = Settings::Controls::Subject.example
+      example = Controls::Subject.example
 
       settable = Settings::Setting::Assignment::Attribute.assure_settable(example, :some_accessor_attribute, strict = false)
 

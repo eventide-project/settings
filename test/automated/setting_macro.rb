@@ -2,7 +2,7 @@ require_relative './automated_init'
 
 context "Setting Macro" do
   context "Generated Attribute" do
-    example = Settings::Controls::Subject.example
+    example = Controls::Subject.example
 
     test "Has a getter" do
       assert(example.respond_to?(:some_setting))
