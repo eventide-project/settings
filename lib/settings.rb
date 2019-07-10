@@ -4,7 +4,6 @@ require 'json'
 require 'log'
 require 'casing'
 require 'attribute'
-require 'confstruct'
 
 require 'settings/log'
 require 'settings/data_source/data_source'

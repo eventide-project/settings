@@ -40,7 +40,7 @@ class Settings
 
   def override(override_data)
     logger.trace { "Overriding settings data" }
-    res = data.push!(override_data)
+    res = data.merge!(override_data)
     logger.debug { "Overrode settings data" }
     logger.debug(tag: :data) { "Override data #{override_data}" }
     res
@@ -116,7 +116,11 @@ class Settings
 
     string_keys = namespace.map { |n| n.is_a?(String) ? n : n.to_s }
 
-    value = string_keys.inject(data) {|memo, k| memo ? memo[k] : nil }
+    value = if string_keys.empty?
+              data
+            else
+              data.dig(*string_keys)
+            end
 
     logger.debug { "Got #{namespace}" }
     logger.debug(tag: :data) { "#{namespace}: #{value.inspect}" }

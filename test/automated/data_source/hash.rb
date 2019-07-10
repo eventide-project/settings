@@ -5,8 +5,8 @@ context "Data Source" do
     hash_source = Controls::DataSource::Hash.example
     data = hash_source.get_data
 
-    test "Converts the data to a Confstruct" do
-      assert(data.is_a? Confstruct::Configuration)
+    test "Converts the data to a Hash" do
+      assert(data.is_a? Hash)
     end
   end
 end
