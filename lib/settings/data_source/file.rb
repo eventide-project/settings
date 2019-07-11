@@ -1,11 +1,6 @@
 class Settings
   class DataSource
     class File < DataSource
-      def self.build(source=nil)
-        canonical = canonize(source)
-        new(canonical)
-      end
-
       def self.canonize(source)
         logger.trace { "Canonizing the file source (Source: #{source})" }
 
@@ -79,7 +74,7 @@ class Settings
         @logger ||= Log.get(self)
       end
 
-      def get_data
+      def read_data
         logger.trace { "Reading file: #{source}" }
         file = ::File.open(source)
         data = JSON.load(file).tap do
@@ -91,6 +86,7 @@ class Settings
         hash_data_source = Hash.build data
         hash_data_source.get_data
       end
+      alias :get_data :read_data
 
       module Defaults
         def self.logger
