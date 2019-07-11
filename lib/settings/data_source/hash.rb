@@ -5,10 +5,6 @@ class Settings
         @logger ||= Log.get(self)
       end
 
-      def self.build(source)
-        new(source)
-      end
-
       def get_data
         source
       end

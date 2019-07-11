@@ -20,6 +20,8 @@ class Settings
 
     data = data_source.get_data
 
+    # assure symbols here
+
     instance = new(data)
 
     instance

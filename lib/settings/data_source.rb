@@ -8,6 +8,10 @@ class Settings
       @source = source
     end
 
-    ## something to make sure keys are symbols
+    def self.build(source=nil)
+      source = canonize(source) if respond_to? :canonize
+
+      new(source)
+    end
   end
 end
