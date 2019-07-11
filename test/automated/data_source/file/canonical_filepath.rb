@@ -3,7 +3,7 @@ require_relative '../../automated_init'
 context "Data Source" do
   fixture = Module.new do
     def self.canonical(path)
-      Settings::DataSource::File.canonical(path)
+      Settings::DataSource::File.canonize_filepath(path)
     end
 
     def self.current_dir

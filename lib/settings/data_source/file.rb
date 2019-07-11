@@ -2,21 +2,22 @@ class Settings
   class DataSource
     class File < DataSource
       def self.build(source=nil)
-        canonical = canonical(source)
-        validate(canonical)
-
+        canonical = canonize(source)
         new(canonical)
       end
 
-      def self.canonical(source)
-        logger.trace { "Canonizing the file source (#{source})" }
+      def self.canonize(source)
+        logger.trace { "Canonizing the file source (Source: #{source})" }
 
-        canonize(source).tap do |instance|
-          logger.debug { "Canonized the file source (#{source})" }
-        end
+        canonized_filepath = canonize_filepath(source)
+        validate(canonized_filepath)
+
+        logger.debug { "Canonized the file source (Source: #{source}, Canonized: #{canonized_filepath})" }
+
+        canonized_filepath
       end
 
-      def self.canonize(source)
+      def self.canonize_filepath(source)
         return default_filepath if source.nil?
         return source if full_path?(source)
 
@@ -31,6 +32,8 @@ class Settings
 
         dirpath ||= Pathname.new(source)
         filepath ||= Pathname.new(source)
+
+        logger.debug { "Canonized the file source (#{source})" }
 
         pathname(filepath, dirpath)
       end
