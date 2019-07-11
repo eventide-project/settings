@@ -74,19 +74,16 @@ class Settings
         @logger ||= Log.get(self)
       end
 
-      def read_data
+      def get_data
         logger.trace { "Reading file: #{source}" }
         file = ::File.open(source)
         data = JSON.load(file).tap do
           logger.debug { "Read file: #{source}" }
         end
 
-        data = Casing::Underscore.(data)
-
         hash_data_source = Hash.build data
         hash_data_source.get_data
       end
-      alias :get_data :read_data
 
       module Defaults
         def self.logger

@@ -64,22 +64,15 @@ class Settings
             }
           }
         end
+      end
 
-        module Override
-          def self.example
-            s = ::Settings.build(Namespace.data)
-            s.override(data)
-            s
-          end
-
-          def self.data
-            {
-              "some_namespace" => {
-                "some_setting" => "some overridden value",
-                "some_other_setting" => "some other value"
-              }
+      module CamelCase
+        def self.data
+          {
+            "someNamespace" => {
+              "someSetting" => "some value"
             }
-          end
+          }
         end
       end
     end

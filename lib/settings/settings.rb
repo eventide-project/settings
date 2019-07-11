@@ -20,7 +20,7 @@ class Settings
 
     data = data_source.get_data
 
-    # assure symbols here
+    data = Casing::Underscore.(data)
 
     instance = new(data)
 
