@@ -65,16 +65,6 @@ class Settings
           }
         end
       end
-
-      module CamelCase
-        def self.data
-          {
-            "someNamespace" => {
-              "someSetting" => "some value"
-            }
-          }
-        end
-      end
     end
   end
 end
