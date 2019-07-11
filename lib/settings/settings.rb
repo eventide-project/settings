@@ -22,6 +22,8 @@ class Settings
 
     data = Casing::Underscore.(data)
 
+    # assure symbols here
+
     instance = new(data)
 
     instance
