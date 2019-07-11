@@ -3,7 +3,7 @@ class Settings
     module Settings
       module SettingAttribute
         def self.example
-          ::Settings.new(data)
+          ::Settings.build(data)
         end
 
         def self.data
@@ -15,7 +15,7 @@ class Settings
 
       module SettingAttributes
         def self.example
-          ::Settings.new(data)
+          ::Settings.build(data)
         end
 
         def self.data
@@ -28,7 +28,7 @@ class Settings
 
         module Partial
           def self.example
-            ::Settings.new(data)
+            ::Settings.build(data)
           end
 
           def self.data
@@ -42,7 +42,7 @@ class Settings
 
       module AccessorAttribute
         def self.example
-          ::Settings.new(data)
+          ::Settings.build(data)
         end
 
         def self.data
@@ -54,7 +54,7 @@ class Settings
 
       module Namespace
         def self.example
-          ::Settings.new(data)
+          ::Settings.build(data)
         end
 
         def self.data
