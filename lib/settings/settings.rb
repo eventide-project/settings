@@ -38,21 +38,6 @@ class Settings
     end
   end
 
-  def override(override_data)
-    logger.trace { "Overriding settings data" }
-    res = data.merge!(override_data)
-    logger.debug { "Overrode settings data" }
-    logger.debug(tag: :data) { "Override data #{override_data}" }
-    res
-  end
-
-  def reset
-    logger.trace { "Resetting overridden settings data" }
-    res = data.pop!
-    logger.debug { "Reset overridden settings data" }
-    res
-  end
-
   def set(receiver, *namespace, attribute: nil, strict: true)
     logger.trace { "Setting #{receiver.class.name} (#{digest(namespace, attribute, strict)})" }
     unless attribute.nil?
