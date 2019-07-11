@@ -22,7 +22,7 @@ class Settings
 
     data = Casing::Underscore.(data)
 
-    # assure symbols here
+    data = Keys::AssureSymbols.(data)
 
     instance = new(data)
 
@@ -103,13 +103,14 @@ class Settings
     namespace.flatten!
     logger.trace { "Getting #{namespace}" }
 
-    string_keys = namespace.map { |n| n.is_a?(String) ? n : n.to_s }
+    keys = namespace.map { |n| n.is_a?(String) ? n.to_sym : n }
 
-    value = if string_keys.empty?
-              data
-            else
-              data.dig(*string_keys)
-            end
+    value = nil
+    if keys.empty?
+      value = data
+    else
+      value = data.dig(*keys)
+    end
 
     logger.debug { "Got #{namespace}" }
     logger.debug(tag: :data) { "#{namespace}: #{value.inspect}" }

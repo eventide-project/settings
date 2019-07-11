@@ -1,13 +1,13 @@
 require_relative '../automated_init'
 
 context "Data Keys" do
-  context "Format" do
-    camel_case_key_data = Controls::Data::CamelCaseKeys.example
-    settings = Settings.build(camel_case_key_data)
+  context "Type" do
+    string_key_data = Controls::Data::StringKeys.example
+    settings = Settings.build(string_key_data)
 
     data = settings.data
-
-    test "Underscore cased" do
+pp data
+    test "Symbol" do
       assert(data == {
         :some_namespace => {
           :some_setting => "some value"
