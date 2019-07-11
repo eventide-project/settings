@@ -7,5 +7,7 @@ class Settings
     def initialize(source)
       @source = source
     end
+
+    ## something to make sure keys are symbols
   end
 end
