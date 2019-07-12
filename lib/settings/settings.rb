@@ -22,8 +22,6 @@ class Settings
 
     data = Casing::Underscore.(data)
 
-    data = Keys::AssureStrings.(data)
-
     instance = new(data)
 
     instance

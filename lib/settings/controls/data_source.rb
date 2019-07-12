@@ -9,6 +9,16 @@ class Settings
         def self.data
           Data::Flat::Single.example
         end
+
+        module SymbolKeys
+          def self.example
+            ::Settings::DataSource::Hash.build(data)
+          end
+
+          def self.data
+            Data::SymbolKeys.example
+          end
+        end
       end
 
       module Implementer
