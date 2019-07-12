@@ -8,7 +8,7 @@ class Settings
 
         def self.data
           {
-            "some_setting" => "some value"
+            'some_setting' => 'some value'
           }
         end
       end
@@ -20,9 +20,9 @@ class Settings
 
         def self.data
           {
-            "some_setting" => "some value",
-            "some_other_setting" => "some other value",
-            "yet_another_setting" => "yet another value"
+            'some_setting' => 'some value',
+            'some_other_setting' => 'some other value',
+            'yet_another_setting' => 'yet another value'
           }
         end
 
@@ -33,8 +33,8 @@ class Settings
 
           def self.data
             {
-              "some_setting" => "some value",
-              "some_other_setting" => "some other value",
+              'some_setting' => 'some value',
+              'some_other_setting' => 'some other value',
             }
           end
         end
@@ -47,7 +47,7 @@ class Settings
 
         def self.data
           {
-            "some_accessor_attribute" => "some accessor value"
+            'some_accessor_attribute' => 'some accessor value'
           }
         end
       end
@@ -59,8 +59,8 @@ class Settings
 
         def self.data
           {
-            "some_namespace" => {
-              "some_setting" => "some value"
+            'some_namespace' => {
+              'some_setting' => 'some value'
             }
           }
         end

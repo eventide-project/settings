@@ -4,8 +4,8 @@ class Settings
       module CamelCaseKeys
         def self.example
           {
-            "someNamespace" => {
-              "someSetting" => "some value"
+            'someNamespace' => {
+              'someSetting' => 'some value'
             }
           }
         end
@@ -14,8 +14,8 @@ class Settings
       module StringKeys
         def self.example
           {
-            "some_namespace" => {
-              "some_setting" => "some value"
+            'some_namespace' => {
+              'some_setting' => 'some value'
             }
           }
         end
