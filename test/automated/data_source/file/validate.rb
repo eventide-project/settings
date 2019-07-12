@@ -4,7 +4,8 @@ context "Data Source" do
   context "File" do
     context "Validate" do
       context "File Doesn't Exist" do
-        file_that_doesnt_exist = 'file-that-does-not-exist.json'
+        random_filename = SecureRandom.hex
+        file_that_doesnt_exist = "#{random_filename}.json"
 
         validate_file_that_doesnt_exist = proc do
           Settings::DataSource::File.validate(file_that_doesnt_exist)
@@ -22,7 +23,9 @@ context "Data Source" do
         settings_file = File.join(settings_dir, 'settings.json')
 
         test "Is valid" do
-          Settings::DataSource::File.validate(settings_file)
+          refute proc { Settings::DataSource::File.validate(settings_file) } do
+            raises_error? Settings::Error
+          end
         end
       end
     end

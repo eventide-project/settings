@@ -7,36 +7,27 @@ class Settings
         end
 
         def self.data
-          {
-            'some_setting' => 'some value'
-          }
+          Data::Flat::Single.example
         end
       end
 
-      module SettingAttributes
+      module PartialMatch
         def self.example
           ::Settings.build(data)
         end
 
         def self.data
-          {
-            'some_setting' => 'some value',
-            'some_other_setting' => 'some other value',
-            'yet_another_setting' => 'yet another value'
-          }
+          Data::Flat::Multiple.example
+        end
+      end
+
+      module Namespace
+        def self.example
+          ::Settings.build(data)
         end
 
-        module Partial
-          def self.example
-            ::Settings.build(data)
-          end
-
-          def self.data
-            {
-              'some_setting' => 'some value',
-              'some_other_setting' => 'some other value',
-            }
-          end
+        def self.data
+          Data::Hierarchical.example
         end
       end
 
@@ -48,20 +39,6 @@ class Settings
         def self.data
           {
             'some_accessor_attribute' => 'some accessor value'
-          }
-        end
-      end
-
-      module Namespace
-        def self.example
-          ::Settings.build(data)
-        end
-
-        def self.data
-          {
-            'some_namespace' => {
-              'some_setting' => 'some value'
-            }
           }
         end
       end

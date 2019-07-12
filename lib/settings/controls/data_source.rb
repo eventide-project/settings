@@ -7,9 +7,7 @@ class Settings
         end
 
         def self.data
-          {
-            'some_setting' => 'some value'
-          }
+          Data::Flat::Single.example
         end
       end
 
