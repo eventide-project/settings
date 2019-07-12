@@ -8,7 +8,7 @@ class Settings
 
         def self.data
           {
-            some_setting: 'some value'
+            'some_setting' => 'some value'
           }
         end
       end

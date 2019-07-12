@@ -6,11 +6,13 @@ context "Data Keys" do
     settings = Settings.build(string_key_data)
 
     data = settings.data
+
 pp data
-    test "Symbol" do
+
+    test "String" do
       assert(data == {
-        :some_namespace => {
-          :some_setting => "some value"
+        'some_namespace' => {
+          'some_setting' => 'some value'
         }
       })
     end
