@@ -1,21 +1,21 @@
 class Settings
   module Controls
     module Data
-      module CamelCaseKeys
+      module Hierarchical
         def self.example
           {
-            'someNamespace' => {
-              'someSetting' => 'some value'
+            'some_namespace' => {
+              'some_setting' => 'some value'
             }
           }
         end
       end
 
-      module StringKeys
+      module CamelCaseKeys
         def self.example
           {
-            'some_namespace' => {
-              'some_setting' => 'some value'
+            'someNamespace' => {
+              'someSetting' => 'some value'
             }
           }
         end
