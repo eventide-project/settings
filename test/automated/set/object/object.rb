@@ -4,7 +4,7 @@ context "Set" do
   context "Object" do
     context "Corresponding Setting Attributes" do
       example = Controls::Subject.example
-      settings = Controls::Settings::SettingAttributes::Partial.example
+      settings = Controls::Settings::PartialMatch.example
 
       settings.set(example)
 
@@ -17,7 +17,7 @@ context "Set" do
 
   context "Attributes that Don't Correspond" do
     example = Controls::Subject.example
-    settings = Controls::Settings::SettingAttributes::Partial.example
+    settings = Controls::Settings::PartialMatch.example
 
     settings.set(example)
 
