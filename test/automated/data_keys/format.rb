@@ -9,8 +9,8 @@ context "Data Keys" do
 
     test "Underscore cased" do
       assert(data == {
-        :some_namespace => {
-          :some_setting => "some value"
+        'some_namespace' => {
+          'some_setting' => 'some value'
         }
       })
     end

@@ -1,14 +1,14 @@
 class Settings
   module Keys
-    module AssureSymbols
+    module AssureStrings
       def self.call(data)
         new_data = {}
 
         data.each do |key, value|
-          new_key = key.to_sym
+          new_key = key.to_s
 
           if value.is_a?(Hash)
-            new_value = AssureSymbols.(value)
+            new_value = AssureStrings.(value)
           else
             new_value = value
           end
