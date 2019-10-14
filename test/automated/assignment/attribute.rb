@@ -15,13 +15,9 @@ context "Assignment" do
     context "Strict" do
       example = Controls::Subject.example
 
-      assign_plain_attribute_strict = proc do
-        Settings::Setting::Assignment::Attribute.assure_settable(example, :some_acessor_attribute, strict = true)
-      end
-
       test "Is an error when setting an attribute that is a plain old attribute" do
-        assert assign_plain_attribute_strict do
-          raises_error? RuntimeError
+        assert_raises RuntimeError do
+          Settings::Setting::Assignment::Attribute.assure_settable(example, :some_acessor_attribute, strict = true)
         end
       end
     end

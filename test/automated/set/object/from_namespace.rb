@@ -22,8 +22,8 @@ context "Set" do
       random_namespace = SecureRandom.hex
 
       test "Is an error" do
-        assert proc { settings.set(example, random_namespace) } do
-          raises_error? Settings::Error
+        assert_raises Settings::Error do
+          settings.set(example, random_namespace)
         end
       end
     end

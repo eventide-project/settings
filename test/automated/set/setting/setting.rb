@@ -21,13 +21,9 @@ context "Set" do
 
       random_attribute_name = SecureRandom.hex.to_sym
 
-      assign_attribute_not_in_source = proc do
-        settings.set(example, attribute: random_attribute_name)
-      end
-
       test "Is an error" do
-        assert assign_attribute_not_in_source do
-          raises_error? Settings::Error
+        assert_raises Settings::Error do
+          settings.set(example, attribute: random_attribute_name)
         end
       end
     end

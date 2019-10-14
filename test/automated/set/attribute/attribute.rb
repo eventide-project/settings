@@ -7,13 +7,9 @@ context "Set" do
     context "Strict" do
       example = Controls::Subject.example
 
-      set_attribute = proc do
-        settings.set(example, attribute: :some_accessor_attribute)
-      end
-
       test "Is an error" do
-        assert set_attribute do
-          raises_error? RuntimeError
+        assert_raises RuntimeError do
+          settings.set(example, attribute: :some_accessor_attribute)
         end
       end
     end
