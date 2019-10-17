@@ -8,7 +8,7 @@ context "Data Source" do
         file_that_doesnt_exist = "#{random_filename}.json"
 
         test "Is invalid" do
-          assert_raises Settings::Error do
+          assert_raises(Settings::Error) do
             Settings::DataSource::File.validate(file_that_doesnt_exist)
           end
         end
@@ -19,7 +19,7 @@ context "Data Source" do
         settings_file = File.join(settings_dir, 'settings.json')
 
         test "Is valid" do
-          refute_raises Settings::Error do
+          refute_raises(Settings::Error) do
             Settings::DataSource::File.validate(settings_file)
           end
         end

@@ -8,7 +8,7 @@ context "Set" do
       example = Controls::Subject.example
 
       test "Is an error" do
-        assert_raises RuntimeError do
+        assert_raises(RuntimeError) do
           settings.set(example, attribute: :some_accessor_attribute)
         end
       end

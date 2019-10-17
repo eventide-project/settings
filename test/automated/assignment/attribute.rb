@@ -16,7 +16,7 @@ context "Assignment" do
       example = Controls::Subject.example
 
       test "Is an error when setting an attribute that is a plain old attribute" do
-        assert_raises RuntimeError do
+        assert_raises(RuntimeError) do
           Settings::Setting::Assignment::Attribute.assure_settable(example, :some_acessor_attribute, strict = true)
         end
       end

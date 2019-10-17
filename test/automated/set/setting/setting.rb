@@ -22,7 +22,7 @@ context "Set" do
       random_attribute_name = SecureRandom.hex.to_sym
 
       test "Is an error" do
-        assert_raises Settings::Error do
+        assert_raises(Settings::Error) do
           settings.set(example, attribute: random_attribute_name)
         end
       end

@@ -22,7 +22,7 @@ context "Set" do
       random_namespace = SecureRandom.hex
 
       test "Is an error" do
-        assert_raises Settings::Error do
+        assert_raises(Settings::Error) do
           settings.set(example, random_namespace)
         end
       end
