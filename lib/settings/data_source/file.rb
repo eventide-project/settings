@@ -74,8 +74,8 @@ class Settings
 
       def get_data
         logger.trace { "Reading file: #{source}" }
-        file = ::File.open(source)
-        data = JSON.load(file).tap do
+        json_text = ::File.read(source)
+        data = JSON.parse(json_text).tap do
           logger.debug { "Read file: #{source}" }
         end
 
