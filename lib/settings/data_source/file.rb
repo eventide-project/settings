@@ -20,28 +20,28 @@ class Settings
         filepath = nil
 
         if file?(source)
-          dirpath = Pathname.new(Directory::Defaults.pathname)
+          dirpath = Directory::Defaults.pathname
         else
-          filepath = Pathname.new(Defaults.filename)
+          filepath = Defaults.filename
         end
 
-        dirpath ||= Pathname.new(source)
-        filepath ||= Pathname.new(source)
+        dirpath ||= source
+        filepath ||= source
 
         logger.debug { "Canonized the file source (#{source})" }
 
-        pathname(filepath, dirpath)
+        pathname(filepath.to_s, dirpath.to_s)
       end
 
       def self.default_filepath
-        dirpath = Pathname.new(Directory::Defaults.pathname)
-        filepath = Pathname.new(Defaults.filename)
+        dirpath = Directory::Defaults.pathname
+        filepath = Defaults.filename
 
-        pathname(filepath, dirpath)
+        pathname(filepath.to_s, dirpath.to_s)
       end
 
       def self.pathname(filepath, dirpath)
-        (dirpath + filepath).to_s
+        ::File.join(dirpath, filepath)
       end
 
       def self.full_path?(source)
@@ -59,9 +59,7 @@ class Settings
       def self.validate(pathname)
         logger.trace { "Validating the pathname (#{pathname})" }
 
-        pathname = Pathname.new(pathname)
-
-        unless pathname.file?
+        unless ::File.exist?(pathname)
           msg = "Settings cannot be read from #{pathname}. The file doesn't exist."
           logger.error { msg }
           raise Settings::Error, msg

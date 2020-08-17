@@ -1,4 +1,3 @@
-require 'pathname'
 require 'json'
 
 require 'log'
