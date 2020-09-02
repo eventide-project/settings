@@ -48,9 +48,12 @@ A settings object is built by passing it either:
 2. A directory path ("settings.json" is assumed as the filename)
 3. A fully-qualified pathname to a JSON file (either relative or absolute)
 4. A hash containing the data
-5. Nothing ("settings.json" in the current working directory is assumed)
+5. Ruby's ENV object, providing access to operating system environment variables
+6. Nothing ("settings.json" in the current working directory is assumed)
 
-A frequent use case will be instantiating `Settings` with a directory path:
+### From a File Path
+
+A frequent use case will be instantiating `Settings` with a file path:
 
 ```ruby
 settings = Settings.build('settings/example.json')
@@ -65,6 +68,8 @@ Where the data in `settings/example.json` would be:
 }
 ```
 
+### From a Hash
+
 The same can be achieved using a hash of the data:
 
 ```ruby
@@ -75,6 +80,16 @@ data = {
 
 settings = Settings.build(data)
 ```
+
+### From the ENV Object
+
+Additionally, a `Settings` instance can be creating from Ruby's `ENV` object:
+
+```ruby
+settings = Settings.build(ENV)
+```
+
+When using ENV as a source, the settings names are converted to lower case. They're no longer upper case as they would be typically when using the `ENV` object directly.
 
 ## Specifying the Data Source in a Subclass
 
