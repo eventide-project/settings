@@ -10,6 +10,7 @@ class Settings
       def self.type(input=nil)
         return Settings::DataSource::Hash if input.is_a?(::Hash)
         return Settings::DataSource::File if input.is_a?(String) || input.nil?
+        return Settings::DataSource::Env if input.instance_of?(Object)
 
         raise Settings::Error, "Input is not supported: #{input}"
       end

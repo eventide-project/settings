@@ -10,6 +10,14 @@ context "Data Source" do
       end
     end
 
+    context "ENV is the source" do
+      data_source_type = Settings::DataSource::Build.type(ENV)
+
+      test "DataSource::Env" do
+        assert(data_source_type == Settings::DataSource::Env)
+      end
+    end
+
     context "Filepath is the source" do
       data_source_type = Settings::DataSource::Build.type('some_filepath')
 
