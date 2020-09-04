@@ -1,11 +1,9 @@
 require 'pathname'
 require 'json'
 
-require 'log'
 require 'casing'
 require 'attribute'
 
-require 'settings/log'
 require 'settings/data_source'
 require 'settings/data_source/hash'
 require 'settings/data_source/env'

@@ -2,12 +2,8 @@ class Settings
   class DataSource
     class File < DataSource
       def self.canonize(source)
-        logger.trace { "Canonizing the file source (Source: #{source})" }
-
         canonized_filepath = canonize_filepath(source)
         validate(canonized_filepath)
-
-        logger.debug { "Canonized the file source (Source: #{source}, Canonized: #{canonized_filepath})" }
 
         canonized_filepath
       end
@@ -27,8 +23,6 @@ class Settings
 
         dirpath ||= Pathname.new(source)
         filepath ||= Pathname.new(source)
-
-        logger.debug { "Canonized the file source (#{source})" }
 
         pathname(filepath, dirpath)
       end
@@ -57,56 +51,32 @@ class Settings
       end
 
       def self.validate(pathname)
-        logger.trace { "Validating the pathname (#{pathname})" }
-
         pathname = Pathname.new(pathname)
 
         unless pathname.file?
-          msg = "Settings cannot be read from #{pathname}. The file doesn't exist."
-          logger.error { msg }
-          raise Settings::Error, msg
+          raise Settings::Error, "Settings cannot be read from #{pathname}. The file doesn't exist."
         end
-
-        logger.trace { "Validated the pathname (#{pathname})" }
-      end
-
-      def self.logger
-        @logger ||= Log.get(self)
       end
 
       def get_data
-        logger.trace { "Reading file: #{source}" }
         file = ::File.open(source)
-        data = JSON.load(file).tap do
-          logger.debug { "Read file: #{source}" }
-        end
+
+        data = JSON.load(file)
 
         hash_data_source = Hash.build data
         hash_data_source.get_data
       end
 
       module Defaults
-        def self.logger
-          @logger ||= Log.get(self)
-        end
-
         def self.filename
-          default_file = 'settings.json'
-          logger.debug { "Using the default settings file name (#{default_file})" }
-          default_file
+          'settings.json'
         end
       end
 
       module Directory
         module Defaults
-          def self.logger
-            @logger ||= Log.get(self)
-          end
-
           def self.pathname
-            default_dir = Dir.pwd
-            logger.debug { "Using the working directory default settings directory (#{default_dir})" }
-            default_dir
+            Dir.pwd
           end
         end
       end
