@@ -30,16 +30,6 @@ class Settings
         end
       end
 
-      module CamelCaseKeys
-        def self.example
-          {
-            'someNamespace' => {
-              'someSetting' => 'some value'
-            }
-          }
-        end
-      end
-
       module SymbolKeys
         def self.example
           {
