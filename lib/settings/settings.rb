@@ -14,8 +14,6 @@ class Settings
 
     data = data_source.get_data
 
-    data = Casing::Underscore.(data)
-
     instance = new(data)
 
     instance
