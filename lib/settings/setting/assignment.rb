@@ -3,10 +3,6 @@ class Settings
     module Assignment
       extend self
 
-      def logger
-        @logger ||= Log.get(self)
-      end
-
       def assign(receiver, attribute, value, strict=false)
         settable = assure_settable(receiver, attribute, strict)
         if settable
@@ -17,11 +13,7 @@ class Settings
       end
 
       def assign_value(receiver, attribute, value)
-        logger.trace { "Assigning to #{attribute}" }
-        receiver.public_send("#{attribute}=", value).tap do
-          logger.debug { "Assigned to #{attribute}" }
-          logger.debug(tag: :data) { "#{attribute}: #{value}" }
-        end
+        receiver.public_send("#{attribute}=", value)
       end
 
       def setting?(receiver, attribute)
@@ -37,40 +29,22 @@ class Settings
         :"#{attribute.to_s}=" unless attribute.to_s.end_with? '='
       end
 
-      def digest(receiver, attribute, strict)
-        content = []
-        content << "Attribute: #{attribute}" if attribute
-        content << "Receiver: #{receiver.class.name}"
-        strict = "<not set>" if strict.nil?
-        content << "Strict: #{strict}"
-        content.join ', '
-      end
-
       module Object
         extend Assignment
 
-        def logger
-          @logger ||= Log.get(self)
-        end
-
         def self.assure_settable(receiver, attribute, strict=true)
-          logger.trace { "Approving attribute (#{digest(receiver, attribute, strict)})" }
-
           if strict
             setting = setting?(receiver, attribute)
             unless setting
-              logger.warn { "Can't set \"#{attribute}\". It isn't a setting of #{receiver.class.name}." }
               return false
             end
           end
 
           assignable = assignable? receiver, attribute
           unless assignable
-            logger.warn { "Can't set \"#{attribute}\". It isn't assignable to #{receiver.class.name}." }
             return false
           end
 
-          logger.debug { "\"#{attribute}\" can be set" }
           true
         end
       end
@@ -78,28 +52,19 @@ class Settings
       module Attribute
         extend Assignment
 
-        def logger
-          @logger ||= Log.get(self)
-        end
-
         def self.assure_settable(receiver, attribute, strict=true)
           if strict
             setting = setting? receiver, attribute
             unless setting
-              msg = "Can't set \"#{attribute}\". It isn't a setting of #{receiver.class.name}."
-              logger.error { msg }
-              raise msg
+              raise "Can't set \"#{attribute}\". It isn't a setting of #{receiver.class.name}."
             end
           end
 
-          assignable = assignable? receiver, attribute
+          assignable = assignable?(receiver, attribute)
           unless assignable
-            msg = "Can't set \"#{attribute}\". It isn't assignable to #{receiver.class.name}."
-            logger.error { msg }
-            raise msg
+            raise "Can't set \"#{attribute}\". It isn't assignable to #{receiver.class.name}."
           end
 
-          logger.debug { "\"#{attribute}\" can be set" }
           true
         end
       end
