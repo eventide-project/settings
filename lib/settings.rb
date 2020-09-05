@@ -1,7 +1,6 @@
 require 'pathname'
 require 'json'
 
-require 'casing'
 require 'attribute'
 
 require 'settings/data_source'

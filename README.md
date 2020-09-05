@@ -184,7 +184,7 @@ example.some_attr == "some attr value"
 # => false (some_attr remains unset, and is nil)
 ```
 
-### Turning Off Strictness to Include Pain Old Attributes
+### Turning Off Strictness to Include Plain Old Attributes
 
 In order for an attribute to be a candidate to by assigned to from the settings data, it should be declared as a `setting`.
 
@@ -261,7 +261,6 @@ example.some_other_setting == nil
 
 And of course, with plain old attributes by turning off stictness
 
-```ruby
 ```javascript
 {
   "some_namespace": {
@@ -269,6 +268,7 @@ And of course, with plain old attributes by turning off stictness
   }
 }
 ```
+
 ```ruby
 settings.set(example, "some_namespace", attribute: :some_attr, strict: false)
 
