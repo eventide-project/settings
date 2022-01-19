@@ -134,7 +134,7 @@ class Example
 end
 ```
 ```ruby
-settings.set example, attribute: :some_setting
+settings.set(example, attribute: :some_setting)
 # => RuntimeError: Can't set "some_attr". It isn't assignable to Example.
 ```
 
@@ -295,7 +295,7 @@ Namespaces can be arbitrarily deep, as well:
 To set the data, the namespaces where the data resides is are specified:
 
 ```ruby
-settings.set example, "some_namespace", "some_deeper_namespace", "and_so_on"
+settings.set(example, "some_namespace", "some_deeper_namespace", "and_so_on")
 
 example.some_setting == "some value"
 # => true
@@ -308,7 +308,7 @@ example.some_other_setting == "some other value"
 Deep namespaces can also be specified when setting individual attributes:
 
 ```ruby
-settings.set example, "some_namespace", "some_deeper_namespace", "and_so_on", attribute: :some_setting
+settings.set(example, "some_namespace", "some_deeper_namespace", "and_so_on", )attribute: :some_setting
 
 example.some_setting == "some value"
 # => true
