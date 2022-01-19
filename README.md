@@ -46,7 +46,7 @@ A settings object is built by passing it either:
 
 1. A filename (current working directory is assumed)
 2. A directory path ("settings.json" is assumed as the filename)
-3. A fully-qualified pathname to a JSON file (either relative or absolute)
+3. A pathname to a JSON file (either relative or absolute)
 4. A hash containing the data
 5. Ruby's ENV object, providing access to operating system environment variables
 6. Nothing ("settings.json" in the current working directory is assumed)
