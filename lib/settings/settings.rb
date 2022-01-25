@@ -10,13 +10,16 @@ class Settings
   def self.build(source=nil)
     source ||= implementer_source
 
-    data_source = DataSource::Build.(source)
-
-    data = data_source.get_data
+    data = get_data(source)
 
     instance = new(data)
 
     instance
+  end
+
+  def self.get_data(source)
+    data_source = DataSource::Build.(source)
+    data = data_source.get_data
   end
 
   def self.implementer_source
