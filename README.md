@@ -4,7 +4,7 @@ Declare settings attributes in classes that use configuration data, and push con
 
 Use either a JSON file or a hash as the settings data source.
 
-Some lower-level capabilities allow interaction with the settings data directly, as well as overriding and reseting the data, which is useful in testing scenarios, as well as hierarchical overrides of data in hierarchical namespaces.
+Some lower-level capabilities allow interaction with the settings data directly, as well as overriding and resetting the data, which is useful in testing scenarios, as well as hierarchical overrides of data in hierarchical namespaces.
 
 ## Usage
 
